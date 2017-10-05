@@ -3,10 +3,11 @@
 
 # フォーマット
 
-- ファイル名：<Qiita記事ID>.md
-- 初回投稿先: `https://qiita.com/Qithub/private/<Qiita記事ID>`（限定共有で公開）
-- 最終投稿先: `https://qiita.com/Qithub/items/<Qiita記事ID>`
+- ファイル名： `<Qiita記事ID>.md`
+- 初回投稿先： `https://qiita.com/Qithub/private/<Qiita記事ID>`（限定共有で公開）
+- 最終投稿先： `https://qiita.com/Qithub/items/<Qiita記事ID>`
 
 ※ 後述するBOTのフォロワーの :thumbsup: が１０以上得られると、Qiita記事のステータスが「限定共有」から「公開」に変わります。
+
 
 
