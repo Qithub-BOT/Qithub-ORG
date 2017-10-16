@@ -2,7 +2,7 @@
 プログラマのための技術情報共有サービス「[Qiita](https://qiita.com)」の記事を、Qiitaユーザーでコラボレーション（共同作成・編集）するための記事本文Markdownデータのリポジトリです。
 
 ## コラボレーションについて
-**GitHubに置かれたMarkdownファイルが更新されるとQiitaの該当記事が更新される仕組み**になっており、`git`を使えるQiitaのユーザーであれば誰でも記事の編集・修正が行えます。
+**GitHubに置かれたMarkdownファイルが更新されるとQiitaの該当記事が更新される仕組み**になっており、`github` もしくは `git` を使える Qiita のユーザーであれば誰でも記事の編集・修正が行えます。
 
 1. 編集したいQiitaコラボ記事の記事IDを探します。（Qiita上のURLの末尾の番号）
 1. [`items`リポジトリ](https://github.com/Qithub-BOT/items)をローカルに Clone もしくは自分の GitHub に Fork します。
