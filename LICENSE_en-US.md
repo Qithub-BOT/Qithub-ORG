@@ -10,7 +10,7 @@ This work is licensed under a <a rel="license" href="http://creativecommons.org/
 
 All articles, documents, and posted items in this repository (Qithub-BOT/items) are published under the Creative Commons' ["Attribution-ShareAlike 4.0 International (CC BY - SA 4.0)" license](https://creativecommons.org/licenses/by-sa/4.0/).
 
-See the detail license of [ "Attribution-ShareAlike 4.0 International (CC BY - SA 4.0)"](https://creativecommons.org/licenses/by-sa/4.0/legalcode) for your right in this repository.
+See the terms of the license at ["Attribution-ShareAlike 4.0 International (CC BY - SA 4.0)"](https://creativecommons.org/licenses/by-sa/4.0/) for your rights in this repository.
 
 For legal details, please refer to [Legal Code](https://creativecommons.org/licenses/by-sa/4.0/legalcode).
 
