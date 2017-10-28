@@ -6,7 +6,7 @@
 
 この 作品 は <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">クリエイティブ・コモンズ 表示 - 継承 4.0 国際 ライセンス</a>の下に提供されています。
 
-### 適用範囲
+### 範囲
 
 Qithub-BOT/items リポジトリ（以下本リポジトリ）内に保存されるすべての Qiita 記事原稿および本リポジトリ内の文章を原稿として Qiita に投稿されたすべての記事は、クリエイティブ・コモンズの[「表示 - 継承 4.0 国際 (CC BY-SA 4.0)」ライセンス](https://creativecommons.org/licenses/by-sa/4.0/deed.ja) の下に提供されるものとします。
 
