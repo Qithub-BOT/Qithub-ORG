@@ -4,20 +4,16 @@
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
 
-This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+**All files included in this repository ([Qithub-BOT/items](https://github.com/Qithub-BOT/items/)) and this repository** are provided under the "<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-Share Alike 4.0 International</a>" license.
 
-### Scope
+For a summary of your rights and licenses for these files, please refer to "[Commons Certificate](https://creativecommons.org/licenses/by-sa/4.0/)". Also see "[Legal Code](https://creativecommons.org/licenses/by-sa/4.0/legalcode)" for legal details.
 
-All articles, documents, and posted items in this repository (Qithub-BOT/items) are published under the Creative Commons' ["Attribution-ShareAlike 4.0 International (CC BY - SA 4.0)" license](https://creativecommons.org/licenses/by-sa/4.0/).
-
-See the terms of the license at ["Attribution-ShareAlike 4.0 International (CC BY - SA 4.0)"](https://creativecommons.org/licenses/by-sa/4.0/) for your rights in this repository.
-
-For legal details, please refer to [Legal Code](https://creativecommons.org/licenses/by-sa/4.0/legalcode).
 
 ### Supplement
 
-Qithub is aimed at posting / updating articles by collaborating the work. Please acknowledge before editting the articles that edited articles via Qithub will be used in [Qiita](https://qiita.com/) and [Qiitadon](https://qiitadon.com).
+Please **DO NOT include code with other licenses in this repository**.
 
-The sooner, the better. If you have any questions about licensing, do not hesitate to ask and bring an issue at Github of this repository. Let us discuss and solve your doubts and our problems.
+If you have questions about licensing, please **do not hesitate to ask** on the issue page of this repository on GitHub. After consultation, we will solve doubts and problems.
 
-[Repository's issue page](https://github.com/Qithub-BOT/items/issues)
+- Issue page of this repository
+    - <https://github.com/Qithub-BOT/items/issues>
