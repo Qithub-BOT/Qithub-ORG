@@ -1,3 +1,5 @@
+# issue / PR のルール
+
 ## issue / PR の議論に進展があった場合
 
 - issue / PR の投稿者が、**TL;DR（進捗・結論 yyyy/MM/dd 現在）** の欄に現在の日付を入れ、
