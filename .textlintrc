@@ -1,0 +1,6 @@
+{
+    "rules": {
+        "spellcheck-tech-word": true,
+        "preset-ja-technical-writing": true
+    }
+}
