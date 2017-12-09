@@ -1,0 +1,28 @@
+{
+  "name": "workspace",
+  "version": "1.0.0",
+  "description": "プログラマのための技術情報共有サービス「[Qiita](https://qiita.com)」の記事を、Qiitaユーザーでコラボレーション（共同作成・編集）するための記事本文Markdownデータのリポジトリです。",
+  "main": "index.js",
+  "dependencies": {
+    "textlint": "^9.1.1",
+    "textlint-rule-preset-ja-technical-writing": "^2.0.0",
+    "textlint-rule-spellcheck-tech-word": "^5.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "textlint ./*.md",
+    "lintfix": "textlint --fix ./*.md"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hidao80/items.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hidao80/items/issues"
+  },
+  "homepage": "https://github.com/hidao80/items#readme"
+}
