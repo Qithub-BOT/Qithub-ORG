@@ -5,4 +5,4 @@ node_js:
 before_script:
   - npm install
 script:
-  - npm run textlint -s
+  - npm run lint -s
