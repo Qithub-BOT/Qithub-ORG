@@ -1,35 +1,29 @@
 ## このリポジトリについて
-プログラマのための技術情報共有サービス「[Qiita](https://qiita.com)」の記事を、Qiitaユーザーでコラボレーション（共同作成・編集）するための記事本文Markdownデータのリポジトリです。
 
-## コラボレーションについて
-**GitHubに置かれたMarkdownファイルが更新されるとQiitaの該当記事が更新される仕組み**になっており、`github` もしくは `git` を使える Qiita のユーザーであれば誰でも記事の編集・修正が行えます。
+このリポジトリは Qithub の GitHub Organization のメイン（とりまとめ）用のリポジトリです。他のリポジトリの issue などもここで一括管理しています。
 
-1. 編集したいQiitaコラボ記事の記事IDを探します。（Qiita上のURLの末尾の番号）
-1. [`items`リポジトリ](https://github.com/Qithub-BOT/items)をローカルに Clone もしくは自分の GitHub に Fork します。
-1. Clone／Fork先で新しいブランチを作成します。ブランチ名は「＜Qiita記事ID＞-＜日付 YmdHi＞」のフォーマットにします。
-    - Forkした場合は、GitHubのWeb上から編集でき、変更の初回保存（コミット）時にブランチ作成を選びます。
+## Qithub とは
 
-1. 作成したブランチ内の該当記事を編集＆コミットします。
-1. 編集が終わったらプルリクエスト（修正の反映依頼。**以下PR**）を行います。
-1. QiitaユーザーによるPR内容のチェック後、特に問題がなければQiitaに修正が反映されます。
+Qiita と Qiitadon のユーザ間のコラボレーションを支援するための Organization です。
 
-## チェックについて
-PR のあった記事は、[Qiitadon](https://qiitadon.com/ "Qiitaのマストドン・インスタンス") の BOT「[Qithub](https://qiitadon.com/@qithub)」のフォロワーに通知されます。
+- [メンテナ一覧](https://github.com/orgs/Qithub-BOT/people)
 
-通知に対し「:thumbsup:」（いわゆる LGTM ）の投票数が 10 件以上得られると承認され、"master" ブランチにマージされると同時にQiitaに反映（記事が更新）されます。
+## 何をしているの
 
-なお、**「Qithub」BOTのフォロワーからの PR の場合はチェックは行われません**ので、こまめに修正を行われたい方は Qiitadon でフォローすることをお勧めします。
+- Qiitadon の BOT を作っています。 https://qiitadon.com/@qithub
+- Qiita のコラボ記事を管理しています。 https://qiita.com/Qithub
+- Electron でコラボツールができないか遊んでいます。 https://github.com/Qithub-BOT/ChQiita-Dev
+- ワイワイと[皮算用で、やってみたいことを語ってます](https://github.com/Qithub-BOT/Qithub-ORG/issues/14)
 
-## フォーマット
+## Organization に入らないと参加できない？
 
-- ファイル名： `<Qiita記事ID>.md`
-- 初回投稿先： `https://qiita.com/Qithub/private/<Qiita記事ID>`（限定共有で公開 ※）
-- 最終投稿先： `https://qiita.com/Qithub/items/<Qiita記事ID>`
-- タイトル　： 本文の１行目がQiita記事のタイトルになります。２行目には改行を必ず入れてください。
-- タグ　　　： 本文の３行目がQiita記事に付けられるタグになります。４行目には改行を必ずいれてください。
-- メインの記事内容： 本文の５行目から通常のQiita記事のMarkdownで記入してください。記述できる内容もQiitaのMarkdown記法に準拠します。（後述する画像を除く） 
+そんなことはありません。どんどん [issue](https://github.com/Qithub-BOT/Qithub-ORG/issues) をあげたりリポジトリを `clone` して PR してください。
 
-※ 後述するBOTのフォロワーの :thumbsup: が１０以上得られると、Qiita記事のステータスが「限定共有」から「公開」に変わります。
+## Qiita ユーザーではないのですが
 
+申し訳ありません。この Organization は **Qiita と Qiitadon ファン専用**となっております。最低限、Qiita のアカウントをお持ちいただく必要があります。
 
+## メンバーはどこにいるの？
+
+実際にどこに居るかはわかりませんが、[Qiitadon](https://qiitadon.com) や [Discord](https://qiitadon.com/web/statuses/99552743138606410) でたむろっています。
 
