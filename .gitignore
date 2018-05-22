@@ -1,0 +1,8 @@
+*.dat
+*.data
+*.db
+*.sqlite
+*.sqlite3
+*.csv
+*.temp
+*.cache
