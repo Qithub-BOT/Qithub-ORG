@@ -16,7 +16,8 @@ $path_file_updater = $path_dir_root . $name_file_updater;
 if(file_exists($path_file_updater)){
     echo 'Updating web site from Origin ...', PHP_EOL;
 
-    $cmd  = 'cd ' . $path_dir_root . DIR_SEP . ' && ';
+    $cmd  = 'TERM=xterm && ';
+    $cmd .= 'cd ' . $path_dir_root . DIR_SEP . ' && ';
     $cmd .= 'pwd &&';
     $cmd .= "php {$name_file_updater} 2>&1";
     echo 'PathDirExe: ', $path_file_updater, PHP_EOL;
