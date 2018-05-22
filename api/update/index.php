@@ -29,7 +29,7 @@ echo '✅ Updater found.', PHP_EOL;
 echo "\t", 'Updating web site from Origin ...', PHP_EOL;
 
 $cmd  = 'TERM=xterm && ';
-$cmd .= 'cd ' . $path_dir_root . DIR_SEP . ' && ';
+$cmd .= 'cd ' . $path_dir_updater . DIR_SEP . ' && ';
 $cmd .= 'pwd && ';
 $cmd .= "php {$path_file_updater} 2>&1";
 
