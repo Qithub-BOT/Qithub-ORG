@@ -22,7 +22,7 @@ if(file_exists($path_file_updater)){
     echo 'PathDirExe: ', $path_file_updater, PHP_EOL;
 
     //$cmd = 'cd ' . $path_dir_root . ' && pwd';
-    echo 'CMD: ', $cmd, PHP_EOL;
+    echo 'CMD: ', $cmd, PHP_EOL, PHP_EOL;
     echo `$cmd`, PHP_EOL;
 
     @ob_flush();
