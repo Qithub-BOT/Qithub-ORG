@@ -1,5 +1,5 @@
 <?php
-// Ver to test 20180522-1415
+// Ver to test 20180522-18:55
 const DIR_SEP = DIRECTORY_SEPARATOR;
 
 header("Content-Type: text/plain");
@@ -20,11 +20,11 @@ if(file_exists($path_file_updater)){
     $cmd .= 'cd ' . $path_dir_root . DIR_SEP . ' && ';
     $cmd .= 'pwd &&';
     $cmd .= "php {$name_file_updater} 2>&1";
-    echo 'PathDirExe: ', $path_file_updater, PHP_EOL;
 
-    //$cmd = 'cd ' . $path_dir_root . ' && pwd';
+    echo 'PathDirExe: ', $path_file_updater, PHP_EOL;
     echo 'CMD: ', $cmd, PHP_EOL, PHP_EOL;
-    echo `$cmd`, PHP_EOL;
+
+    echo `$cmd`, PHP_EOL, PHP_EOL;
 
     @ob_flush();
     @flush();
