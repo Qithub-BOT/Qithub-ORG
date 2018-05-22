@@ -26,6 +26,7 @@ $path_dir_target = $name_dir_current . DIR_SEP . $name_dir_target;
 $path_dir_git    = $path_dir_target  . DIR_SEP . $name_dir_git;
 
 setPathDirGit($path_dir_git);
+setPathDirRoot($path_dir_target);
 
 /* =================================================================== [Main] */
 
@@ -38,22 +39,26 @@ if (! isAvailableCommandGit()) {
 
 // Fetch git from Origin
 if (dir_exists($path_dir_target) && dir_exists($path_dir_git)) {
-    echo MARK_OK . ' Web document root dir found.', PHP_EOL;
+    echo MARK_OK . ' Found: Web document root.', PHP_EOL;
     fetchGit($url_repo, $name_dir_target);
-    
-    dieMsg('Updated.');
+    dieMsg( MARK_OK . ' Updated.');
 }
 
 // Clone git from Origin as DocumentRoot
 if (! dir_exists($path_dir_git)) {
-    $path = (string) $path_dir_git;
-    echo MARK_NG . " No '.git' dir found at: '{$path}'", PHP_EOL;
+    $path_dir_git = (string) $path_dir_git;
 
-    if(cloneGit($url_repo, $name_dir_target) && dir_exists($path_dir_git)){
-        dieMsg( MARK_OK . ' Cloned.');        
+    echo MARK_NG . " No '.git' dir found at: '{$path_dir_git}'", PHP_EOL;
+
+    if (cloneGit($url_repo, $name_dir_target)) {
+        //
     }
 
-    dieMsg( MARK_NG . ' Fail cloning. Check file permission.');        
+    if (dir_exists($path_dir_git)) {
+        dieMsg(MARK_OK . ' Cloned.');
+    }
+
+    dieMsg(MARK_NG . ' Fail cloning. Check file permission.');
 }
 
 if (! dir_exists($path_dir_target)) {
@@ -81,7 +86,7 @@ function cloneGit($url_repo, $name_dir_git)
     echo "\t" . '  Name dir to clone: ', $name_dir_git, PHP_EOL;
     echo "\t" . '  CMD: ', $cmd, PHP_EOL, PHP_EOL;
 
-    echo runCmd($cmd);
+    echo runCmd($cmd), PHP_EOL;
 }
 
 /* ---------------------------------------------------------------------- [D] */
@@ -126,22 +131,26 @@ function echoTitle()
 
 function fetchGit($url_repo, $name_dir_git)
 {
-    $path = getPathDirGit();
-    if(! dir_exists($path) || (PATH_UNKNOWN === $path)){
+    $path_dir_git  = getPathDirGit();
+    $path_dir_root = getPathDirRoot();
+
+    if (! dir_exists($path_dir_git) || (PATH_UNKNOWN === $path_dir_git)) {
         echo MARK_NG, ' Path to .git not found.', PHP_EOL;
         return false;
     }
 
-    $cmd  = 'cd ' . $name_dir_git . ' && ';
+    $cmd  = 'cd ' . $path_dir_root . ' && ';
+    $cmd .= 'echo pwd && ';
     $cmd .= 'git fetch origin ';
-    $cmd .= '&& git rest --hard origin/master';
+    $cmd .= '&& git reset --hard origin/master';
 
     echo "\t" . '- Fetching git from Origin (GitHub) ...', PHP_EOL;
     echo "\t" . '  URL: ', $url_repo, PHP_EOL;
     echo "\t" . '  Name dir to clone: ', $name_dir_git, PHP_EOL;
+    echo "\t" . '  Path dir to .git: ', $path_dir_git, PHP_EOL;
+    echo "\t" . '  Path dir to DocRoot: ', $path_dir_root, PHP_EOL;
     echo "\t" . '  CMD: ', $cmd, PHP_EOL;
     echo "\t" . '  PWD: ', `pwd`, PHP_EOL;
-    echo "\t" . '  PWD: ', `cd DocumentRoot && pwd`, PHP_EOL;
 
     echo runCmd($cmd), PHP_EOL;
 }
@@ -150,8 +159,16 @@ function fetchGit($url_repo, $name_dir_git)
 
 function getPathDirGit()
 {
-    if(defined('PATH_DIR_GIT')){
+    if (defined('PATH_DIR_GIT')) {
         return realpath(PATH_DIR_GIT) ?: PATH_UNKNOWN;
+    }
+    return PATH_UNKNOWN;
+}
+
+function getPathDirRoot()
+{
+    if (defined('PATH_DIR_ROOT')) {
+        return realpath(PATH_DIR_ROOT) ?: PATH_UNKNOWN;
     }
     return PATH_UNKNOWN;
 }
@@ -230,10 +247,23 @@ function runCmd($cmd, $echo = DO_NOT_ECHO)
 function setPathDirGit($path)
 {
     $path = (string) $path;
-    if(defined('PATH_DIR_GIT')){
+
+    if (defined('PATH_DIR_GIT')) {
         echo MARK_NG, ' PATH_DIR_GIT already defined.', PHP_EOL;
         return false;
     }
 
     define('PATH_DIR_GIT', $path);
+}
+
+function setPathDirRoot($path)
+{
+    $path = (string) $path;
+
+    if (defined('PATH_DIR_ROOT')) {
+        echo MARK_NG, ' PATH_DIR_ROOT already defined.', PHP_EOL;
+        return false;
+    }
+
+    define('PATH_DIR_ROOT', $path);
 }
