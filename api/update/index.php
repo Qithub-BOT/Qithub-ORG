@@ -29,9 +29,9 @@ echo '✅ Updater found.', PHP_EOL;
 echo "\t", 'Updating web site from Origin ...', PHP_EOL;
 
 $cmd  = 'TERM=xterm && ';
-$cmd .= 'cd ' . $path_dir_updater . DIR_SEP . ' && ';
+$cmd .= 'cd ' . $path_dir_root . DIR_SEP . ' && ';
 $cmd .= 'pwd && ';
-$cmd .= "php {$name_file_updater} 2>&1";
+$cmd .= "php {$path_file_updater} 2>&1";
 
 echo "\t", '- Path updater  : ', $path_file_updater, PHP_EOL;
 echo "\t", '- Command to run: ', $cmd, PHP_EOL, PHP_EOL;
