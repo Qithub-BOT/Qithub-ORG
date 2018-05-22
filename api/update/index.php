@@ -14,7 +14,7 @@ $path_dir_parent   = $name_dir_parent . DIR_SEP;
 // DocumentRoot/api/update/index.php
 $path_dir_root     = $path_dir_parent . $path_dir_parent . $path_dir_parent;
 $path_dir_root     = realpath(__DIR__ . DIR_SEP . $path_dir_root);
-$path_file_updater = $path_dir_root . $name_file_updater;
+$path_file_updater = $path_dir_root . DIR_SEP . $name_file_updater;
 
 if(file_exists($path_file_updater)){
     echo 'Updating web site from Origin ...', PHP_EOL;
