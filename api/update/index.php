@@ -1,5 +1,8 @@
 <?php
 // Ver to test 20180522-18:55
+
+namespace KEINOS\Update;
+
 const DIR_SEP = DIRECTORY_SEPARATOR;
 
 header("Content-Type: text/plain");
@@ -9,7 +12,7 @@ $name_dir_parent   = '..';
 $path_dir_parent   = $name_dir_parent . DIR_SEP;
 
 // DocumentRoot/api/update/index.php
-$path_dir_root     = $path_dir_parent . $path_dir_parent . $path_dir_parent;
+$path_dir_root     = __DIR__ . DIR_SEP . $path_dir_parent . $path_dir_parent;
 $path_dir_root     = realpath($path_dir_root) . DIR_SEP;
 $path_file_updater = $path_dir_root . $name_file_updater;
 
@@ -31,3 +34,10 @@ if(file_exists($path_file_updater)){
 }else{
     echo 'Not found:', $path_file_updater, PHP_EOL;
 }
+
+/* ============================================================== [Functions] */
+
+
+
+
+
