@@ -18,7 +18,7 @@ $url_repo         = 'https://github.com/Qithub-BOT/Qithub-ORG.git';
 $name_dir_target  = 'DocumentRoot'; //Root dir of the website
 
 // Local settings
-$name_dir_current = '.';
+$name_dir_current = __DIR__;
 $mode_dir_target  = 0777;
 $name_dir_git    = '.git';
 
@@ -122,6 +122,7 @@ function echoTitle()
     $title .= "\t" . 'Qithub-ORG site cloner';
     $title .= ' (' . VER_APP_CUR . ')' . PHP_EOL . PHP_EOL;
     $title .= "\t" . 'By ' . NAME_AUTHOR . PHP_EOL;
+    $title .= getIdGitCommit() . PHP_EOL;
     $title .= echoHR(DO_NOT_ECHO);
 
     echo $title, PHP_EOL;
@@ -156,6 +157,17 @@ function fetchGit($url_repo, $name_dir_git)
 }
 
 /* ---------------------------------------------------------------------- [G] */
+
+function getIdGitCommit()
+{
+    $path = getPathDirGit();
+    $cmd  = 'cd ' . $path . ' && ';
+    $cmd .= 'git log -n 1 --format=%H';
+
+    $ver  = runCmd($cmd);
+    
+    return $ver;
+}
 
 function getPathDirGit()
 {
@@ -221,6 +233,13 @@ function isAvailableCommandGit()
     echo MARK_OK . ' Git Version: ', $ver_cmd_git, PHP_EOL;
 
     return $ver_cmd_git;
+}
+
+function isHashedValue($string)
+{
+    $true = is_string($string);
+    
+    
 }
 
 function isVersionHigherThan($ver_current, $ver_min)
