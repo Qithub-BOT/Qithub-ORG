@@ -28,12 +28,12 @@ $path_dir_updater = dirname($path_file_updater);
 echo '✅ Updater found.', PHP_EOL;
 echo "\t", 'Updating web site from Origin ...', PHP_EOL;
 
-$cmd  = 'TERM=xterm && ';
+$cmd  = 'TERM=xterm-256color && ';
 $cmd .= 'cd ' . $path_dir_updater . DIR_SEP . ' && ';
-$cmd .= 'pwd && ';
-$cmd .= 'whoami && ';
-$cmd .= 'env && ';
-$cmd .= "php {$path_file_updater} 2>&1";
+$cmd .= 'echo -n \'Current dir is: \' ' . 'pwd && ';
+$cmd .= 'echo -n \'Current user is: \' ' . 'whoami && ';
+$cmd .= 'echo \'Current env are: \' ' . 'env && ';
+$cmd .= "/bin/php {$path_file_updater} 2>&1";
 
 echo "\t", '- Path updater  : ', $path_file_updater, PHP_EOL;
 echo "\t", '- Command to run: ', $cmd, PHP_EOL, PHP_EOL;
