@@ -28,7 +28,7 @@ $path_dir_updater = dirname($path_file_updater);
 echo '✅ Updater found.', PHP_EOL;
 echo "\t", 'Updating web site from Origin ...', PHP_EOL;
 
-$cmd  = 'export TERM=xterm-256color && ';
+$cmd  = 'export TERM=xterm && ';
 $cmd .= 'cd ' . $path_dir_updater . DIR_SEP . ' && ';
 $cmd .= 'echo -n "Current dir is: " && ';
 $cmd .= 'pwd && ';
