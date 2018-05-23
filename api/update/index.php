@@ -30,9 +30,9 @@ echo "\t", 'Updating web site from Origin ...', PHP_EOL;
 
 $cmd  = 'TERM=xterm-256color && ';
 $cmd .= 'cd ' . $path_dir_updater . DIR_SEP . ' && ';
-$cmd .= 'echo -n \'Current dir is: \' && ';
+$cmd .= 'echo -n "Current dir is: " && ';
 $cmd .= 'pwd && ';
-$cmd .= 'echo -n \'Current user is: \' &&';
+$cmd .= 'echo -n "\nCurrent user is: " &&';
 $cmd .= 'whoami && ';
 $cmd .= 'echo \'Current env are: \' && ';
 $cmd .= 'env && ';
