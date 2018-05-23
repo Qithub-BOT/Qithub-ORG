@@ -125,7 +125,7 @@ function echoTitle()
     $title .= getIdGitCommit() . PHP_EOL;
     $title .= echoHR(DO_NOT_ECHO);
 
-    echo $title, PHP_EOL;
+    echo PHP_EOL, $title, PHP_EOL;
 }
 
 /* ---------------------------------------------------------------------- [F] */
@@ -141,9 +141,11 @@ function fetchGit($url_repo, $name_dir_git)
     }
 
     $cmd  = 'cd ' . $path_dir_root . ' && ';
-    $cmd .= 'echo pwd && ';
-    $cmd .= 'git fetch origin ';
-    $cmd .= '&& git reset --hard origin/master';
+    $cmd .= 'pwd && ';
+    $cmd .= 'whoami && ';
+    $cmd .= '/usr/bin/git --version && ';
+    $cmd .= '/usr/bin/git fetch origin && ';
+    $cmd .= '/usr/bin/git reset --hard origin/master';
 
     echo "\t" . '- Fetching git from Origin (GitHub) ...', PHP_EOL;
     echo "\t" . '  URL: ', $url_repo, PHP_EOL;
