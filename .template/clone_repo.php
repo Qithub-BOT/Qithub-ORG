@@ -1,7 +1,7 @@
 <?php
 
 /* ============================================================== [Constants] */
-const VER_APP_CUR  = 'v0.1 alpha'; //Current version of this app.
+const VER_APP_CUR  = 'v0.1 alpha 20180524-1415'; //Current version of this app.
 const VER_GIT_MIN  = '1.8.3';      //Git version tested.
 const NAME_AUTHOR  = 'Qithub-BOT Organization @ GitHub';
 const DIR_SEP      = DIRECTORY_SEPARATOR;
@@ -123,7 +123,6 @@ function echoTitle()
     $title .= "\t" . 'Qithub-ORG site cloner';
     $title .= ' (' . VER_APP_CUR . ')' . PHP_EOL . PHP_EOL;
     $title .= "\t" . 'By ' . NAME_AUTHOR . PHP_EOL;
-    $title .= getIdGitCommit() . PHP_EOL;
     $title .= echoHR(DO_NOT_ECHO);
 
     echo PHP_EOL, $title, PHP_EOL;
@@ -148,15 +147,15 @@ function fetchGit($url_repo, $name_dir_git)
     $cmd .= '/usr/bin/git fetch origin && ';
     $cmd .= '/usr/bin/git reset --hard origin/master';
 
-    echo "\t" . '- Fetching git from Origin (GitHub) ...', PHP_EOL;
-    echo "\t" . '  URL: ', $url_repo, PHP_EOL;
-    echo "\t" . '  Name dir to clone: ', $name_dir_git, PHP_EOL;
-    echo "\t" . '  Path dir to .git: ', $path_dir_git, PHP_EOL;
-    echo "\t" . '  Path dir to DocRoot: ', $path_dir_root, PHP_EOL;
-    echo "\t" . '  CMD: ', $cmd, PHP_EOL;
-    echo "\t" . '  PWD: ', `pwd`, PHP_EOL;
+    echo "\t", '- Fetching git from Origin (GitHub) ...', PHP_EOL;
+    echo "\t", '  URL: ', $url_repo, PHP_EOL;
+    echo "\t", '  Name dir to clone: ', $name_dir_git, PHP_EOL;
+    echo "\t", '  Path dir to .git: ', $path_dir_git, PHP_EOL;
+    echo "\t", '  Path dir to DocRoot: ', $path_dir_root, PHP_EOL;
+    echo "\t", '  CMD: ', $cmd, PHP_EOL;
+    echo "\t", '  PWD: ', `pwd`, PHP_EOL;
 
-    echo runCmd($cmd), PHP_EOL;
+    echo "\t- ", runCmd($cmd), PHP_EOL;
 }
 
 /* ---------------------------------------------------------------------- [G] */
@@ -233,7 +232,8 @@ function isAvailableCommandGit()
         return false;
     }
 
-    echo MARK_OK . ' Git Version: ', $ver_cmd_git, PHP_EOL;
+    echo MARK_OK, ' Git Version: ', $ver_cmd_git, PHP_EOL;
+    echo MARK_OK, ' Current commit ID: ', getIdGitCommit() . PHP_EOL;
 
     return $ver_cmd_git;
 }
