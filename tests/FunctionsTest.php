@@ -14,20 +14,34 @@ use PHPUnit\Framework\TestCase;
 
 class FunctionsTest extends TestCase
 {
+
     public function setUp()
     {
-        //
+        // Warning も確実にエラーとして扱うようにする
+        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+            $msg  = 'Error #' . $errno . ': ';
+            $msg .= $errstr . " on line " . $errline . " in file " . $errfile;
+            throw new RuntimeException($msg);
+        });
     }
 
-    /*
-     * テストを行うメソッド名は「test*」
-     */    
-    public function test_return_message()
+    /**
+     * @dataProvider provideDataTest
+     */
+    public function testEchoParrotry($arg1, $arg2)
     {
-        $message = 'Hello, World!';
-        $result  = \Qithub\fn\echoParrotry($message, true);
-
-        $this->assertSame('Hello, World!' === $result);
+        $result = \Qithub\fn\echoParrotry($arg2, true);
+        $this->assertSame($arg1, $result);
     }
+
+    static function provideDataTest()
+    {
+        return [
+            [ 'Hello World', 'Hello World' ],   // #0
+            [ 'Hello World!', 'Hello World!' ],   // #1
+            [ 'Hello World', 'Hello World' ],   // #2
+        ];
+    }
+
 
 }
