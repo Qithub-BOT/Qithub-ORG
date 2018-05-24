@@ -2,8 +2,6 @@ linter:
   code_sniffer:
     dir:
       - 'includes/'
-      - 'tools/'
-      - 'tests/'
     options:
       extensions:
         - php

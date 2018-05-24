@@ -12,3 +12,9 @@ function echoParrotry($message, $return=false)
 
     echo $message, PHP_EOL;
 }
+
+/* NG function that's not camelCase */
+function echo_sample()
+{
+    return 'hoge';
+}
