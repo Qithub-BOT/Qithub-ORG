@@ -54,7 +54,7 @@ $lists['program'] = [
     'pip' => [
         'version' => 'pip --version',
         ],
-    'npm package' => [
+    'pip package' => [
         'version' => 'pip list',
         ],
     'Python package' => [
