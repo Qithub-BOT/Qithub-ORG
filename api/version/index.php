@@ -54,6 +54,9 @@ $lists['program'] = [
     'pip' => [
         'version' => 'pip --version',
         ],
+    'npm package' => [
+        'version' => 'pip list',
+        ],
     'Python package' => [
         'list of Python package' => 'pip freeze',
         ],
