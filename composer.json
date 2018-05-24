@@ -1,0 +1,18 @@
+{
+    "name": "qithub-bot/qithub-org",
+    "description": "Dependencies for the side Qithub.tk",
+    "type": "library",
+    "license": "CC-BY-SA-4.0",
+    "authors": [
+        {
+            "name": "Qithub-ORG",
+            "email": "qithub@keinos.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "5.7.27"
+    },
+    "conflict": {
+        "phpunit/php-timer": ">=2"
+    }
+}

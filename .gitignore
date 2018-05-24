@@ -1,3 +1,8 @@
+composer.phar
+composer.lock
+box.phar
+/vendor/*
+
 *.dat
 *.data
 *.db
