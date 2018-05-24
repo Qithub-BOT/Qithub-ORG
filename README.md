@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Qithub-BOT/Qithub-ORG.svg?branch=master)](https://travis-ci.org/Qithub-BOT/Qithub-ORG)
+
 ## このリポジトリについて
 
 このリポジトリは Qithub の GitHub Organization のメイン（とりまとめ）用のリポジトリです。他のリポジトリの issue などもここで一括管理しています。
