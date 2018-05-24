@@ -1,6 +1,6 @@
 linter:
   code_sniffer:
-    dir: includes/,tools/,tests/
+    dir: ./includes/,./tools/,./tests/
     options:
       extensions: php,inc
       standard: PSR2
