@@ -10,10 +10,11 @@ linter:
         - inc
       standard: PSR2
       encoding: utf-8
+
   phpmd:
     options:
       suffixes:
        - php
        - inc
-      exclude: vendor/
+      exclude: 'vendor/'
       strict: true
