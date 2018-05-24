@@ -5,11 +5,15 @@ linter:
       - 'tools/'
       - 'tests/'
     options:
-      extensions: php,inc
+      extensions:
+        - php
+        - inc
       standard: PSR2
       encoding: utf-8
   phpmd:
     options:
-      suffixes: php,inc
+      suffixes:
+       - php
+       - inc
       exclude: vendor/
       strict: true
