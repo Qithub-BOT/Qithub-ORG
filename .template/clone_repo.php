@@ -106,7 +106,8 @@ function dir_exists($path_dir)
 
 function echoHR($echo = DO_NOT_ECHO)
 {
-    $horizontal_line = '===========================' . PHP_EOL;
+    $width_default = 60;
+    $horizontal_line = str_repeat('=', $width_default) . PHP_EOL;
 
     if (DO_ECHO === $echo) {
         echo $horizontal_line;
