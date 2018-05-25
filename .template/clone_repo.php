@@ -1,7 +1,7 @@
 <?php
 
 /* ============================================================== [Constants] */
-const VER_APP_CUR  = 'v0.1 alpha 20180524-1726'; //Current version of this app.
+const VER_APP_CUR  = 'v0.1 alpha 20180524-1415'; //Current version of this app.
 const VER_GIT_MIN  = '1.8.3';      //Git version tested.
 const NAME_AUTHOR  = 'Qithub-BOT Organization @ GitHub';
 const DIR_SEP      = DIRECTORY_SEPARATOR;
@@ -41,7 +41,7 @@ if (! isAvailableCommandGit()) {
 if (dir_exists($path_dir_target) && dir_exists($path_dir_git)) {
     echo MARK_OK . ' Found: Web document root.', PHP_EOL;
     fetchGit($url_repo, $name_dir_target);
-    dieMsg( MARK_OK . ' Updated.');
+    dieMsg(MARK_OK . ' Updated.');
 }
 
 // Clone git from Origin as DocumentRoot
@@ -87,6 +87,7 @@ function cloneGit($url_repo, $name_dir_git)
     echo "\t" . '  CMD: ', $cmd, PHP_EOL, PHP_EOL;
 
     echo runCmd($cmd), PHP_EOL;
+    flushNow();
 }
 
 /* ---------------------------------------------------------------------- [D] */
@@ -113,6 +114,8 @@ function echoHR($echo = DO_NOT_ECHO)
         echo $horizontal_line;
     }
 
+    flushNow();
+
     return $horizontal_line;
 }
 
@@ -126,6 +129,8 @@ function echoTitle()
     $title .= echoHR(DO_NOT_ECHO);
 
     echo PHP_EOL, $title, PHP_EOL;
+
+    flushNow();
 }
 
 /* ---------------------------------------------------------------------- [F] */
@@ -158,6 +163,12 @@ function fetchGit($url_repo, $name_dir_git)
     echo "\t- ", runCmd($cmd), PHP_EOL;
 }
 
+function flushNow()
+{
+    @ob_flush();
+    @flush();
+}
+
 /* ---------------------------------------------------------------------- [G] */
 
 function getIdGitCommit()
@@ -167,7 +178,7 @@ function getIdGitCommit()
     $cmd .= 'git log -n 1 --format=%H';
 
     $ver  = runCmd($cmd);
-    
+
     return $ver;
 }
 
@@ -241,8 +252,6 @@ function isAvailableCommandGit()
 function isHashedValue($string)
 {
     $true = is_string($string);
-    
-    
 }
 
 function isVersionHigherThan($ver_current, $ver_min)
@@ -260,6 +269,8 @@ function runCmd($cmd, $echo = DO_NOT_ECHO)
         echo exec($cmd);
         return true;
     }
+
+    flushNow();
 
     return exec($cmd, $output, $return_var);
 }
