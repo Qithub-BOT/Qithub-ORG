@@ -1,10 +1,12 @@
 linter:
   code_sniffer:
-    dir: src/
+    version: 3
+    dir: ./
     options:
       extensions: php,inc
       standard: PSR2
       encoding: utf-8
+
   phpmd:
     options:
       suffixes: php,inc

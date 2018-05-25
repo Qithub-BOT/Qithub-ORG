@@ -1,7 +1,7 @@
 <?php
 
 /* ============================================================== [Constants] */
-const VER_APP_CUR  = 'v0.1 alpha 20180524-1415'; //Current version of this app.
+const VER_APP_CUR  = 'v0.1 alpha 20180524-1726'; //Current version of this app.
 const VER_GIT_MIN  = '1.8.3';      //Git version tested.
 const NAME_AUTHOR  = 'Qithub-BOT Organization @ GitHub';
 const DIR_SEP      = DIRECTORY_SEPARATOR;

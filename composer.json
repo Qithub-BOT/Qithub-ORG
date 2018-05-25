@@ -14,5 +14,8 @@
     },
     "conflict": {
         "phpunit/php-timer": ">=2"
+    },
+    "require": {
+        "squizlabs/php_codesniffer": "*"
     }
 }
