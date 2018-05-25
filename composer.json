@@ -1,7 +1,7 @@
 {
-    "name": "qithub-bot/qithub-org",
-    "description": "Dependencies for the side Qithub.tk",
-    "type": "library",
+    "name": "qithub/org",
+    "description": "Composer requirement for Qithub.tk",
+    "type": "project",
     "license": "CC-BY-SA-4.0",
     "authors": [
         {
