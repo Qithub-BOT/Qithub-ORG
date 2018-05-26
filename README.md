@@ -1,21 +1,20 @@
 [![Build Status](https://travis-ci.org/Qithub-BOT/Qithub-ORG.svg?branch=master)](https://travis-ci.org/Qithub-BOT/Qithub-ORG)
 
-## このリポジトリについて
-
-このリポジトリは Qithub の GitHub Organization のメイン（とりまとめ）用のリポジトリです。他のリポジトリの issue などもここで一括管理しています。
-
 ## Qithub とは
 
-Qiita と Qiitadon のユーザ間のコラボレーションを支援するための Organization です。
+Qiita と Qiitadon をこよなく愛する同人サークルです。 （@ GitHub Organization）
+
+新しいプログラム言語の写経をはじめ含め、GitHub でコラボレーションをしながら **Qiita ユーザ間の支援するための[楽しそうなこと](https://github.com/Qithub-BOT/Qithub-ORG/issues/14)を語るサークル** です。
+
+- [部室（溜まり場）@ Qiitadon酒場](https://discord.gg/zDXJhd) @ Discord （ゲスト・ログイン可能、要 Qiita もしくは Qiitadon ユーザ）
+
+## このリポジトリについて
+
+このリポジトリは Qithub の「とりまとめ」用のリポジトリです。他のリポジトリの issue などもここで一括管理しています。
+
+また、このリポジトリの内容は https://qithub.tk/ に反映されます。
 
 - [メンテナ一覧](https://github.com/orgs/Qithub-BOT/people)
-
-## 何をしているの
-
-- Qiitadon の BOT を作っています。 https://qiitadon.com/@qithub
-- Qiita のコラボ記事を管理しています。 https://qiita.com/Qithub
-- Electron でコラボツールができないか遊んでいます。 https://github.com/Qithub-BOT/ChQiita-Dev
-- ワイワイと[皮算用で、やってみたいことを語ってます](https://github.com/Qithub-BOT/Qithub-ORG/issues/14)
 
 ## Organization に入らないと参加できない？
 
