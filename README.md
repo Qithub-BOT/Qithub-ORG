@@ -2,7 +2,7 @@
 
 ## Qithub とは
 
-Qiita と Qiitadon をこよなく愛する同人サークルです。 （@ Organization）
+Qiita と Qiitadon をこよなく愛する同人サークルです。 （@ GitHub Organization）
 
 新しいプログラム言語の写経をはじめ含め、GitHub でコラボレーションをしながら **Qiita ユーザ間の支援するための[楽しそうなこと](https://github.com/Qithub-BOT/Qithub-ORG/issues/14)を語るサークル** です。
 
