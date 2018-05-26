@@ -6,7 +6,7 @@ Qiita と Qiitadon をこよなく愛する同人サークルです。 （@ Orga
 
 新しいプログラム言語の写経をはじめ含め、GitHub でコラボレーションをしながら **Qiita ユーザ間の支援するための[楽しそうなこと](https://github.com/Qithub-BOT/Qithub-ORG/issues/14)を語るサークル** です。
 
-- [部室（溜まり場）@ Qiitadon酒場]（https://discord.gg/zDXJhd） @ Discord （ゲスト・ログイン可能、要 Qiita もしくは Qiitadon ユーザ）
+- [部室（溜まり場）@ Qiitadon酒場](https://discord.gg/zDXJhd) @ Discord （ゲスト・ログイン可能、要 Qiita もしくは Qiitadon ユーザ）
 
 ## このリポジトリについて
 
