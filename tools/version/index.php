@@ -63,10 +63,12 @@ foreach ($lists as $type => $list) {
 /* Miscellaneous and/or custom menu */
 echo_eol('<h2>Env</h2>');
 
+$os     = runCmd('cat /etc/redhat-release');
 $path   = runCmd('echo $PATH');
 $whoami = runCmd('whoami');
 
 echo_eol('<ul>');
+echo_eol("<li>OS = {$os}</li>");
 echo_eol("<li>PATH = {$path}</li>");
 echo_eol("<li>WHOAMI = {$whoami}</li>");
 echo_eol('</ul>');

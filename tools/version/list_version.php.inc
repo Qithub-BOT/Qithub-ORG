@@ -22,8 +22,8 @@ $lists['language'] = [
         'version' => 'php7 -v',
         ],
     'Golang' => [
-        'path'    => 'echo /usr/local/go/bin/go',
-        'version' => '/usr/local/go/bin/go version',
+        'path'    => 'which go',
+        'version' => 'go version',
         ],
     'Node.js' => [
         'path'    => 'which node',
