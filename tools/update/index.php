@@ -44,10 +44,7 @@ echo "\t", '- Command to run: ', $cmd, PHP_EOL, PHP_EOL;
 @ob_flush();
 @flush();
 
-echo `$cmd`, PHP_EOL, PHP_EOL;
-
-@ob_flush();
-@flush();
+echo runCmd($cmd), PHP_EOL, PHP_EOL;
 
 
 /* ============================================================== [Functions] */
@@ -58,5 +55,18 @@ function dieMsg($string)
     die;
 }
 
+function runCmd($cmd, $return = true)
+{
+    $result = `$cmd 2>&1`;
+
+    @ob_flush();
+    @flush();
+    
+    if($return){
+        return $result;
+    }
+    
+    echo $result;
+}
 
 
