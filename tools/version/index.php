@@ -54,7 +54,7 @@ $lists['program'] = [
         'MeCab Directory info' => 'mecab --dictionary-info',
         ],
     'MeCab-config' => [
-        'version' => 'mecab-config --dicdir',
+        'version' => 'mecab-config --version',
         ],
     'MeCab-config dictionary path' => [
         'dictionary path' => 'mecab-config --dicdir',
