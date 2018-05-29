@@ -24,6 +24,7 @@ $lists['language'] = [
     'Golang' => [
         'path'    => 'which go',
         'version' => 'go version',
+        'env'     => 'go env',
         ],
     'Node.js' => [
         'path'    => 'which node',
@@ -91,9 +92,6 @@ $lists['program'] = [
     ],
     'RipGrep(rg)' => [
         'version' => 'rg --version',
-    ],
-    'Go env' => [
-        "env value" => '/usr/local/go/bin/go env',
     ],
     'yum' => [
         "version" => 'yum --version',
