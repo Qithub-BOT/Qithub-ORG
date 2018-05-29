@@ -96,6 +96,8 @@ $lists['program'] = [
 $key  = isset($_GET['key'])  ? $_GET['key']  : '';
 $type = isset($_GET['type']) ? $_GET['type'] : '';
 
+/* Has request query. Show request as text. */
+
 if (! empty($key) && ! empty($type)) {
     header('Content-Type: text/plain');
     if (isset($lists[$type][$key])) {
@@ -109,9 +111,12 @@ if (! empty($key) && ! empty($type)) {
     die;
 }
 
+/* Show list menu as html */
+
 echo_header();
 echo_eol('<body>');
 
+// Category
 foreach ($lists as $type => $list) {
     $type = htmlentities($type);
     $type_head2 = ucfirst($type);
@@ -120,6 +125,7 @@ foreach ($lists as $type => $list) {
 
     ksort($list);
 
+    // Menu
     foreach ($list as $menu => $cmd) {
         $href = create_link($menu);
         $menu = htmlentities($menu);
@@ -129,6 +135,7 @@ foreach ($lists as $type => $list) {
     echo_eol('</ul>');
 }
 
+/* Miscellaneous and/or custom menu */
 echo_eol('<h2>Env</h2>');
 $cmd = 'echo $PATH';
 $PATH = `$cmd`;
