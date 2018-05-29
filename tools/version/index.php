@@ -78,6 +78,12 @@ $lists['program'] = [
     'Go env' => [
         "env value" => '/usr/local/go/bin/go env',
         ],
+    'yum' => [
+        "version" => 'yum --version',
+    ],
+    'yum package' => [
+        "Version list of installed package" => 'yum list installed',
+    ],
 ];
 
 $key  = isset($_GET['key'])  ? $_GET['key']  : '';
