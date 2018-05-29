@@ -5,7 +5,7 @@
 header("X-Robots-Tag: noindex, nofollow");
 
 $cmd = 'export GOPATH=$HOME/go';
-echo `$cmd`;
+echo runCmd($cmd);
 
 $lists = array();
 
@@ -114,12 +114,15 @@ if (! empty($key) && ! empty($type)) {
 /* Show list menu as html */
 
 echo_header();
+
+// start.body.html
 echo_eol('<body>');
 
 // Category
 foreach ($lists as $type => $list) {
-    $type = htmlentities($type);
+    $type       = htmlentities($type);
     $type_head2 = ucfirst($type);
+
     echo_eol("<h2>${type_head2}</h2>");
     echo_eol('<ul>');
 
@@ -137,14 +140,16 @@ foreach ($lists as $type => $list) {
 
 /* Miscellaneous and/or custom menu */
 echo_eol('<h2>Env</h2>');
-$cmd = 'echo $PATH';
-$PATH = `$cmd`;
+
+$path   = runCmd('echo $PATH');
+$whoami = runCmd('whoami');
+
 echo_eol('<ul>');
-echo_eol("<li>PATH=$PATH</li>");
-$WHOAMI = `whoami`;
-echo_eol("<li>WHOAMI=$WHOAMI</li>");
+echo_eol("<li>PATH = {$path}</li>");
+echo_eol("<li>WHOAMI = {$whoami}</li>");
 echo_eol('</ul>');
 
+// end.body.html
 echo_eol('</body>');
 echo_eol('</html>');
 
@@ -183,10 +188,10 @@ EOL;
 function echo_version($array)
 {
     foreach ($array as $title => $cmd) {
-        $title = ucfirst(trim($title));
-        $cmd_result = trim(`$cmd`);
+        $title      = ucfirst(trim($title));
+        $cmd_result = trim(runCmd($cmd));
         $cmd_result = indent($cmd_result);
-        echo_eol("${title}: ${cmd_result}");
+        echo_eol("{$title}: {$cmd_result}");
     }
 }
 
@@ -194,17 +199,30 @@ function echo_version($array)
 
 function indent($string)
 {
-    $string = trim($string);
-    $result = $string;
+    $result = trim((string) $string);
 
-    if (0 < mb_substr_count($string, PHP_EOL)) {
-        $array  = explode(PHP_EOL, $string);
+    if (0 < mb_substr_count($result, PHP_EOL)) {
+        $array  = explode(PHP_EOL, $result);
         $result = PHP_EOL;
         foreach ($array as $line) {
-            $result .= "\t${line}" . PHP_EOL;
+            $result .= "\t" . $line . PHP_EOL;
         }
         return $result;
     }
 
     return $result;
+}
+
+/* ---------------------------------------------------------------------- [R] */
+
+function runCmd($cmd, $return = true)
+{
+    $cmd    = (string) $cmd;
+    $result = `$cmd 2>&1`;
+
+    if ($return) {
+        return $result;
+    }
+
+    echo $result;
 }
