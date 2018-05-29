@@ -50,6 +50,15 @@ $lists['program'] = [
     'MeCab' => [
         'version' => 'mecab --version',
         ],
+    'MeCab dictionary info' => [
+        'MeCab Directory info' => 'mecab --dictionary-info',
+        ],
+    'mecab-config dictionary path' => [
+        'MeCab Directory info' => 'mecab-config --dicdir',
+        ],
+    'mecab-config dictionary list' => [
+        'MeCab Directory info' => 'ls -la $(echo \`mecab-config --dicdir\`)',
+        ],
     'npm' => [
         'version' => 'npm --version',
         ],
@@ -85,10 +94,10 @@ $lists['program'] = [
         ],
     'yum' => [
         "version" => 'yum --version',
-    ],
+        ],
     'yum package' => [
         "Version list of installed package" => 'yum list installed',
-    ],
+        ],
 ];
 
 /* =================================================================== [Main] */
