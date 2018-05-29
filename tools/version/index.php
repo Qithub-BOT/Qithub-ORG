@@ -57,7 +57,7 @@ $lists['program'] = [
         'MeCab Directory info' => 'mecab-config --dicdir',
         ],
     'mecab-config dictionary list' => [
-        'MeCab Directory info' => 'ls -la $(echo \`mecab-config --dicdir\`)',
+        'MeCab Directory info' => 'ls -la $(echo `mecab-config --dicdir`)',
         ],
     'npm' => [
         'version' => 'npm --version',
@@ -135,7 +135,7 @@ foreach ($lists as $type => $list) {
     echo_eol("<h2>${type_head2}</h2>");
     echo_eol('<ul>');
 
-    ksort($list);
+    ksort($list, SORT_NATURAL);
 
     // Menu
     foreach ($list as $menu => $cmd) {
