@@ -4,13 +4,13 @@
 
 header("X-Robots-Tag: noindex, nofollow");
 
-$cmd = 'export GOPATH=$HOME/go';
-echo runCmd($cmd);
-
-$lists = array();
+// ToDo: Uncomment it until Golang install
+//echo runCmd('export GOPATH=$HOME/go');
 
 /* =============================================================== [Settings] */
 
+// include lists
+$lists = array();
 include_once('list_version.php.inc');
 
 /* =================================================================== [Main] */
