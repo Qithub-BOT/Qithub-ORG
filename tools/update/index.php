@@ -4,6 +4,9 @@
 namespace KEINOS\Update;
 
 const DIR_SEP = DIRECTORY_SEPARATOR;
+const DO_NOT_ECHO    = true;
+const DO_RETURN      = true;
+const RETURN_AS_ECHO = false;
 
 header("Content-Type: text/plain");
 
@@ -27,25 +30,24 @@ $path_dir_updater = dirname($path_file_updater);
 
 echo '✅ Updater found.', PHP_EOL;
 echo "\t", 'Updating web site from Origin ...', PHP_EOL;
+echo "\t", '- Path updater  : ', $path_file_updater, PHP_EOL;
 
-$cmd  = 'export TERM=xterm && ';
+// Show whoami
+echo "\t", '- whoami: ', runCmd('whoami'), PHP_EOL;
+
+// Show server envs
+echo "Current envs are:", PHP_EOL;
+echo runCmd('env'), PHP_EOL;
+
+// Run updater
+echo 'Running updater ...', PHP_EOL;
+$cmd  = '';
 $cmd .= 'cd ' . $path_dir_updater . DIR_SEP . ' && ';
 $cmd .= 'echo -n "Current dir is: " && ';
-$cmd .= 'pwd && ';
-$cmd .= 'echo -n "Current user is: " &&';
-$cmd .= 'whoami && ';
-$cmd .= 'echo \'Current env are: \' && ';
-$cmd .= 'env && ';
-$cmd .= "/bin/php {$path_file_updater} 2>&1";
-
-echo "\t", '- Path updater  : ', $path_file_updater, PHP_EOL;
-echo "\t", '- Command to run: ', $cmd, PHP_EOL, PHP_EOL;
-
-@ob_flush();
-@flush();
-
+$cmd .= "/bin/php {$path_file_updater}";
 echo runCmd($cmd), PHP_EOL, PHP_EOL;
 
+dieMsg('Done');
 
 /* ============================================================== [Functions] */
 
@@ -55,8 +57,9 @@ function dieMsg($string)
     die;
 }
 
-function runCmd($cmd, $return = true)
+function runCmd($cmd, $return = DO_NOT_ECHO)
 {
+    $cmd    = 'export TERM=xterm && ' . $cmd;
     $result = `$cmd 2>&1`;
 
     @ob_flush();
