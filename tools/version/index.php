@@ -1,10 +1,15 @@
 <?php
+
+/* ============================================================= [Initialize] */
+
 header("X-Robots-Tag: noindex, nofollow");
 
 $cmd = 'export GOPATH=$HOME/go';
 echo `$cmd`;
 
 $lists = array();
+
+/* =============================================================== [Settings] */
 
 $lists['language'] = [
     'PHP5' => [
@@ -54,7 +59,7 @@ $lists['program'] = [
     'pip' => [
         'version' => 'pip --version',
         ],
-    'pip package' => [
+    'pip package installed' => [
         'version' => 'pip list',
         ],
     'Python package' => [
@@ -85,6 +90,8 @@ $lists['program'] = [
         "Version list of installed package" => 'yum list installed',
     ],
 ];
+
+/* =================================================================== [Main] */
 
 $key  = isset($_GET['key'])  ? $_GET['key']  : '';
 $type = isset($_GET['type']) ? $_GET['type'] : '';
@@ -134,6 +141,10 @@ echo_eol('</ul>');
 echo_eol('</body>');
 echo_eol('</html>');
 
+/* ============================================================== [Functions] */
+
+/* ---------------------------------------------------------------------- [C] */
+
 function create_link($id_key)
 {
     $id_key = (string) $id_key;
@@ -141,6 +152,8 @@ function create_link($id_key)
 
     return "?key=${id_key}";
 }
+
+/* ---------------------------------------------------------------------- [E] */
 
 function echo_eol($string)
 {
@@ -169,6 +182,8 @@ function echo_version($array)
         echo_eol("${title}: ${cmd_result}");
     }
 }
+
+/* ---------------------------------------------------------------------- [I] */
 
 function indent($string)
 {
