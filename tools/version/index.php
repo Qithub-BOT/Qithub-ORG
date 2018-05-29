@@ -53,11 +53,17 @@ $lists['program'] = [
     'MeCab dictionary info' => [
         'MeCab Directory info' => 'mecab --dictionary-info',
         ],
-    'mecab-config dictionary path' => [
-        'MeCab Directory info' => 'mecab-config --dicdir',
+    'MeCab-config' => [
+        'version' => 'mecab-config --dicdir',
         ],
-    'mecab-config dictionary list' => [
-        'MeCab Directory info' => 'ls -la $(echo `mecab-config --dicdir`)',
+    'MeCab-config dictionary path' => [
+        'dictionary path' => 'mecab-config --dicdir',
+        ],
+    'MeCab-config dictionaries list' => [
+        'List of MeCab dictionaries list' => 'mecab-config --dicdir && ls -la $(echo `mecab-config --dicdir`)',
+        ],
+    'MeCab-ipadic-NEologd' => [
+        'Path of mecab-ipadic-NEologd' => 'echo `mecab-config --dicdir`"/mecab-ipadic-neologd"',
         ],
     'npm' => [
         'version' => 'npm --version',
