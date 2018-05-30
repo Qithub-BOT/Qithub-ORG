@@ -69,8 +69,8 @@ function indent($string, $level = 1)
         if ($isSingleLine) {
             $result = "\t" . $result;
         } else {
-            $result = '';
             $array  = explode(PHP_EOL, $result);
+            $result = '';
             foreach ($array as $line) {
                 $result .= "\t" . $line . PHP_EOL;
             }
