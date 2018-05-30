@@ -34,9 +34,9 @@ echo indent('Updating web site from Origin ...'), PHP_EOL;
 // Show path
 echo indent('- Path updater: '), $path_file_updater, PHP_EOL;
 // Show whoami
-echo indent('- whoami: '), runCmd('whoami'), PHP_EOL;
+echo indent('- whoami: '), runCmd('whoami');
 // Show server envs
-echo indent('Current envs are:'), PHP_EOL;
+echo indent('- Current envs are:'), PHP_EOL;
 echo indent(runCmd('env'), 2), PHP_EOL;
 // Show update command
 $cmd  = '';
@@ -70,7 +70,6 @@ function indent($string, $level = 1)
             $result = "\t" . $result;
         } else {
             $array  = explode(PHP_EOL, $result);
-            $result = PHP_EOL;
             foreach ($array as $line) {
                 $result .= "\t" . $line . PHP_EOL;
             }
