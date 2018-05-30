@@ -14,7 +14,7 @@ $name_file_updater = 'clone_repo.php';
 $name_dir_parent   = '..';
 $path_dir_root     = $_SERVER['DOCUMENT_ROOT'];
 
-if(empty($path_dir_root)){
+if (empty($path_dir_root)) {
     echo '❌ Error: ';
     die('Run it via Web server' . PHP_EOL);
 }
@@ -22,29 +22,32 @@ $path_dir_updater  = $path_dir_root . DIR_SEP . $name_dir_parent . DIR_SEP;
 $path_file_updater = $path_dir_updater . DIR_SEP . $name_file_updater;
 $path_file_updater = realpath($path_file_updater);
 
-if(! file_exists($path_file_updater)){
+if (! file_exists($path_file_updater)) {
     dieMsg('Not found:', $path_file_updater);
 }
 
 $path_dir_updater = dirname($path_file_updater);
 
 echo '✅ Updater found.', PHP_EOL;
-echo "\t", 'Updating web site from Origin ...', PHP_EOL;
-echo "\t", '- Path updater  : ', $path_file_updater, PHP_EOL;
+echo indent('Updating web site from Origin ...'), PHP_EOL;
 
+// Show path
+echo indent('- Path updater: '), $path_file_updater, PHP_EOL;
 // Show whoami
-echo "\t", '- whoami: ', runCmd('whoami'), PHP_EOL;
-
+echo indent('- whoami: '), runCmd('whoami'), PHP_EOL;
 // Show server envs
-echo "Current envs are:", PHP_EOL;
-echo runCmd('env'), PHP_EOL;
-
-// Run updater
-echo 'Running updater ...', PHP_EOL;
+echo indent('Current envs are:'), PHP_EOL;
+echo indent(indent(runCmd('env'))), PHP_EOL;
+// Show update command
 $cmd  = '';
 $cmd .= 'cd ' . $path_dir_updater . DIR_SEP . ' && ';
 $cmd .= 'echo -n "Current dir is: " && ';
+$cmd .= 'pwd &&';
 $cmd .= "/bin/php {$path_file_updater}";
+echo indent('- Command to run:'), $cmd, PHP_EOL;
+
+// Run updater
+echo 'Running updater ...', PHP_EOL;
 echo runCmd($cmd), PHP_EOL, PHP_EOL;
 
 dieMsg('Done');
@@ -57,6 +60,20 @@ function dieMsg($string)
     die;
 }
 
+function indent($string)
+{
+    $result = trim((string) $string);
+    if (0 < mb_substr_count($result, PHP_EOL)) {
+        $array  = explode(PHP_EOL, $result);
+        $result = PHP_EOL;
+        foreach ($array as $line) {
+            $result .= "\t" . $line . PHP_EOL;
+        }
+        return $result;
+    }
+    return $result;
+}
+
 function runCmd($cmd, $return = DO_NOT_ECHO)
 {
     $cmd    = 'export TERM=xterm && ' . $cmd;
@@ -64,12 +81,10 @@ function runCmd($cmd, $return = DO_NOT_ECHO)
 
     @ob_flush();
     @flush();
-    
-    if($return){
+
+    if ($return) {
         return $result;
     }
-    
+
     echo $result;
 }
-
-
