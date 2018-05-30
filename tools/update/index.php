@@ -48,7 +48,7 @@ echo indent('- Command to run:'), $cmd, PHP_EOL;
 
 // Run updater
 echo 'Running updater ...', PHP_EOL;
-echo runCmd($cmd), PHP_EOL, PHP_EOL;
+echo str_replace('[3;J[H[2J', '[clear screen]', runCmd($cmd)), PHP_EOL;
 
 dieMsg('Done');
 
