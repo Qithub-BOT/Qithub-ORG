@@ -37,7 +37,7 @@ echo indent('- Path updater: '), $path_file_updater, PHP_EOL;
 echo indent('- whoami: '), runCmd('whoami');
 // Show server envs
 echo indent('- Current envs are:'), PHP_EOL;
-echo indent(runCmd('env'), 2), PHP_EOL;
+echo indent(runCmd('env'), 2);
 // Show update command
 $cmd  = '';
 $cmd .= 'cd ' . $path_dir_updater . DIR_SEP . ' && ';
