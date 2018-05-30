@@ -63,7 +63,7 @@ function dieMsg($string)
 function indent($string, $level = 1)
 {
     $result       = trim((string) $string);
-    $isSingleLine = (0 < mb_substr_count($result, PHP_EOL));
+    $isSingleLine = ! ( 0 < mb_substr_count($result, PHP_EOL) );
 
     for ($i=0; $i<$level; $i++) {
         if ($isSingleLine) {
