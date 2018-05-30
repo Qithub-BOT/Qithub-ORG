@@ -37,7 +37,7 @@ echo indent('- Path updater: '), $path_file_updater, PHP_EOL;
 echo indent('- whoami: '), runCmd('whoami'), PHP_EOL;
 // Show server envs
 echo indent('Current envs are:'), PHP_EOL;
-echo indent(indent(runCmd('env'))), PHP_EOL;
+echo indent(runCmd('env'), 2), PHP_EOL;
 // Show update command
 $cmd  = '';
 $cmd .= 'cd ' . $path_dir_updater . DIR_SEP . ' && ';
@@ -60,17 +60,23 @@ function dieMsg($string)
     die;
 }
 
-function indent($string)
+function indent($string, $level = 1)
 {
-    $result = trim((string) $string);
-    if (0 < mb_substr_count($result, PHP_EOL)) {
-        $array  = explode(PHP_EOL, $result);
-        $result = PHP_EOL;
-        foreach ($array as $line) {
-            $result .= "\t" . $line . PHP_EOL;
+    $result       = trim((string) $string);
+    $isSingleLine = (0 < mb_substr_count($result, PHP_EOL));
+
+    for ($i=0; $i<$level; $i++) {
+        if ($isSingleLine) {
+            $result = "\t" . $result;
+        } else {
+            $array  = explode(PHP_EOL, $result);
+            $result = PHP_EOL;
+            foreach ($array as $line) {
+                $result .= "\t" . $line . PHP_EOL;
+            }
         }
-        return $result;
     }
+
     return $result;
 }
 
