@@ -67,12 +67,14 @@ $os     = runCmd('cat /etc/redhat-release');
 $path   = runCmd('echo $PATH');
 $whoami = runCmd('whoami');
 $df     = runCmd('df -h');
+$env    = runCmd('printenv');
 
 echo_eol('<ul>');
 echo_eol("<li>OS = {$os}</li>");
 echo_eol("<li>PATH = {$path}</li>");
 echo_eol("<li>WHOAMI = {$whoami}</li>");
 echo_eol("<li>Diskspace(df) = <pre>{$df}</pre></li>");
+echo_eol("<li>環境変数一覧<ul><li><pre>{$env}</pre></li></ul></li>");
 echo_eol('</ul>');
 
 // end.body.html
