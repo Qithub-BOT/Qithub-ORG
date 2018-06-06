@@ -42,6 +42,10 @@ $lists['language'] = [
         'path'    => 'which ruby',
         'version' => 'ruby -v',
         ],
+    'Perl' => [
+        'path'    => 'which perl',
+        'version' => 'perl -V',
+        ],
 ];
 
 $lists['program'] = [
@@ -71,6 +75,9 @@ $lists['program'] = [
     ],
     'npm package' => [
         'version' => 'npm ls -g',
+    ],
+    'Perl module' => [
+        'Perl module list' => 'find `perl -e \'print "@INC"\'` -name \'*.pm\' -print',
     ],
     'pip' => [
         'version' => 'pip --version',
