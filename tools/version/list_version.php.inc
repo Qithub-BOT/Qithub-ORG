@@ -63,6 +63,9 @@ $lists['program'] = [
     'MeCab-ipadic-NEologd' => [
         'Path of mecab-ipadic-NEologd' => 'echo `mecab-config --dicdir`"/mecab-ipadic-neologd"',
     ],
+    'Composer' => [
+        'version' => 'composer --version',
+    ],
     'npm' => [
         'version' => 'npm --version',
     ],
