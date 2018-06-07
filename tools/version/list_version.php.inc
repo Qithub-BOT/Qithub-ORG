@@ -49,6 +49,10 @@ $lists['language'] = [
 ];
 
 $lists['program'] = [
+    'Word2Vec' => [
+        'path'    => 'which word2vec',
+        'version' => 'word2vec',
+    ],
     'MeCab' => [
         'version' => 'mecab --version',
     ],
@@ -58,10 +62,8 @@ $lists['program'] = [
     'MeCab-config' => [
         'version' => 'mecab-config --version',
     ],
-    'MeCab-config dictionary path' => [
+    'MeCab-config dictionary info' => [
         'dictionary path' => 'mecab-config --dicdir',
-    ],
-    'MeCab-config dictionaries list' => [
         'List of MeCab dictionaries list' => 'mecab-config --dicdir && ls -la $(echo `mecab-config --dicdir`)',
     ],
     'MeCab-ipadic-NEologd' => [
@@ -83,10 +85,10 @@ $lists['program'] = [
         'version' => 'pip --version',
     ],
     'pip package installed' => [
-        'version' => 'pip list',
+        'List of pip packages' => 'pip list',
     ],
-    'Python package' => [
-        'list of Python package' => 'pip freeze',
+    'Python package installed' => [
+        'list of Python packages' => 'pip freeze',
     ],
     'phpinfo() - PHP5 cli' => [
         'info PHP5' => 'php -r \'phpinfo();\'',
@@ -106,7 +108,7 @@ $lists['program'] = [
     'yum' => [
         "version" => 'yum --version',
     ],
-    'yum package' => [
-        "Version list of installed package" => 'yum list installed',
+    'yum package installed' => [
+        "List of yum packages installed" => 'yum list installed',
     ],
 ];
