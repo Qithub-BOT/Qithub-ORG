@@ -26,13 +26,13 @@ GitHub/Git 初心者であったり PR の仕方やルールなど、**何か不
 
 ### 部室
 
-- 部室 @ Discrod （準備中） ※
+- [部室_qithub @ Qiitadon酒場hidao店](https://discordapp.com/invite/kRVsy4A) @ Discrod ※
 
 ### 溜まり場
 
 - [溜まり場 @ Qiitadon酒場hidao店](https://discordapp.com/invite/aPF23CN) @ Discord ※
 
-※ `Discord` はチャット・ルームです。ゲスト・カウント（ユーザ登録不要）で入場できます。入場の際、Qiitadon と同じアカウント名にしてもらうとわかりやすくて助かります。
+※ `Discord` はチャット・ルームです。ゲスト・カウント（ユーザ登録不要）で入場できます。入場の際、ニックネームは Qiitadon と同じアカウント名にしてもらうとわかりやすくて助かります。
 
 ### 遊び場
 
