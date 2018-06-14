@@ -2,29 +2,52 @@
 
 ## Qithub とは
 
-Qiita と Qiitadon をこよなく愛する同人サークルです。 （@ GitHub Organization）
+「Qithub」は [Qiita](https://qiita.com/) と [Qiitadon](https://qiitadon.com/) をこよなく愛する同人サークルです。以下の条件に合えば誰でも参加できます。
 
-新しいプログラム言語の写経をはじめ含め、GitHub でコラボレーションをしながら **Qiita ユーザ間の支援するための[楽しそうなこと](https://github.com/Qithub-BOT/Qithub-ORG/issues/14)を語るサークル** です。
-
-- [部室（溜まり場）@ Qiitadon酒場](https://discord.gg/zDXJhd) @ Discord （ゲスト・ログイン可能、要 Qiita もしくは Qiitadon ユーザ）
+- Qiita もしくは Qiitadon ユーザである。
+- Qiita もしくは Qiitadon がもっと楽しくなることがしたい。
+- なんか[楽しそうなこと](https://github.com/Qithub-BOT/Qithub-ORG/issues/14)を語りたい／やりたい。
+- GitHub でコラボしたいが、怖くてできない。
+- 仕事とは関係なく**趣味**でプログラミングしたいし、写経／乱取りなんだから小煩いことを言われたくない。
 
 ## このリポジトリについて
 
-このリポジトリは Qithub の「とりまとめ」用のリポジトリです。他のリポジトリの issue などもここで一括管理しています。
+このリポジトリは **Qithub サークルの「遊び場」および「とりまとめ」用のリポジトリ**です。[他のリポジトリ](https://github.com/Qithub-BOT)の issue などもここで一括管理しています。
 
-また、このリポジトリの内容は https://qithub.tk/ に反映されます。
+## 部員はどこにいるの？
+
+実際にどこに居るかはわかりませんが、 Qiitadon や Qiitadon酒場 でたむろっています。
+
+## 入部方法
+
+**Qiita/Qiitadon ユーザであれば特に手続きはありません**。どんどん [issue](https://github.com/Qithub-BOT/Qithub-ORG/issues) をあげたりリポジトリを `clone` して PR （プルリク, Pull Request）してください。
+
+GitHub/Git 初心者であったり PR の仕方やルールなど、**何か不安がある場合は遠慮なく下記の部室や溜まり場で聞いて**ください。
+
+### 部室
+
+- 部室 @ Discrod （準備中） ※
+
+### 溜まり場
+
+- [溜まり場 @ Qiitadon酒場hidao店](https://discordapp.com/invite/aPF23CN) @ Discord ※
+
+※ `Discord` はチャット・ルームです。ゲスト・カウント（ユーザ登録不要）で入場できます。入場の際、Qiitadon と同じアカウント名にしてもらうとわかりやすくて助かります。
+
+### 遊び場
+
+- [遊び場 @ https://qithub.tk/](https://qithub.tk)
+
+上記 URL のサーバが Qithub サークルの遊び場です。[このリポジトリ](https://github.com/Qithub-BOT/Qithub-ORG)の内容が https://qithub.tk/ に反映されるようになっています。そのため PR をあげてマージされると Web サーバに反映されます。
+
+また、**このサーバは Qiita/Qiitadon ユーザが使うことを目的としています**ので一般ユーザ向けのサーバではないことにご留意ください。（一般向けにスピンオフする可能性はあります）
+
+
+## メンテナについて
+
+基本的に PR のチェックなどはサークルのメンバー全員で まったり と行なっていますが、リポジトリやサーバのメンテナンスは以下のメンバーで行なっています。
+
+「なんか手伝ってもいいよー」という方は、Qiitadon や Qiitadon酒場でお声がけくださーい。
 
 - [メンテナ一覧](https://github.com/orgs/Qithub-BOT/people)
-
-## Organization に入らないと参加できない？
-
-そんなことはありません。どんどん [issue](https://github.com/Qithub-BOT/Qithub-ORG/issues) をあげたりリポジトリを `clone` して PR してください。
-
-## Qiita ユーザーではないのですが
-
-申し訳ありません。この Organization は **Qiita と Qiitadon ファン専用**となっております。最低限、Qiita のアカウントをお持ちいただく必要があります。
-
-## メンバーはどこにいるの？
-
-実際にどこに居るかはわかりませんが、[Qiitadon](https://qiitadon.com) や [Discord](https://qiitadon.com/web/statuses/99552743138606410) でたむろっています。
 
