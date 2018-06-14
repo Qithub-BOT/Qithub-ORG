@@ -40,7 +40,7 @@ Qiitadon酒場は 24h/7d オープンのオンライン酒場です。Qiitadon �
 
 ### 遊び場
 
-- [遊び場 @ https://qithub.tk/](https://qithub.tk)
+<img src="https://raw.githubusercontent.com/Qithub-BOT/Qithub-ORG/master/images/Icon_Qiitime/Qiitime_512x512.png" width=80 align=left> [遊び場 @ https://qithub.tk/](https://qithub.tk)
 
 上記 URL のサーバが Qithub サークルの遊び場です。[このリポジトリ](https://github.com/Qithub-BOT/Qithub-ORG)の内容が https://qithub.tk/ に反映されるようになっています。そのため PR をあげてマージされると Web サーバに反映されます。
 
