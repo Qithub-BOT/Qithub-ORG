@@ -1,7 +1,7 @@
 <?php
 
 include_once('vendor/autoload.php');
-include_once('includes/functions.php.inc');
+include_once('.includes/functions.php.inc');
 
 use PHPUnit\Framework\TestCase;
 
