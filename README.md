@@ -26,11 +26,15 @@ GitHub/Git 初心者であったり PR の仕方やルールなど、**何か不
 
 ### 部室
 
-- [部室_qithub @ Qiitadon酒場hidao店](https://discordapp.com/invite/kRVsy4A) @ Discrod ※
+<img src="https://github.com/Qithub-BOT/Qithub-ORG/blob/master/images/Icon_Qithub/Qithub_500x500.png" width=80 align=left>  [部室_qithub @ Qiitadon酒場hidao店](https://discordapp.com/invite/kRVsy4A) @ Discrod ※
+
+下記 Qiitadon酒場hidao店の１室（チャンネル）を借りて部室にしています。
 
 ### 溜まり場
 
-- [溜まり場 @ Qiitadon酒場hidao店](https://discordapp.com/invite/aPF23CN) @ Discord ※
+<img src="https://raw.githubusercontent.com/Qithub-BOT/Qithub-ORG/master/images/Icon_QiitadonBar/QiitadonBar-v2_512x512.png" width=80 align=left> [溜まり場 @ Qiitadon酒場hidao店](https://discordapp.com/invite/aPF23CN) @ Discord ※
+
+Qiitadon酒場は 24h/7d オープンのオンライン酒場です。Qiitadon とは違った雰囲気でドリンク・食べ物持参で、まったりとチャットしています。たまにライブ配信もしています。
 
 ※ `Discord` はチャット・ルームです。ゲスト・カウント（ユーザ登録不要）で入場できます。入場の際、ニックネームは Qiitadon と同じアカウント名にしてもらうとわかりやすくて助かります。
 
