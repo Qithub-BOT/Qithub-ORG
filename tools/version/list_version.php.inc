@@ -102,9 +102,6 @@ $lists['program'] = [
     'Git' => [
         'version' => 'git --version',
     ],
-    'Kusanagi' => [
-        'version' => 'kusanagi --version',
-    ],
     'ls' => [
         'version' => 'ls -la /backup',
     ],
