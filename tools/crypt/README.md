@@ -23,6 +23,7 @@ $ ./enc.sh <github user> <input file> [<output file>]
 
 - [ソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/enc.sh.txt)
 - [ソースをダウンロード](https://qithub.tk/tools/crypt/?type=enc)
+- [Checksum (SHA512)](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/enc.sh.sig)
 
 ### 復号スクリプト（`dec.sh`）
 
@@ -42,6 +43,7 @@ $ ./dec.sh <secret key> <input file> <output file>
 
 - [ソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/dec.sh.txt)
 - [ソースをダウンロード](https://qithub.tk/tools/crypt/?type=dec)
+- [Checksum (SHA512)](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/dec.sh.sig)
 
 ### 動作テスト・スクリプト（`check.sh`）
 
@@ -61,6 +63,7 @@ $ ./check.sh <github user> <secret key>
 
 - [ソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/check.sh.txt)
 - [ソースをダウンロード](https://qithub.tk/tools/crypt/?type=check)
+- [Checksum (SHA512)](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/check.sh.sig)
 
 ## 注意
 
