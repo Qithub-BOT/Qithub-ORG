@@ -13,8 +13,8 @@ if(! empty($type)){
 
     header('Content-Type: text/plain');
 
-    $name_file_local    = $type . ".sh.txt";
-    $name_file_download = $type . ".sh";
+    $name_file_local    = $type . ".sh";
+    $name_file_download = $type;
 
     if(! file_exists($name_file_local)){
         die('File not found.');

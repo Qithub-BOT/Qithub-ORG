@@ -8,7 +8,7 @@
 ### 暗号化スクリプト（`enc.sh`）
 
 ```bash
-$ ./enc.sh KEINOS ./himitsu.txt
+$ ./enc KEINOS ./himitsu.txt
 ```
 
 上記コマンドは [`@KEINOS@GitHub` の公開鍵一覧](https://github.com/KEINOS.keys)から一番最初の公開鍵を使い `himitsu.txt` を暗号化し `himitsu.txt.enc` ファイルを作成します。
@@ -16,19 +16,19 @@ $ ./enc.sh KEINOS ./himitsu.txt
 #### 構文
 
 ```bash
-$ ./enc.sh <github user> <input file> [<output file>]
+$ ./enc <github user> <input file> [<output file>]
 ```
 
 #### ソース
 
-- [ソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/enc.sh.txt)
-- [ソースをダウンロード](https://qithub.tk/tools/crypt/?type=enc)
+- [`enc.sh` のソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/enc.sh.txt)
+- [`enc.sh` のダウンロード](https://qithub.tk/tools/crypt/?type=enc)
 - [Checksum (SHA512)](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/enc.sh.sig)
 
 ### 復号スクリプト（`dec.sh`）
 
 ```bash
-$ ./dec.sh ../.ssh/id_rsa ./himitsu.txt.enc ./himitsu.txt
+$ ./dec ../.ssh/id_rsa ./himitsu.txt.enc ./himitsu.txt
 ```
 
 上記コマンドはローカルの秘密鍵（`id_rsa`）で `himitsu.txt` を暗号化し `himitsu.txt.enc` ファイルを作成します。
@@ -36,19 +36,19 @@ $ ./dec.sh ../.ssh/id_rsa ./himitsu.txt.enc ./himitsu.txt
 #### 構文
 
 ```bash
-$ ./dec.sh <secret key> <input file> <output file>
+$ ./dec <secret key> <input file> <output file>
 ```
 
 #### ソース
 
-- [ソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/dec.sh.txt)
-- [ソースをダウンロード](https://qithub.tk/tools/crypt/?type=dec)
+- [`dec.sh` のソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/dec.sh.txt)
+- [`dec.sh` のダウンロード](https://qithub.tk/tools/crypt/?type=dec)
 - [Checksum (SHA512)](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/dec.sh.sig)
 
 ### 動作テスト・スクリプト（`check.sh`）
 
 ```bash
-$ ./check.sh KEINOS ../.ssh/id_rsa
+$ ./check KEINOS ../.ssh/id_rsa
 ```
 
 上記コマンドはカレント・ディレクトリにダミー・ファイルを作成し暗号化・復号と比較のチェックを行います。
@@ -60,13 +60,13 @@ $ ./check.sh KEINOS ../.ssh/id_rsa
 #### 構文
 
 ```bash
-$ ./check.sh <github user> <secret key>
+$ ./check <github user> <secret key>
 ```
 
 #### ソース
 
-- [ソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/check.sh.txt)
-- [ソースをダウンロード](https://qithub.tk/tools/crypt/?type=check)
+- [`check.sh` のソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/check.sh.txt)
+- [`check.sh` のダウンロード](https://qithub.tk/tools/crypt/?type=check)
 - [Checksum (SHA512)](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/check.sh.sig)
 
 ## 注意
