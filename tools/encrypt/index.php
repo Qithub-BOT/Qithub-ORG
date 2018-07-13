@@ -1,5 +1,11 @@
 <?php
 
+if(file_exists('../../.includes/Parsedown.php.inc')){
+    echo 'OK', PHP_EOL;
+}
+
+die;
+
 /* ============================================================= [Initialize] */
 
 header("X-Robots-Tag: noindex, nofollow");
