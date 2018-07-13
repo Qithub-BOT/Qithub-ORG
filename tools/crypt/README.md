@@ -11,7 +11,7 @@
 $ ./enc.sh KEINOS ./himitsu.txt
 ```
 
-上記コマンドは [`@KEINOS@GitHub` の公開鍵](https://github.com/KEINOS.keys)で `himitsu.txt` を暗号化し `himitsu.txt.enc` ファイルを作成します。
+上記コマンドは [`@KEINOS@GitHub` の公開鍵一覧](https://github.com/KEINOS.keys)から一番最初の公開鍵を使い `himitsu.txt` を暗号化し `himitsu.txt.enc` ファイルを作成します。
 
 #### 構文
 
@@ -51,7 +51,11 @@ $ ./dec.sh <secret key> <input file> <output file>
 $ ./check.sh KEINOS ../.ssh/id_rsa
 ```
 
-上記コマンドはカレント・ディレクトリにダミー・ファイルを作成し暗号化・復号と比較のチェックを行います。指定したユーザと
+上記コマンドはカレント・ディレクトリにダミー・ファイルを作成し暗号化・復号と比較のチェックを行います。
+
+第１引数のユーザ名は自分の GitHub アカウント、第２引数は公開鍵とペアの秘密鍵のパスを指定してください。
+
+暗号化で使われる公開鍵は指定ユーザの公開鍵一覧（`https://github.com/<github user>.keys`）で表示される一番上の公開鍵が使われます。
 
 #### 構文
 
