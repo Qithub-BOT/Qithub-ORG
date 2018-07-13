@@ -38,10 +38,12 @@ $body      = $Parsedown->text(file_get_contents('README.md'));
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
 	<meta name="robots" content="noindex">
 	<title>暗号化・復号スクリプト - Qithub.tk</title>
+	<link href="/css/github-markdown.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body class="markdown-body">
 <?=$body; ?>
 </body>
 </html>
