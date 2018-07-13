@@ -1,11 +1,5 @@
 <?php
 
-if(file_exists('../../.includes/Parsedown.php.inc')){
-    echo 'OK', PHP_EOL;
-}
-
-die;
-
 /* ============================================================= [Initialize] */
 
 header("X-Robots-Tag: noindex, nofollow");
@@ -35,7 +29,7 @@ if(! empty($type)){
 
 /* =========================================================== [Default Page] */
 
-include('../../../.includes/Parsedown.php.inc');
+include('../../.includes/Parsedown.php.inc');
 
 $Parsedown = new Parsedown();
 $body      = $Parsedown->text(file_get_contents('README.md'));
