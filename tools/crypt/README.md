@@ -21,7 +21,7 @@ $ ./enc.sh <github user> <input file> [<output file>]
 
 #### ソース
 
-- [ソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/encrypt/enc.sh.txt)
+- [ソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/enc.sh.txt)
 - [ソースをダウンロード](https://qithub.tk/tools/crypt/?type=enc)
 
 ### 復号スクリプト（`dec.sh`）
@@ -40,7 +40,7 @@ $ ./dec.sh <secret key> <input file> <output file>
 
 #### ソース
 
-- [ソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/encrypt/dec.sh.txt)
+- [ソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/dec.sh.txt)
 - [ソースをダウンロード](https://qithub.tk/tools/crypt/?type=dec)
 
 ### 動作テスト・スクリプト（`check.sh`）
@@ -59,7 +59,7 @@ $ ./check.sh <github user> <secret key>
 
 #### ソース
 
-- [ソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/encrypt/check.sh.txt)
+- [ソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/check.sh.txt)
 - [ソースをダウンロード](https://qithub.tk/tools/crypt/?type=check)
 
 ## 注意
