@@ -7,7 +7,7 @@ $list_name_file = [
 ];
 
 foreach($list_name_file as $name_file){
-    $name_file_original = "{$name_file}.sh.txt";
+    $name_file_original = "{$name_file}.sh";
     $name_file_signed   = "{$name_file}.sh.sig";
 
     echo 'Creating signature file: ', $name_file , ' ... ';
