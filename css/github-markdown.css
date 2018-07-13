@@ -18,6 +18,7 @@
   font-size: 16px;
   line-height: 1.5;
   word-wrap: break-word;
+  padding: 1em;
 }
 
 .markdown-body .pl-c {
@@ -508,7 +509,9 @@
 }
 
 .markdown-body h3 {
+  padding-left: 0.3em;
   font-size: 1.25em;
+  border-left: 0.5em solid #eaecef;
 }
 
 .markdown-body h4 {
