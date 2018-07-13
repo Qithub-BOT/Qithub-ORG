@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+# 軽量ファイルの復号スクリプト (UTF-8)
+# ====================================
+#
+# GitHub 上で公開されている（https://github.com/<user name>.keys で取得できる）
+# 自身の RSA 公開鍵を使って暗号化されたファイルを復号/平文化します。
+#
+# - 使い方の例：
+#   以下のコマンドで復号された'himitsu.txt' が作成されます。
+#       $ ./dec.sh ../.ssh/id_rsa himitsu.txt.enc himitsu.txt
+#
+# - 注意：利用前にスクリプトに実行権限を与えるのを忘れないでください。
+#
+
+# ヘルプ表示
+# ----------
+if [[ $# < 3 ]]; then
+  echo
+  echo "使い方: $0 <id_rsa> <input file> <output file>"
+  echo
+  echo "- <id_rsa>      : GitHub で公開している公開鍵のペアとなる秘密鍵のパス"
+  echo "- <input file>  : 暗号化されたファイルのパス"
+  echo "- <output file> : 復号/平文化されるファイルのパス"
+  echo
+  exit 1
+fi
+
+cd `dirname $0`
+clear
+
+# コマンド引数取得
+# ----------------
+SECRETKEY=$1
+INPUTFILE=$2
+OUTPUTFILE=$3
+
+
+# テキストへ復号
+# --------------
+# 参考URL ： https://qiita.com/kunichiko/items/3c0b1a2915e9dacbd4c1
+echo -n "ファイルを復号しています ... "
+openssl rsautl -decrypt -inkey $SECRETKEY -in $INPUTFILE -out $OUTPUTFILE
+
+if [[ $? != 0 ]]; then
+  echo "NG：復号中にエラーが発生しました。以下の内容が考えられます。"
+  echo " - 暗号ファイルが渡されていない"
+  echo " - 暗号化に使われた公開鍵と違うペアの秘密鍵を使っている"
+  echo " - 1 ブロック以上のデータ（長すぎる暗号データ）を復号している"
+  echo "[注意]:"
+  echo "GitHub で公開されている公開鍵のうち 1 番上の公開鍵のペアの秘密鍵を使っているか確認してください。'check.sh'スクリプトで動作確認をおすすめします。"
+  exit 1
+fi
+echo "OK"
+
+
+# 終了表示
+# --------
+echo
+echo "ファイルを復号しました。"
+echo "復号済みファイル： ${OUTPUTFILE}"
+echo

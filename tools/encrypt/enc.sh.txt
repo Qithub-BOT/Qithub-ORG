@@ -1,0 +1,133 @@
+#!/usr/bin/env bash
+
+# 軽量ファイルの暗号化スクリプト (UTF-8)
+# ======================================
+#
+# GitHub 上で公開されている（https://github.com/<user name>.keys で取得できる）
+# 相手の RSA 公開鍵を使って小さなファイルを暗号化します。
+#
+# - 使い方の例：
+#   以下のコマンドで暗号化された'himitsu.txt.enc' が作成されます。
+#       $ ./enc.sh KEINOS ./himitsu.txt
+#
+# - 注意：利用前にスクリプトに実行権限を与えるのを忘れないでください。
+#
+
+# ヘルプ表示
+# ----------
+if [[ $# < 2 ]]; then
+  echo
+  echo "使い方: $0 <github user> <input file> [<output file>]"
+  echo
+  echo "- <github user> : 相手の GitHub アカウント名"
+  echo "- <input file>  : 暗号化したいファイルのパス"
+  echo "[オプション]"
+  echo "- <output file> : 暗号化されたファイルの出力先のパス"
+  echo "                  指定がない場合は <input_file>.enc として出力されます。"
+  echo "[注意]"
+  echo "- このスクリプトは 1 ブロックぶんのデータのみ暗号化できます。"
+  echo
+  exit 1
+fi
+
+cd `dirname $0`
+clear
+
+# コマンド引数取得
+# ----------------
+USERNAME=$1
+INPUTFILE=$2
+
+
+# 出力ファイル名設定
+# ------------------
+OUTPUTFILE=$2.enc
+if [[ $# == 3 ]]; then
+  OUTPUTFILE=$3
+fi
+
+
+# trap の設定
+# -----------
+# スクリプト終了後一時ファイルを削除します。
+# - 参考URL ： https://qiita.com/m-yamashita/items/889c116b92dc0bf4ea7d
+trap "rm -rf /tmp/$USERNAME.*" 0
+
+
+# 一時ファイル
+# ------------
+TMP=`md5 -q -s $RANDOM`
+PATHPUBKEY=/tmp/$USERNAME.$TMP.pub
+
+# RSA 公開鍵の取得
+# ----------------
+# ユーザの GitHub の公開鍵一覧の１行目を取得
+# - 取得先は： https://github.com/<user name>.keys
+# - 参考URL ： https://qiita.com/m0r1/items/af16c41475d493ab6774
+echo -n "${USERNAME} の GitHub 上の公開鍵を取得中 ... "
+
+curl -s https://github.com/$USERNAME.keys | head -n 1 > $PATHPUBKEY
+
+if [[ $? != 0 ]]; then
+  echo "NG：公開鍵を取得・保存できませんでした。"
+  exit 1
+fi
+echo "OK"
+
+
+# 公開鍵のフォーマット変換
+# ------------------------
+# - 参考URL ：
+#   - https://qiita.com/drobune/items/bf5d689eff7f69ed6866
+#   - https://qiita.com/connvoi_tyou/items/3e86b6b68c3f398b3244
+echo -n "RSA 形式の公開鍵を PKCS8 形式に変換中 ... "
+
+ssh-keygen -f $PATHPUBKEY -e -m pkcs8 > $PATHPUBKEY.pkcs8
+
+if [[ $? != 0 ]]; then
+  echo "NG：RSA -> PKCS8 変換中にエラーが発生しました。"
+  exit 1
+fi
+echo "OK"
+
+
+# テキストの暗号化
+# ----------------
+# このスクリプトは 1 ブロックで可能なデータ量のみ暗号化します。そのため長いテキ
+# ストは暗号化できません。
+# - 参考URL ： https://qiita.com/kunichiko/items/3c0b1a2915e9dacbd4c1
+# - RSA鍵のビット長 = 最大暗号化可能バイト数
+#        768 =   85
+#       1024 =  117
+#       2048 =  246
+#       4096 =  502
+#       8192 = 1018
+echo -n "公開鍵でファイルを暗号化中 ... "
+openssl rsautl -encrypt -pubin -inkey $PATHPUBKEY.pkcs8 -ssl -in $INPUTFILE -out $OUTPUTFILE
+
+if [[ $? != 0 ]]; then
+  echo "NG：暗号化に失敗しました。ファイルのサイズなど、エラー内容を確認ください。"
+  exit 1
+fi
+echo "OK"
+
+
+# 一時ファイルの削除
+# ------------------
+echo -n "一時ファイルの削除中 ... "
+rm $PATHPUBKEY
+rm $PATHPUBKEY.pkcs8
+
+if [[ $? != 0 ]]; then
+  echo "NG：一時ファイルの削除に失敗しました。 '/tmp/' ディレクトリ内を手動で削除してください。"
+  exit 1
+fi
+echo "OK"
+
+# 終了表示
+# --------
+echo
+echo "暗号化を完了しました。このファイルを相手に送ってください。"
+echo "暗号化済みファイル： ${OUTPUTFILE}"
+echo
+exit 0
