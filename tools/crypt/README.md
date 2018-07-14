@@ -1,9 +1,10 @@
 ## 軽量ファイルの暗号化・復号スクリプト
 
-**GitHub 上の公開鍵を使ってファイルを暗号化／復号するスクリプト**です。
+**GitHub 上の公開鍵を使ってファイルを暗号化／復号するシェル・スクリプト**です。
 
 サークル間のメンバーでセンシティブなファイルのやりとりにお使いください。
 
+---
 
 ### 暗号化スクリプト（`enc.sh`）
 
@@ -25,13 +26,15 @@ $ ./enc <github user> <input file> [<output file>]
 - [`enc.sh` のダウンロード](https://qithub.tk/tools/crypt/?type=enc)
 - [Checksum (SHA512)](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/enc.sh.sig)
 
+---
+
 ### 復号スクリプト（`dec.sh`）
 
 ```bash
 $ ./dec ../.ssh/id_rsa ./himitsu.txt.enc ./himitsu.txt
 ```
 
-上記コマンドはローカルの秘密鍵（`id_rsa`）で `himitsu.txt` を暗号化し `himitsu.txt.enc` ファイルを作成します。
+上記コマンドはローカルの秘密鍵（`id_rsa`）で `himitsu.txt.enc` を復号し `himitsu.txt` ファイルを復元します。
 
 #### 構文
 
@@ -44,6 +47,8 @@ $ ./dec <secret key> <input file> <output file>
 - [`dec.sh` のソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/dec.sh)
 - [`dec.sh` のダウンロード](https://qithub.tk/tools/crypt/?type=dec)
 - [Checksum (SHA512)](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/dec.sh.sig)
+
+---
 
 ### 動作テスト・スクリプト（`check.sh`）
 
@@ -68,6 +73,8 @@ $ ./check <github user> <secret key>
 - [`check.sh` のソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/check.sh)
 - [`check.sh` のダウンロード](https://qithub.tk/tools/crypt/?type=check)
 - [Checksum (SHA512)](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/check.sh.sig)
+
+---
 
 ## 注意
 
