@@ -8,7 +8,6 @@
 
 ## TL;DR
 
-
 ### 暗号化（Encrypt）
 
 GitHub ユーザに送る**ファイルの暗号化**の仕方。（以下は KEINOS 氏に送る場合）
@@ -22,7 +21,7 @@ $ ./enc KEINOS ./himitsu.txt
 自身の秘密鍵で届いた**暗号ファイルの復号**の仕方。（GitHub の公開鍵とペアの秘密鍵に限る）
 
 ```
-$ ./dec ../.ssh/id_rsa ./himitsu.txt.enc ./himitsu.txt
+$ ./dec ~/.ssh/id_rsa ./himitsu.txt.enc ./himitsu.txt
 ```
 
 ### 動作確認（Check）
@@ -30,7 +29,7 @@ $ ./dec ../.ssh/id_rsa ./himitsu.txt.enc ./himitsu.txt
 ローカルでダミーファイルの暗号化→復号を行い、**公開鍵と秘密鍵のペアの動作テスト**の仕方。（以下は KEINOS 氏がテストする場合）
 
 ```
-$ ./check KEINOS ../.ssh/id_rsa
+$ ./check KEINOS ~/.ssh/id_rsa
 ```
 
 ### 署名（Sign）（作成中）
@@ -38,7 +37,7 @@ $ ./check KEINOS ../.ssh/id_rsa
 自身の秘密鍵で**ファイルの署名**の仕方。（GitHub の公開鍵とペアの秘密鍵に限る）
 
 ```
-$ ./sign ../.ssh/id_rsa ./himitsu.txt
+$ ./sign ~/.ssh/id_rsa ./himitsu.txt
 ```
 
 ### 署名の確認（Verify）（作成中）
@@ -46,7 +45,7 @@ $ ./sign ../.ssh/id_rsa ./himitsu.txt
 署名者の GitHub 上の公開鍵による**ファイルの署名確認**の仕方。（GitHub の公開鍵とペアの秘密鍵に限る）
 
 ```
-$ ./verify KEINOS ./himitsu.txt.sig ./himitsu.txt
+$ ./verify KEINOS ./himitsu.txt.sha512 ./himitsu.txt
 ```
 
 ---
@@ -84,13 +83,13 @@ $ ./enc <github user> <input file> [<output file>]
 
 - [`enc.sh` のソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/enc.sh)
 - [`enc.sh` のダウンロード](https://qithub.tk/tools/crypt/?type=enc)
-- [チェックサム (SHA512)](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/enc.sh.sig)
+- [チェックサム (SHA512)](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/enc.sha512)
 
 ---
 
 ### 復号スクリプト（`dec.sh`）
 
-このスクリプトはローカルの秘密鍵（例：`.ssh/id_rsa`）を使い暗号ファイルを復号します。
+このスクリプトはローカルの秘密鍵（例：`~/.ssh/id_rsa`）を使い暗号ファイルを復号します。
 
 #### 構文
 
@@ -108,14 +107,13 @@ $ ./dec <private key> <input file> <output file>
 
 - [`dec.sh` のソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/dec.sh)
 - [`dec.sh` のダウンロード](https://qithub.tk/tools/crypt/?type=dec)
-- [チェックサム (SHA512)](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/dec.sh.sig)
+- [チェックサム (SHA512)](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/dec.sha512)
 
 ---
 
 ### 動作テスト・スクリプト（`check.sh`）
 
 このスクリプトはカレント・ディレクトリにダミー・ファイルを作成し暗号化・復号と比較のチェックを行います。
-
 
 #### 構文
 
@@ -131,7 +129,7 @@ $ ./check <github user> <private key>
 
 - [`check.sh` のソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/check.sh)
 - [`check.sh` のダウンロード](https://qithub.tk/tools/crypt/?type=check)
-- [チェックサム (SHA512)](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/check.sh.sig)
+- [チェックサム (SHA512)](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/check.sha512)
 
 ---
 
@@ -150,7 +148,7 @@ $ ./sign <private key> <input file> [<output file>]
 
 ##### オプション
 
-- `<output file>`：署名されたファイルの保存先のパス。指定されていない場合は、同階層に `<input file>.sig` と `.sig` 拡張子を追加して暗号化済みファイルが作成されます。
+- `<output file>`：署名されたファイルの保存先のパス。指定されていない場合は、同階層に `<input file>.sha512` と `.sha512` 拡張子を追加して暗号化済みファイルが作成されます。
 
 ##### 参考文献
 
