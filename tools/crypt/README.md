@@ -81,7 +81,7 @@ $ ./enc <github user> <input file> [<output file>]
 
 #### ソース
 
-- [`enc.sh` のソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/enc.sh)
+- [`enc.sh` のソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/enc)
 - [`enc.sh` のダウンロード](https://qithub.tk/tools/crypt/?type=enc)
 - [チェックサム (SHA512)](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/enc.sha512)
 
@@ -105,7 +105,7 @@ $ ./dec <private key> <input file> <output file>
 
 #### ソース
 
-- [`dec.sh` のソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/dec.sh)
+- [`dec.sh` のソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/dec)
 - [`dec.sh` のダウンロード](https://qithub.tk/tools/crypt/?type=dec)
 - [チェックサム (SHA512)](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/dec.sha512)
 
@@ -127,7 +127,7 @@ $ ./check <github user> <private key>
 
 #### ソース
 
-- [`check.sh` のソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/check.sh)
+- [`check.sh` のソースを見る](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/check)
 - [`check.sh` のダウンロード](https://qithub.tk/tools/crypt/?type=check)
 - [チェックサム (SHA512)](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/tools/crypt/check.sha512)
 
