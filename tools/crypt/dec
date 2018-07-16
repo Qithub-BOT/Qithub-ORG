@@ -8,7 +8,7 @@
 #
 # - 使い方の例：
 #   以下のコマンドで復号された'himitsu.txt' が作成されます。
-#       $ ./dec.sh ../.ssh/id_rsa himitsu.txt.enc himitsu.txt
+#       $ ./dec.sh ../.ssh/private key himitsu.txt.enc himitsu.txt
 #
 # - 注意：利用前にスクリプトに実行権限を与えるのを忘れないでください。
 #
@@ -17,9 +17,9 @@
 # ----------
 if [[ $# < 3 ]]; then
   echo
-  echo "使い方: $0 <id_rsa> <input file> <output file>"
+  echo "使い方: $0 <private key> <input file> <output file>"
   echo
-  echo "- <id_rsa>      : GitHub で公開している公開鍵のペアとなる秘密鍵のパス"
+  echo "- <private key> : GitHub で公開している公開鍵のペアとなる秘密鍵のパス"
   echo "- <input file>  : 暗号化されたファイルのパス"
   echo "- <output file> : 復号/平文化されるファイルのパス"
   echo
