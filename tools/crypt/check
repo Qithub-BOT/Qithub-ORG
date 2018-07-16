@@ -71,7 +71,7 @@ echo "OK"
 # サンプル・ファイルの暗号化
 # --------------------------
 echo -n "サンプル・ファイルを暗号化しています ... "
-RESULT=`./enc.sh ${USERNAME} ${PATHFILE} 2>$1`
+RESULT=`./enc ${USERNAME} ${PATHFILE} 2>$1`
 
 if [[ $? != 0 ]]; then
   echo "NG：サンプル・ファイルの暗号化に失敗しました。"
@@ -84,7 +84,7 @@ echo "OK"
 # サンプル・ファイルの復号
 # ------------------------
 echo -n "暗号ファイルを復号しています ... "
-RESULT=`./dec.sh ${SECRETKEY} ${PATHFILE}.enc ${PATHFILE}.dec 2>$1`
+RESULT=`./dec ${SECRETKEY} ${PATHFILE}.enc ${PATHFILE}.dec 2>$1`
 
 if [[ $? != 0 ]]; then
   echo "NG：暗号ファイルの復号中にエラーが発生しました。"
