@@ -1,0 +1,127 @@
+#!/usr/bin/env bash
+
+# ファイルの署名の確認スクリプト (UTF-8)
+# ======================================
+#
+# ファイルが正しく電子署名ファイル（.sig）で署名されているか検証する。
+#
+# - 使い方の例：
+#   以下のコマンドで KEINOS 氏が `myfile.txt` を署名したか検証します。
+#   以下の場合、`myfile.txt.sig` が同階層にある必要があります。
+#
+#       $ ./verify myfile.txt KEINOS
+#
+# - 注意：利用前にスクリプトに実行権限を与えるのを忘れないでください。
+#
+
+# ヘルプ表示
+# ----------
+if [[ $# < 2 ]]; then
+  echo
+  echo "使い方: ${0} <verify file> <github user> [<sign file>]"
+  echo
+  echo "- <verify file> : 確認したいファイル"
+  echo "- <github user> : 署名者の GitHub アカウント名"
+  echo
+  echo "[オプション]"
+  echo "- <sign file>   : 電子署名ファイルのパス"
+  echo "                  指定がない場合は同階層の <verify file>.sig が使用されます。"
+  echo
+  exit 1
+fi
+
+
+# コマンド引数取得
+# ----------------
+VERIFYFILE=$1
+USERNAME=$2
+
+
+# 出力ファイル名設定
+# ------------------
+SIGNFILE=$1.sig
+if [[ $# == 3 ]]; then
+  SIGNFILE=$3
+fi
+
+# trap の設定
+# -----------
+# スクリプト終了後一時ファイルを削除します。
+# - 参考URL ：
+#     https://qiita.com/m-yamashita/items/889c116b92dc0bf4ea7d
+#     https://qiita.com/bsdhack/items/47c9cbb5fd22fcc9597a
+TMPDIR=${TMP:-/tmp}/`basename ${0}`-`md5 -q -s ${RANDOM}`
+mkdir -p ${TMPDIR}
+trap 'rm -r ${TMPDIR}' 0
+
+
+# [電子署名の検証] -------------------------------------------------------------
+
+echo
+echo "${VERIFYFILE} を電子署名 ${SIGNFILE} で検証します"
+echo
+
+# 一時ファイル
+# ------------
+PATHPUBKEY=${TMPDIR}/${USERNAME}.pub
+
+
+# RSA 公開鍵の取得
+# ----------------
+# ユーザの GitHub の公開鍵一覧の１行目を取得
+# - 取得先は： https://github.com/<user name>.keys
+# - 参考URL ： https://qiita.com/m0r1/items/af16c41475d493ab6774
+echo -n "- ${USERNAME} の GitHub 上の公開鍵を取得中 ... "
+
+curl -s https://github.com/$USERNAME.keys | head -n 1 > $PATHPUBKEY
+
+if [[ $? != 0 ]]; then
+  echo "NG：公開鍵を取得・保存できませんでした。"
+  exit 1
+fi
+echo "OK"
+
+
+# 公開鍵のフォーマット変換
+# ------------------------
+# - 参考URL ：
+#   - https://qiita.com/drobune/items/bf5d689eff7f69ed6866
+#   - https://qiita.com/connvoi_tyou/items/3e86b6b68c3f398b3244
+echo -n "- RSA 形式の公開鍵を PKCS8 形式に変換中 ... "
+
+ssh-keygen -f $PATHPUBKEY -e -m pkcs8 > $PATHPUBKEY.pkcs8
+
+if [[ $? != 0 ]]; then
+  echo "NG：RSA -> PKCS8 変換中にエラーが発生しました。"
+  exit 1
+fi
+echo "OK"
+
+
+# 電子署名の検証
+# --------------
+# - 参考URL ： https://qiita.com/kunichiko/items/3c0b1a2915e9dacbd4c1
+echo -n "- ファイル ${VERIFYFILE} の署名ファイルを検証中 ... "
+
+openssl dgst -sha1 -verify ${PATHPUBKEY}.pkcs8 -signature ${SIGNFILE} ${VERIFYFILE}
+
+
+if [[ $? != 0 ]]; then
+  echo
+  echo "NG：署名ファイルを検証できませんでした。以下のいずれかが署名時と異なります。"
+  echo "- 対象ファイル： ${VERIFYFILE}"
+  echo "- 署名ファイル： ${SIGNFILE}"
+  echo "- 署名者      ： ${USERNAME}（署名時の鍵が異なる）"
+  echo
+  exit 1
+fi
+
+
+# 終了表示
+# --------
+echo
+echo "✅ 署名の検証を完了しました。このファイルは正しく署名されています。"
+echo "- 対象ファイル： ${VERIFYFILE}"
+echo "- 署名者      ： ${USERNAME}"
+echo
+exit 0

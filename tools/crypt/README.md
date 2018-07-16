@@ -13,7 +13,7 @@
 GitHub ユーザに送る**ファイルの暗号化**の仕方。（以下は KEINOS 氏に送る場合）
 
 ```
-$ ./enc KEINOS ./himitsu.txt
+$ ./enc KEINOS himitsu.txt
 ```
 
 ### 復号（Decrypt）
@@ -21,31 +21,31 @@ $ ./enc KEINOS ./himitsu.txt
 自身の秘密鍵で、届いた**暗号ファイルの復号**の仕方。（GitHub の公開鍵とペアの秘密鍵に限る）
 
 ```
-$ ./dec ~/.ssh/id_rsa ./himitsu.txt.enc ./himitsu.txt
+$ ./dec ~/.ssh/id_rsa himitsu.txt.enc himitsu.txt
 ```
 
 ### 動作確認（Check）
 
-ローカルでダミーファイルの暗号化→復号を行い、**公開鍵と秘密鍵のペアの動作テスト**の仕方。（以下は KEINOS 氏がテストする場合）
+**公開鍵と秘密鍵のペアの動作テスト**の仕方。ローカルでダミーファイルの暗号化→復号を行います。（以下は KEINOS 氏がテストを行う場合）
 
 ```
 $ ./check KEINOS ~/.ssh/id_rsa
 ```
 
-### 署名（Sign）（作成中）
+### 電子署名（Sign）
 
 自身の秘密鍵で**ファイルの署名**の仕方。（GitHub の公開鍵とペアの秘密鍵に限る）
 
 ```
-$ ./sign ~/.ssh/id_rsa ./himitsu.txt
+$ ./sign KEINOS ~/.ssh/id_rsa himitsu.txt
 ```
 
-### 署名の確認（Verify）（作成中）
+### 署名の確認（Verify）
 
-署名者の GitHub 上の公開鍵による**ファイルの署名確認**の仕方。（GitHub の公開鍵とペアの秘密鍵に限る）
+署名者の GitHub 公開鍵で署名を検証する。
 
 ```
-$ ./verify KEINOS ./himitsu.txt.sha512 ./himitsu.txt
+$ ./verify himitsu.txt KEINOS himitsu.txt.sig
 ```
 
 ---
@@ -133,7 +133,7 @@ $ ./check <github user> <private key>
 
 ---
 
-### 署名スクリプト（このシェル・スクリプトは作成中です）
+### 署名スクリプト
 
 このシェル・スクリプトは、自分の秘密鍵を使ってファイルの署名を作成します。
 
@@ -148,11 +148,30 @@ $ ./sign <private key> <input file> [<output file>]
 
 ##### オプション
 
-- `<output file>`：署名されたファイルの保存先のパス。指定されていない場合は、同階層に `<input file>.sha512` と `.sha512` 拡張子を追加して暗号化済みファイルが作成されます。
+- `<output file>`：署名されたファイルの保存先パス。指定されていない場合は、同階層に `<input file>.sig` （`.sig` 拡張子を追加した署名ファイル）が作成されます。
 
 ##### 参考文献
 
 - http://blog.livedoor.jp/k_urushima/archives/979220.html
+
+---
+
+### 署名の検証スクリプト
+
+このシェル・スクリプトは、ファイルが正しく署名されたものか検証します。
+
+#### 構文
+
+```bash
+$ ./verify <verify file> <github user> [<sign file>]
+```
+
+- `<verify file>`：署名を確認したいファイルのパス
+- `<github user>`：署名者の GitHub アカウント名
+
+##### オプション
+
+- `<sign file>`：署名されたファイルのパス。指定されていない場合は、同階層にある `<verify file>.sig` （`.sig` 拡張子を追加したファイル）が使用されます。
 
 ---
 
