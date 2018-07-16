@@ -38,7 +38,7 @@ foreach ($list_name_file as $name_file) {
         dieMsg('Error: While creating checksum value. Check algorithm.');
     }
 
-    $checksums .= "{$algorithm}({$name_file}) {$hash}" . PHP_EOL;
+    $checksums .= "{$algorithm}({$name_file})= {$hash}" . PHP_EOL;
 
     echo '.';
 }
