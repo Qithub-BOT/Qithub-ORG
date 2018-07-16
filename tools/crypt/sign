@@ -1,0 +1,139 @@
+#!/usr/bin/env bash
+
+# 軽量ファイルの署名スクリプト (UTF-8)
+# ======================================
+#
+# RSA 秘密鍵を使いファイルに著名（電子署名ファイルの生成を）します。
+# 
+# GitHub 上で公開されている（https://github.com/<user name>.keys で取得できる）
+# 自身の RSA 公開鍵とペアの秘密鍵である必要があります。
+#
+# - 使い方の例：
+#   以下のコマンドで署名ファイル `myfile.txt.sig` が作成されます。
+#       $ ./sign ~/.ssh/id_rsa myfile.txt
+#
+# - 注意：利用前にスクリプトに実行権限を与えるのを忘れないでください。
+#
+
+# ヘルプ表示
+# ----------
+if [[ $# < 2 ]]; then
+  echo
+  echo "使い方: $0 <github user> <id_rsa> <input file> [<output file>]"
+  echo
+  echo "- <github user> : 自分の GitHub アカウント名"
+  echo "- <private key> : GitHub で公開している公開鍵のペアとなる秘密鍵のパス"
+  echo "- <input file>  : 署名したいファイルのパス"
+  echo
+  echo "[オプション]"
+  echo "- <output file> : 署名ファイルの出力先のパス"
+  echo "                  指定がない場合は <input_file>.sig として出力されます。"
+  echo
+  exit 1
+fi
+
+cd `dirname $0`
+
+# コマンド引数取得
+# ----------------
+USERNAME=$1
+PRIVATEKEY=$2
+INPUTFILE=$3
+
+
+# 出力ファイル名設定
+# ------------------
+OUTPUTFILE=$3.sig
+if [[ $# == 4 ]]; then
+  OUTPUTFILE=$4
+fi
+
+# trap の設定
+# -----------
+# スクリプト終了後一時ファイルを削除します。
+# - 参考URL ： https://qiita.com/m-yamashita/items/889c116b92dc0bf4ea7d
+trap "rm -rf /tmp/$USERNAME.*" 0
+
+
+# 電子著名の生成
+# --------------
+# - 参考URL ： https://qiita.com/kunichiko/items/3c0b1a2915e9dacbd4c1
+echo -n "ファイル ${INPUTFILE} の署名ファイルを生成中 ... "
+
+openssl dgst -sha1 -sign ${PRIVATEKEY} ${INPUTFILE} > ${OUTPUTFILE}
+
+if [[ $? != 0 ]]; then
+  echo "NG：署名ファイルを生成できませんでした。"
+  exit 1
+fi
+
+echo "OK"
+echo "✅ ${INPUTFILE} の電子署名が作成されました。"
+
+
+# [電子署名の検証] -------------------------------------------------------------
+
+echo
+echo "電子署名の検証を行います"
+echo
+
+# 一時ファイル
+# ------------
+TMP=`md5 -q -s $RANDOM`
+PATHPUBKEY=/tmp/$USERNAME.$TMP.pub
+
+# RSA 公開鍵の取得
+# ----------------
+# ユーザの GitHub の公開鍵一覧の１行目を取得
+# - 取得先は： https://github.com/<user name>.keys
+# - 参考URL ： https://qiita.com/m0r1/items/af16c41475d493ab6774
+echo -n "${USERNAME} の GitHub 上の公開鍵を取得中 ... "
+
+curl -s https://github.com/$USERNAME.keys | head -n 1 > $PATHPUBKEY
+
+if [[ $? != 0 ]]; then
+  echo "NG：公開鍵を取得・保存できませんでした。"
+  exit 1
+fi
+echo "OK"
+
+
+# 公開鍵のフォーマット変換
+# ------------------------
+# - 参考URL ：
+#   - https://qiita.com/drobune/items/bf5d689eff7f69ed6866
+#   - https://qiita.com/connvoi_tyou/items/3e86b6b68c3f398b3244
+echo -n "RSA 形式の公開鍵を PKCS8 形式に変換中 ... "
+
+ssh-keygen -f $PATHPUBKEY -e -m pkcs8 > $PATHPUBKEY.pkcs8
+
+if [[ $? != 0 ]]; then
+  echo "NG：RSA -> PKCS8 変換中にエラーが発生しました。"
+  exit 1
+fi
+echo "OK"
+
+
+# 電子著名の検証
+# --------------
+# - 参考URL ： https://qiita.com/kunichiko/items/3c0b1a2915e9dacbd4c1
+echo -n "ファイル ${INPUTFILE} の署名ファイルを検証中 ... "
+
+openssl dgst -sha1 -verify ${PATHPUBKEY}.pkcs8 -signature ${OUTPUTFILE} ${INPUTFILE}
+
+if [[ $? != 0 ]]; then
+  echo "NG：署名ファイルを検証できませんでした。"
+  exit 1
+fi
+
+echo "✅ 電子著名ファイルの検証が完了しました"
+
+
+# 終了表示
+# --------
+echo
+echo "✅ 署名を完了しました。このファイルを対象ファイルとセットでご利用ください。"
+echo "対象ファイル    ： ${INPUTFILE}"
+echo "電子署名ファイル： ${OUTPUTFILE}"
+echo
+exit 0
