@@ -18,6 +18,7 @@ $list_name_file = [
     'dec',
     'check',
     'sign',
+    'verify',
 ];
 
 $checksums = '';
