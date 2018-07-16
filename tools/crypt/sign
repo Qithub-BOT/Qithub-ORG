@@ -3,7 +3,7 @@
 # 軽量ファイルの署名スクリプト (UTF-8)
 # ======================================
 #
-# RSA 秘密鍵を使いファイルに著名（電子署名ファイルの生成を）します。
+# RSA 秘密鍵を使いファイルに署名（電子署名ファイルの生成を）します。
 # 
 # GitHub 上で公開されている（https://github.com/<user name>.keys で取得できる）
 # 自身の RSA 公開鍵とペアの秘密鍵である必要があります。
@@ -55,7 +55,7 @@ fi
 trap "rm -rf /tmp/$USERNAME.*" 0
 
 
-# 電子著名の生成
+# 電子署名の生成
 # --------------
 # - 参考URL ： https://qiita.com/kunichiko/items/3c0b1a2915e9dacbd4c1
 echo -n "ファイル ${INPUTFILE} の署名ファイルを生成中 ... "
@@ -114,7 +114,7 @@ fi
 echo "OK"
 
 
-# 電子著名の検証
+# 電子署名の検証
 # --------------
 # - 参考URL ： https://qiita.com/kunichiko/items/3c0b1a2915e9dacbd4c1
 echo -n "ファイル ${INPUTFILE} の署名ファイルを検証中 ... "
@@ -126,7 +126,7 @@ if [[ $? != 0 ]]; then
   exit 1
 fi
 
-echo "✅ 電子著名ファイルの検証が完了しました"
+echo "✅ 電子署名ファイルの検証が完了しました"
 
 
 # 終了表示
