@@ -26,7 +26,7 @@ $ ./dec ~/.ssh/id_rsa himitsu.txt.enc himitsu.txt
 
 ### 動作確認（Check）
 
-**公開鍵と秘密鍵のペアの動作テスト**の仕方。ローカルでダミーファイルの暗号化→復号を行います。（以下は KEINOS 氏がテストを行う場合）
+GitHub 上の公開鍵とローカルの秘密鍵で**暗号化・復号の動作テスト**の仕方。（以下は KEINOS 氏がテストを行う場合）
 
 ```
 $ ./check KEINOS ~/.ssh/id_rsa
