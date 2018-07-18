@@ -1,0 +1,188 @@
+#!/usr/bin/env bash
+
+# AES SHA256 CBC 暗号化スクリプト (UTF-8)
+# =======================================
+#
+#
+# OpenSSL の AES-256-CBC と「共通鍵」を使ってファイルを暗号化します。
+#
+# GitHub 上で公開されている（https://github.com/<user name>.keys で取得できる）
+# 自身の RSA 公開鍵とペアの秘密鍵である必要があります。
+#
+# - 使い方の例：
+#   以下のコマンドで署名ファイル `myfile.txt.sig` が作成されます。
+#       $ ./sign ~/.ssh/id_rsa myfile.txt
+#
+# - 注意：利用前にスクリプトに実行権限を与えるのを忘れないでください。
+#
+
+# ヘルプ表示
+# ----------
+if [[ $# < 1 ]]; then
+  echo
+  echo "ファイルを圧縮して暗号化します。（AES-256-CBC暗号）"
+  echo
+  echo "使い方: $0 <input file> [<output file>]"
+  echo
+  echo "- <input file>  : 圧縮＆暗号化したいファイルのパス"
+  echo
+  echo "[オプション]"
+  echo "- <output file> : 圧縮＆暗号化済みファイルの出力先のパス"
+  echo "                  指定がない場合は <input_file>.gz.aes として出力されます。"
+  echo
+  exit 1
+fi
+
+
+# コマンド引数取得
+# ----------------
+INPUTFILE=$1
+
+
+# 出力ファイル名設定
+# ------------------
+OUTPUTFILE=$1.tar.gz.aes
+if [[ $# == 2 ]]; then
+  OUTPUTFILE=$2
+fi
+
+
+# 暗号ファイル保存先ディレクトリの作成
+# ------------------------------------
+echo -n "- アーカイブ用ディレクトリを作成しています ... "
+
+TEMPDIR=./$INPUTFILE-archive/
+mkdir -p $TEMPDIR
+
+if [[ $? != 0 ]]; then
+  echo "NG：ディレクトリをできませんでした。"
+  echo "- 書き込み権限などを確認してください。"
+  exit 1
+fi
+echo "OK"
+
+
+# パスワードの生成
+# ----------------
+echo -n "- 共通鍵を作成しています ... "
+
+PASSWORD=`md5 -q -s $RANDOM`
+echo $PASSWORD>$TEMPDIR$OUTPUTFILE.passwd
+
+if [[ $? != 0 ]]; then
+  echo "NG：ファイルを作成できませんでした。"
+  echo "書き込み権限などを確認してください。"
+  exit 1
+fi
+echo "OK"
+
+# ファイルの圧縮＆暗号化
+# ----------------------
+# - 参考文献：https://qiita.com/kite_999/items/cc39179463fd061b2e7d
+echo -n "- ファイルを TAR/GZIP 圧縮 → AES 暗号化します ... "
+tar cz $INPUTFILE | openssl enc -e -aes-256-cbc -salt -k $PASSWORD -out $TEMPDIR$OUTPUTFILE
+
+if [[ $? != 0 ]]; then
+  echo "NG：ファイルを圧縮・暗号化できませんでした。"
+  exit 1
+fi
+echo "OK"
+
+
+echo
+echo "✅ $INPUTFILE の圧縮＆暗号化が完了しました。"
+echo "  - ファイル名：$TEMPDIR$OUTPUTFILE"
+
+
+echo
+echo "【テスト】共通鍵の動作確認および復号・解凍のテストを行います:"
+echo
+
+
+# 共通鍵の読み込み
+# ----------------
+echo -n "- 共通鍵を読み込んでいます ... "
+
+PASSWORD=`cat $TEMPDIR$OUTPUTFILE.passwd`
+
+if [[ $? != 0 ]]; then
+  echo "NG：共通鍵を読み込めませんでした。"
+  exit 1
+fi
+echo "OK"
+
+
+# ファイルの復号テスト
+# --------------------
+echo -n "- 共通鍵でファイルを復号しています ... "
+
+TEMPFILE=$INPUTFILE.tar.gz
+openssl enc -d -aes-256-cbc -salt -k $PASSWORD -in $TEMPDIR$OUTPUTFILE -out $TEMPDIR$TEMPFILE
+
+if [[ $? != 0 ]]; then
+  echo "NG：ファイルを復号できませんでした。"
+  exit 1
+fi
+echo "OK"
+
+
+# 解凍のテスト
+# ------------
+echo -n "- 復号された圧縮ファイルの解凍をしています ... "
+
+tar -C $TEMPDIR -xf $TEMPDIR$TEMPFILE
+
+if [[ $? != 0 ]]; then
+  echo "NG：ファイルを解凍できませんでした。"
+  exit 1
+fi
+echo "OK"
+
+
+# オリジナルと解凍後の同一テスト
+# ------------------------------
+echo -n "- オリジナルと解凍済みのファイルのハッシュを比較しています ... "
+
+HASHORIGINAL=`md5 -q $INPUTFILE`
+HASHARCHIVED=`md5 -q $TEMPDIR$INPUTFILE`
+
+if [ $HASHORIGINAL = $HASHARCHIVED ]; then
+  echo "OK"
+else
+  echo "NG ハッシュ値が一致しません"
+  exit 1
+fi
+
+
+# 作業ファイルの削除
+# ------------------
+echo -n "- 作業ファイルの削除をしています ... "
+
+rm -f $TEMPDIR$TEMPFILE
+rm -f $TEMPDIR$INPUTFILE
+if [[ $? != 0 ]]; then
+  echo "NG：作業ファイルを削除できませんでした。"
+  exit 1
+fi
+echo "OK"
+
+
+# 終了表示
+# --------
+echo
+echo "✅ ファイルの圧縮・暗号化が完了しました。"
+echo "   以下のファイルをセットでご利用ください。"
+echo
+echo "  - 出力先ディレクトリ：${TEMPDIR}"
+echo "  - 対象ファイル  ： ${OUTPUTFILE}"
+echo "  - 共通鍵ファイル： ${OUTPUTFILE}.passwd"
+echo
+echo "‼️ 注意 ‼️"
+echo "共通鍵は平文であるため、相手の公開鍵で暗号化して送ることを強くおすすめします。"
+echo "GitHub の公開鍵を使った暗号化は enc コマンドを利用ください。"
+echo 
+
+exit 0
+
+#echo $(dirname ${0})
+# Restore
