@@ -1,18 +1,22 @@
 <?php
+/**
+ * Displays server installed program lang and software.
+ */
 
 /* ============================================================= [Initialize] */
 
 header("X-Robots-Tag: noindex, nofollow");
 
-// ToDo: Uncomment it until Golang install
-//echo runCmd('export GOPATH=$HOME/go');
-
-/* =============================================================== [Settings] */
-
 const PATH_DIR_CACHE = './.cache';
 const DIR_SEP        = DIRECTORY_SEPARATOR;
 
 define('UPDATE_CACHE', isset($_GET['update']));
+
+if(! is_dir(PATH_DIR_CACHE)){
+    mkdir(PATH_DIR_CAHE, 0600);
+}
+
+/* =============================================================== [Settings] */
 
 // include lists
 $lists = array();
