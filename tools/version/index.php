@@ -157,7 +157,7 @@ function runCmd($command, &$output = '', $return_var = 0)
     $last_line = exec($command, $output, $return_var);
     $output    = trim(implode(PHP_EOL, $output)) . PHP_EOL;
 
-    if (0 !=== $return_var){
+    if (0 !== $return_var){
         $result .= 'ERROR:' . PHP_EOL; 
     }
 
