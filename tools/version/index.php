@@ -9,6 +9,11 @@ header("X-Robots-Tag: noindex, nofollow");
 
 /* =============================================================== [Settings] */
 
+const PATH_DIR_CACHE = './.cache';
+const DIR_SEP        = DIRECTORY_SEPARATOR;
+
+define('UPDATE_CACHE', isset($_GET['update']));
+
 // include lists
 $lists = array();
 include_once('list_version.php.inc');
@@ -123,6 +128,45 @@ function echo_version($array)
     }
 }
 
+/* ---------------------------------------------------------------------- [G] */
+
+function getCache($command)
+{
+    $path_file_cache = getPathCache($command);
+
+    if (! file_exists($path_file_cache)) {
+        return false;
+    }
+
+    return unserialize(file_get_contents($path_file_cache));
+}
+
+function getNameCache($command)
+{
+    return 'cache_' . md5(trim($command));
+}
+
+function getPathCache($command)
+{
+    $name_cache     = getNameCache($command);
+    $path_dir_cache = realpath(PATH_DIR_CACHE);
+
+    return $path_dir_cache . DIR_SEP . $name_cache;
+}
+
+/* ---------------------------------------------------------------------- [H] */
+
+function hasCache($command)
+{
+    if (UPDATE_CACHE) {
+        return false;
+    }
+
+    $path_file_cache = getPathCache($command);
+
+    return file_exists($path_file_cache);
+}
+
 /* ---------------------------------------------------------------------- [I] */
 
 function indent($string)
@@ -143,29 +187,46 @@ function indent($string)
 
 /* ---------------------------------------------------------------------- [R] */
 
-function runCmd($command, &$output = '', $return_var = 0)
+function runCmd($command_original, &$output = '', $return_var = 0)
 {
-    $command = (string) $command;
+    if (hasCache($command_original)) {
+        return getCache($command_original);
+    }
+
+    $command = (string) $command_original;
     $output  = array();
     $result  = '';
     $pipe    = '2>&1';
-    
-    if(false === strpos(str_replace(' ', '', $command), $pipe)){
+
+    if (false === strpos(str_replace(' ', '', $command), $pipe)) {
         $command = $command . ' ' . $pipe;
     }
 
     $last_line = exec($command, $output, $return_var);
     $output    = trim(implode(PHP_EOL, $output)) . PHP_EOL;
 
-    if (0 !== $return_var){
-        $result .= 'ERROR:' . PHP_EOL; 
+    if (0 !== $return_var) {
+        $result .= 'ERROR:' . PHP_EOL;
     }
 
-    $result .= $output . PHP_EOL;    
-    
-    updateScreen();   
-    
-    return $result;
+    $result .= $output . PHP_EOL;
+
+    updateScreen();
+
+    if (saveCache($command_original, $result)) {
+        return $result;
+    }
+
+    return 'Error: Can not save cache file.';
+}
+
+/* ---------------------------------------------------------------------- [S] */
+
+function saveCache($command, $data)
+{
+    $path_file_cache = getPathCache($command);
+
+    return file_put_contents($path_file_cache, serialize($data));
 }
 
 /* ---------------------------------------------------------------------- [U] */
@@ -175,4 +236,3 @@ function updateScreen()
     @ob_flush();
     @flush();
 }
-
