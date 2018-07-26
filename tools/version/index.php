@@ -143,14 +143,36 @@ function indent($string)
 
 /* ---------------------------------------------------------------------- [R] */
 
-function runCmd($cmd, $return = true)
+function runCmd($command, &$output = '', $return_var = 0)
 {
-    $cmd    = (string) $cmd;
-    $result = `$cmd 2>&1`;
-
-    if ($return) {
-        return $result;
+    $command = (string) $command;
+    $output  = array();
+    $result  = '';
+    $pipe    = '2>&1';
+    
+    if(false === strpos(str_replace(' ', '', $command), $pipe)){
+        $command = $command . ' ' . $pipe;
     }
 
-    echo $result;
+    $last_line = exec($command, $output, $return_var);
+    $output    = trim(implode(PHP_EOL, $output)) . PHP_EOL;
+
+    if (0 !=== $return_var){
+        $result .= 'ERROR:' . PHP_EOL; 
+    }
+
+    $result .= $output . PHP_EOL;    
+    
+    updateScreen();   
+    
+    return $result;
 }
+
+/* ---------------------------------------------------------------------- [U] */
+
+function updateScreen()
+{
+    @ob_flush();
+    @flush();
+}
+
