@@ -13,7 +13,7 @@ const DIR_SEP        = DIRECTORY_SEPARATOR;
 define('UPDATE_CACHE', isset($_GET['update']));
 
 if(! is_dir(PATH_DIR_CACHE)){
-    mkdir(PATH_DIR_CACHE, 0600);
+    mkdir(PATH_DIR_CACHE, 0700);
 }
 
 /* =============================================================== [Settings] */
