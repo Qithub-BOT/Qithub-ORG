@@ -1,8 +1,6 @@
-<img title="Qithub LOGO" alt="Qithub Logo" src="https://github.com/Qithub-BOT/Qithub-ORG/raw/master/images/Icon_Qithub/Qithub_500x500.png" width="32px" align="left">
-
 ## Qithub のオフィシャル・ロゴ
 
-このディレクトリは、Qithub サークルの公式ロゴ置き場です。
+<img title="Qithub LOGO" alt="Qithub Logo" src="https://github.com/Qithub-BOT/Qithub-ORG/raw/master/images/Icon_Qithub/Qithub_500x500.png" width="32px"> このディレクトリは、Qithub サークルの公式ロゴ置き場です。
 
 - Qithub-master.mdp
     - マスター画像ファイル
@@ -11,6 +9,8 @@
     - サイズ別透過 PNG 画像ファイル
 - [Favicons/](./favicons/)
     - Favicon.ico 含む各種種類およびサイズのアイコン・画像用ディレクトリ
+
+---
 
 ### `favicon.ico` の base64 エンコードデータ
 
