@@ -32,7 +32,7 @@ GitHub/Git 初心者であったり PR の仕方やルールなど、**何か不
 
 ### 溜まり場
 
-<img src="https://raw.githubusercontent.com/Qithub-BOT/Qithub-ORG/master/images/Icon_QiitadonBar/QiitadonBar-v2_512x512.png" width=80 align=left> [溜まり場 @ Qiitadon酒場hidao店](https://discordapp.com/invite/aPF23CN) @ Discord ※
+<img src="https://raw.githubusercontent.com/Qithub-BOT/Qithub-ORG/master/images/Icon_QiitadonBar/QiitadonBar-v2_512x512.png" width=80 align=left> [溜まり場 @ Qiitadon酒場hidao店](https://discord.gg/JevmsM7) @ Discord ※
 
 Qiitadon酒場は 24h/7d オープンのオンライン酒場です。Qiitadon とは違った雰囲気でドリンク・食べ物持参で、まったりとチャットしています。たまにライブ配信もしています。
 

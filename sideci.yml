@@ -12,3 +12,6 @@ linter:
       suffixes: php,inc
       exclude: vendor/
       strict: true
+
+  eslint:
+    dir: "./*"
