@@ -14,5 +14,4 @@ linter:
       strict: true
 
   eslint:
-    npm_install: true
     dir: "./*"
