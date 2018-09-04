@@ -340,9 +340,13 @@ function isCli()
 
 function isHeaderResponseOK($response_header)
 {
-    $staus_response = strtoupper(getValue(0, $response_header));
+    foreach ($response_header as $line) {
+        if (false !== strpos(strtoupper($line), '200 OK')){
+            return true;
+        }
+    }
 
-    return ( false !== strpos($staus_response, '200 OK'));
+    return false;
 }
 
 function isRequestInTime()
