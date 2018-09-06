@@ -22,7 +22,8 @@
 
 **Qiita/Qiitadon ユーザであれば特に手続きはありません**。どんどん [issue](https://github.com/Qithub-BOT/Qithub-ORG/issues) をあげたりリポジトリを `clone` して PR （プルリク, Pull Request）してください。
 
-GitHub/Git 初心者であったり PR の仕方やルールなど、**何か不安がある場合は遠慮なく下記の部室や溜まり場で聞いて**ください。
+GitHub/Git 初心者であったり PR の仕方やルールなど、**何か不安がある場合は遠慮なく下記の部室や溜まり場で聞いて**ください。  
+**Qiitadon で[メンテナ](https://github.com/orgs/Qithub-BOT/people)にメンション or DM していただいても OK** です。
 
 ### 部室
 
