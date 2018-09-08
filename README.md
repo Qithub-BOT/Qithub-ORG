@@ -10,7 +10,7 @@
 - Qiita もしくは Qiitadon がもっと楽しくなることがしたい。
 - なんか[楽しそうなこと](https://github.com/Qithub-BOT/Qithub-ORG/issues/14)を語りたい／やりたい。
 - GitHub でコラボしたいが、怖くてできない。
-- 仕事とは関係なく**趣味**でプログラミングしたいし、写経／乱取りなんだから小煩いことを言われたくない。でも誰かに気楽にチェックして欲しい。
+- 仕事とは関係なく**趣味**でプログラミングしたいし、写経／乱取りなんだから小ウルサイことを言われたくない。でも誰かに気楽にチェックして欲しい。😳
 
 ## このリポジトリについて
 
@@ -24,8 +24,13 @@
 
 **Qiita/Qiitadon ユーザであれば特に手続きはありません**。どんどん [issue](https://github.com/Qithub-BOT/Qithub-ORG/issues) をあげたりリポジトリを `clone` して PR （プルリク, Pull Request）してください。
 
-GitHub/Git 初心者であったり PR の仕方やルールなど、**何か不安がある場合は遠慮なく下記の部室や溜まり場で聞いて**ください。  
+そもそも GitHub/Git や OSS コラボの初心者のための練習の場として始まったので、失敗したら[ケセラセラ](https://ja.wiktionary.org/wiki/qu%C3%A9_ser%C3%A1,_ser%C3%A1)です。
+
+[PR の仕方](https://github.com/Qithub-BOT/Qithub-ORG/wiki/%E3%83%96%E3%83%A9%E3%83%B3%E3%83%81%E3%80%81PR%E3%80%81%E3%83%9E%E3%83%BC%E3%82%B8%E3%81%AE%E3%83%AB%E3%83%BC%E3%83%AB)や[ルール](https://github.com/Qithub-BOT/Qithub-ORG/wiki/Qithub-ORG-%E3%83%AB%E3%83%BC%E3%83%AB)など、**何か不安がある場合は遠慮なく下記の部室や溜まり場で聞いて**ください。
+
 **Qiitadon で[メンテナ](https://github.com/orgs/Qithub-BOT/people)にメンション or DM していただいても OK** です。
+
+- メンテナも随時募集中！下記「メンテナについて」をご覧ください。
 
 ### 部室
 
@@ -47,9 +52,19 @@ Qiitadon酒場は 24h/7d オープンのオンライン酒場です。Qiitadon �
 
 ※ **`Discord` はチャット・ルームです。ゲスト・アカウント（ユーザ登録不要）で入場できます**。入場の際、ニックネームは Qiitadon と同じアカウント名にしてもらうとわかりやすくて助かります。ブラウザを閉じると別のゲスト・ユーザとなるので、それが面倒な方はアカウントを作成をおすすめします。
 
+## 新規リポジトリを作りたい
+
+[Qithub の既存のリポジトリ](https://github.com/Qithub-BOT)とは趣旨が異なるリポジトリを新たに設置したい場合、リポジトリの管理者としてメンテナの一員になっていただく必要があります。
+
+「こんなリポジトリを建てたい」と概要を [issue](https://github.com/Qithub-BOT/Qithub-ORG/issues) に立ててもらえたら、他のリポジトリで代用できないか、リポジトリ名は適切か、など実現に向けてみんなでブラッシュアップしたいと思います。
+
+なお、そのリポジトリは Qithub Organization の[運用ルール](https://github.com/Qithub-BOT/Qithub-ORG/wiki/Qithub-ORG-%E3%83%AB%E3%83%BC%E3%83%AB)や [Qithub のポリシー](https://github.com/Qithub-BOT/Qithub-ORG/wiki/%E3%83%9D%E3%83%AA%E3%82%B7%E3%83%BC%E3%80%81%E3%82%B3%E3%83%B3%E3%82%BB%E3%83%97%E3%83%88)に準拠していただく必要があります。
+
 ## メンテナについて
 
-基本的に PR のチェックなどはサークルのメンバー全員で まったり と行なっていますが、リポジトリやサーバのメンテナンスは以下のメンバーで行なっています。
+Qithub サークルでは GitHub の Organization メンバーをメンテナと呼んでいます。
+
+基本的に PR のチェック（コードレビュー）などはサークルのメンバー全員で**まったり**と行なっていますが、サークルのメンバー対応、リポジトリの管理やサーバのメンテナンスはメンテナが行なっています。
 
 「なんか手伝ってもいいよー」という方は、Qiitadon や Qiitadon酒場でお声がけくださーい。
 
