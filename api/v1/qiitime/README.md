@@ -1,6 +1,6 @@
 ## QiiTime API について
 
-この API は [Qiitadon](https://qiitadon.com/) で時報 BOT「[@​QiiTime​](https://qiitadon.com/@QiiTime)」に時報トゥートを行わせる、もしくは時報トゥートに関する情報を取得するためのものです。
+この API は [Qiitadon](https://qiitadon.com/) で時報 BOT「[@​QiiTime​](https://qiitadon.com/@QiiTime)」の時報トゥートに関する情報を取得するためのものです。
 
 下記「リクエスト URL」にアクセスすると、最後の時報トゥートに関する JSON データを取得できます。
 
@@ -69,9 +69,9 @@ $ php -r "print_r(file_get_contents('https://qithub.tk/api/v1/qiitime/'));"
 
 ### 基本動作
 
-- API にアクセスがあると１時間ごとに時報を Qiitadon でトゥートします。
-- API へのアクセスが同時刻内（トゥート済みの１時間以内）の場合は何もしません。
-- 上記いずれの場合でも、最後にトゥートした情報を返します。
+- API にアクセスがあると、最後にトゥートした情報を JSON 形式で返します。
+- API へのアクセス時、その時間内にトゥートされてない場合は、時報を Qiitadon でトゥートします。
+- API へのアクセス時、同時刻内（１時間以内）にトゥート済みの場合は何もしません。
 
 
 ### `threshold` 値について
