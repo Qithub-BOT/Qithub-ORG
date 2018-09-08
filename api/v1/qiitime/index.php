@@ -135,14 +135,7 @@ EOD;
     // Status message
     // -------------------------------------------------------------------------
     $status =<<<EOD
-ニュースやメモなどのトゥートで LTL や FTL を汚したくない。でも後日ハッシュタグで検索対象にしたい。そんなトゥートがあれば、このトゥートに公開で返信してね。
-
-- 最新の時報トゥートID： https://qithub.tk/api/v1/qiitime/ (JSON)
-- QiiTime API に関して： https://github.com/Qithub-BOT/Qithub-ORG/tree/master/api/v1/qiitime
-
-P.S. 利用方法、返信内容やインスタンスも問わないけど、ウチ（Qiitadon のインスタンス）をピンポンダッシュするようなことはしないでね。
-
-この時報の検索タグ： #${date_tag_Ym} #${date_tag_Ymd} #${date_tag_YmdH}
+QiiTime は Qiita/Qiitadon の同人サークル Qithub のコラボ作品です。詳細は https://qiitadon.com/@QiiTime/100691414720855633 へ。コラボ・メンバー募集中！ :qiitan: #${date_tag_Ym} #${date_tag_Ymd} #${date_tag_YmdH}
 EOD;
 
     return ['spoiler_text' => $spoiler_text, 'status' => $status];
