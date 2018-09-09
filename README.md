@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/Qithub-BOT/Qithub-ORG.svg?branch=master)](https://travis-ci.org/Qithub-BOT/Qithub-ORG)
 
-<img title="Qithub LOGO" alt="Qithub Logo" src="https://github.com/Qithub-BOT/Qithub-ORG/raw/master/images/Banner_Qithub/Qithub-BOT-900x900.jpg" width="900">
+<img title="Qithub LOGO" alt="Qithub Logo" src="https://github.com/Qithub-BOT/Qithub-ORG/raw/master/images/Banner_Qithub/Qithub-BOT-900x300.jpg" width="900">
 
 ## Qithub とは
 
