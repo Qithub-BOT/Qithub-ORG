@@ -15,3 +15,5 @@ linter:
 
   eslint:
     dir: "./*"
+    options:
+      ext: 'js'
