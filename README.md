@@ -30,7 +30,7 @@
 
 このサークルはそもそも GitHub/Git や OSS コラボの初心者の練習の場として始まったので、失敗したら[ケセラセラ](https://ja.wiktionary.org/wiki/qu%C3%A9_ser%C3%A1,_ser%C3%A1)です。
 
-[PR の仕方](https://github.com/Qithub-BOT/Qithub-ORG/wiki/%E3%83%96%E3%83%A9%E3%83%B3%E3%83%81%E3%80%81PR%E3%80%81%E3%83%9E%E3%83%BC%E3%82%B8%E3%81%AE%E3%83%AB%E3%83%BC%E3%83%AB)や[ルール](https://github.com/Qithub-BOT/Qithub-ORG/wiki/Qithub-ORG-%E3%83%AB%E3%83%BC%E3%83%AB)など、**何か不安がある場合は遠慮なく下記の部室や溜まり場で聞いて**ください。Qiitadon でサークル・メンバーやメンテナにメンション or DM していただいても OK です。
+[PR の仕方](https://github.com/Qithub-BOT/Qithub-ORG/wiki/%E3%83%96%E3%83%A9%E3%83%B3%E3%83%81%E3%80%81PR%E3%80%81%E3%83%9E%E3%83%BC%E3%82%B8%E3%81%AE%E3%83%AB%E3%83%BC%E3%83%AB)や[ルール](https://github.com/Qithub-BOT/Qithub-ORG/wiki/Qithub-ORG-%E3%81%AE%E3%83%AB%E3%83%BC%E3%83%AB)など、**何か不安がある場合は遠慮なく下記の部室や溜まり場で聞いて**ください。Qiitadon でサークル・メンバーやメンテナにメンション or DM していただいても OK です。
 
 なお、メンテナも随時募集中！下記「メンテナについて」をご覧ください。
 
