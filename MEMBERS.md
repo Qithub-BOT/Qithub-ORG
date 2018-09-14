@@ -11,12 +11,26 @@
 
 ## メンバー（ABC順）
 
+- [@alice1017](https://github.com/alice1017)
 - [@hidao80](https://github.com/hidao80)
 - [@KEINOS](https://github.com/KEINOS)
 
 ---
 
 ## プロフィール（ABC順）
+
+### @alice1017
+
+平日はサラリーマン、週末はエンジニア（趣味）。  
+内向型で、一人の時間と音楽がなにより好き。
+
+そして趣味のために生きている趣味人。
+
+- Github <https://github.com/alice1017>
+- Qiita <https://qiita.com/alice1017>
+- Qiitadon <https://qiitadon.com/@alice1017/>
+- ブログ [ある趣味人の独白](http://alice1017.info/)
+
 
 ### @hidao80
 
