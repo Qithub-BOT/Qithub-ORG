@@ -11,12 +11,22 @@
 
 ## メンバー（ABC順）
 
+- [@hidao80](https://github.com/hidao80)
 - [@KEINOS](https://github.com/KEINOS)
 
 ---
 
 ## プロフィール（ABC順）
 
+### @hidao80
+
+IT土方で岡山アイスコーヒー党総帥。  
+Qiitadon酒場hidao店(不定期開催)のオーナー。
+
+
+- GitHub <https://github.com/hidao80/> 
+- Qiita <https://qiita.com/hidao>
+- Qiitadon @hidao
 
 ### @KEINOS
 
