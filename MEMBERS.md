@@ -23,6 +23,7 @@
 IT土方で岡山アイスコーヒー党総帥。  
 Qiitadon酒場hidao店(不定期開催)のオーナー。
 
+新しもの好きの話好き。実装は苦手
 
 - GitHub <https://github.com/hidao80/> 
 - Qiita <https://qiita.com/hidao>
