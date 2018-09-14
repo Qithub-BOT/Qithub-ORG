@@ -189,7 +189,7 @@ LGTM👍
 
 ### 相談
 
-`@qithub:help extention` とするのならば、`@qithub:help --help` と同じ出力をする `@qithub:help help` も有効にした方が良い？
+`@qithub:help extension` とするのならば、`@qithub:help --help` と同じ出力をする `@qithub:help help` も有効にした方が良い？
 
 -----
 
