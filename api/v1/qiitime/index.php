@@ -25,8 +25,8 @@ include_once('../.lib/php/tootlib.php.inc');
 
 // 内部環境定数
 const FORMAT_TIMESTAMP   = 'YmdH';  // 2018083020 フォーマット
-const JSON_NO_OPTION     = 0;       // json_encode() のオプション初期化用 
-const KEY_TOKEN          = 'token'; // 
+const JSON_NO_OPTION     = 0;       // json_encode() のオプション初期化用
+const KEY_TOKEN          = 'token'; //
 
 // フラグ
 const TOOT_IS_NEW       = false;
@@ -50,7 +50,6 @@ $settings = [
 
 // トゥート済み情報の保存先を同階層に作成
 if (! hasSavedData($settings)) {
-
     $path_dir_data = getPathDirData($settings);
 
     // ディレクトリ作成
@@ -156,7 +155,7 @@ function echoLatestTootInfo(array $settings, $status_cache = TOOT_IS_CACHE)
     if (! isCli()) {
         $etag = getEtag($settings);
         header('content-type: application/json; charset=utf-8');
-        header("ETag: \"${etag}\"");
+        header("ETag: \"{$etag}\"");
     }
 
     echo getJsonToReturn($settings, $status_cache, JSON_PRETTY_PRINT), PHP_EOL;

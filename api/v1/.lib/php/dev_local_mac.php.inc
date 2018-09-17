@@ -64,20 +64,8 @@ if (! isset($list_browser[$browser])) {
 $browser = $list_browser[$browser];
 $port    = getPortRandom();
 
-function openBrowser($browser, $port)
-{
-    $cmd  = "open -a \"{$browser}\" \"http://localhost:{$port}\" ";
-    
-    $output = [];
-    $return_var = 0;
-    
-    $last_line = exec($cmd, $output, $return_var);
-    
-    return ( 0 === $return_var);    
-}
-
 echo 'Launching browser ... ';
-if(! openBrowser($browser, $port)){
+if (! openBrowser($browser, $port)) {
     dieMsg('Fail to open browser.', __LINE__);
 }
 echoEOL('OK');
@@ -106,9 +94,11 @@ function dieMsg($msg, $status = STATUS_OK)
     }
 
     $status_to_display = ($status === STATUS_OK) ? 'OK' : $status;
-    
-    echo trim($msg), " (status:${status_to_display})", PHP_EOL;
-    
+
+    echo trim($msg), " (status:{$status_to_display})", PHP_EOL;
+    /**
+     * @SuppressWarnings(PHPMD)
+     */
     exit($status);
 }
 
@@ -269,6 +259,9 @@ function getPortRandom($port_min = 50000, $port_max = 65535)
 
 function isCli()
 {
+    /**
+     * @SuppressWarnings(PHPMD)
+     */
     return PHP_SAPI === 'cli' || empty($_SERVER['REMOTE_ADDR']);
 }
 
@@ -285,7 +278,7 @@ function isAppValidToCall($name_app)
     $cmd = $path_file_lsregister . " -dump | grep -o \"/.*\\${name_app}.app/\" | head -1";
 
     $output = [];
-    $staus  = STATUS_OK;
+    $status = STATUS_OK;
 
     if (! runCmd($cmd, $output, $status)) {
         return false;
@@ -298,12 +291,26 @@ function isServerAlive()
     return `if [ $$ -ne $(pgrep -fo "$0") ]; then echo "既に起動されています"; exit 1; fi`;
 }
 
+/* ---------------------------------------------------------------------- [O] */
+
+function openBrowser($browser, $port)
+{
+    $cmd  = "open -a \"{$browser}\" \"http://localhost:{$port}\" ";
+
+    $output = [];
+    $return_var = 0;
+
+    exec($cmd, $output, $return_var);
+
+    return ( 0 === $return_var);
+}
+
 /* ---------------------------------------------------------------------- [R] */
 
 function runCmd($command, &$output = [], &$return_var = 0)
 {
     $command   = $command . ' 2>&1';
-    $last_line = exec($command, $output, $return_var);
+    exec($command, $output, $return_var);
 
     return (0 === $return_var);
 }

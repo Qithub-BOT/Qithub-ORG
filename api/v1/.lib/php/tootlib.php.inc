@@ -125,8 +125,11 @@ namespace {
 
         $status_to_display = ($status === STATUS_OK) ? 'OK' : $status;
 
-        echo trim($msg), " (status:${status_to_display})", PHP_EOL;
+        echo trim($msg), " (status:{$status_to_display})", PHP_EOL;
 
+        /**
+         * @SuppressWarnings(PHPMD)
+         */
         exit($status);
     }
 
@@ -230,7 +233,7 @@ namespace {
         $host     = $properties->host;
         $endpoint = $properties->endpoint;
 
-        return "${schema}://${host}${endpoint}";
+        return "{$schema}://{$host}{$endpoint}";
     }
 
     function getValue($key, array $array, $default = '')
@@ -293,6 +296,9 @@ namespace {
 
     function isCli()
     {
+        /**
+         * @SuppressWarnings(PHPMD)
+         */
         return PHP_SAPI === 'cli' || empty($_SERVER['REMOTE_ADDR']);
     }
 
