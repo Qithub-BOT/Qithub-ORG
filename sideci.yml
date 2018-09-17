@@ -8,6 +8,8 @@ linter:
       encoding: utf-8
   phpmd:
     options:
+      rule: codesize,naming,unusedcode
+      minimumpriority: 3
       suffixes: php,inc
-      exclude: vendor/
-      strict: true
+      exclude: vendor/,Vendor/
+      strict: false

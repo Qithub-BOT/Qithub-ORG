@@ -2,4 +2,4 @@
 <?php
 namespace Qithub\dev;
 
-include_once('../.lib/php/dev_local_mac.php.inc');
+include_once('../.lib/php/developServer.php.inc');

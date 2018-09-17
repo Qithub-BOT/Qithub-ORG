@@ -1,88 +1,11 @@
 <?php
 namespace Qithub\dev;
 
-/* [Constants] ============================================================== */
-
-const DIR_SEP       = DIRECTORY_SEPARATOR;
-const DO_NOT_RETURN = false;
-const DO_ECHO       = false;
-const DO_RETURN     = true;
-const DO_NOT_ECHO   = true;
-const STATUS_OK     = 0;
-
-/* [Settings] =============================================================== */
-
-disable_ob();
-
-echo 'Starting ...', PHP_EOL;
-
-$browser_default = 'safari';
-
-$list_browser['safari']  = 'Safari';
-$list_browser['chrome']  = 'Google Chrome';
-$list_browser['firefox'] = 'Firefox';
-$list_browser['opera']   = 'Opera';
-
-/* [Main] =================================================================== */
-
-if (! isCli()) {
-    header("Content-Type: text/plain");
-
-    $msg = 'This is a CLI application. Run this script via terminal on macOS.';
-    dieMsg($msg, __LINE__);
-}
-
-if (! isOSmacOS()) {
-    $msg = 'Not macOS: Currently this script works only on macOS.';
-    dieMsg($msg, __LINE__);
-}
-
-//echo isServerAlive();
-//die;
-
-if (1 === $argc) {
-    dieMsg(getMsgHelp(), __LINE__);
-}
-
-$browser = isset($argv[1]) ? strtolower($argv[1]) : $browser_default;
-$index   = isset($argv[2]) ? $argv[2] : getPathIndexDefault();
-
-if (file_exists($browser)) {
-    echo 'ERROR: ';
-    echoEOL('File must be set after the browser name. (See help)'. PHP_EOL);
-}
-
-if (! file_exists($index)) {
-    dieMsg('No index file found. Create one or specify the index name. (See help)');
-}
-
-if (! isset($list_browser[$browser])) {
-    dieMsg(getMsgHelp(), __LINE__);
-}
-
-
-$browser = $list_browser[$browser];
-$port    = getPortRandom();
-
-echo 'Launching browser ... ';
-if (! openBrowser($browser, $port)) {
-    dieMsg('Fail to open browser.', __LINE__);
-}
-echoEOL('OK');
-
-echoEOL('Launching PHP built-in web server ... ');
-echoEOL('(Press ctl+c to stop the server)');
-
-$cmd = "php -S localhost:{$port} {$index}";
-
-echo `$cmd`;
-
-exit(STATUS_OK);
-
 /* [Functions] ============================================================== */
 
 /* ---------------------------------------------------------------------- [D] */
 
+/** * @SuppressWarnings(PHPMD.ExitExpression) */
 function dieMsg($msg, $status = STATUS_OK)
 {
     if (! is_string($msg)) {
@@ -96,39 +19,8 @@ function dieMsg($msg, $status = STATUS_OK)
     $status_to_display = ($status === STATUS_OK) ? 'OK' : $status;
 
     echo trim($msg), " (status:{$status_to_display})", PHP_EOL;
-    /**
-     * @SuppressWarnings(PHPMD)
-     */
+
     exit($status);
-}
-
-
-function disable_ob()
-{
-    // Turn off output buffering and compression and auto flush buffer
-    ini_set('output_buffering', 'off');
-    ini_set('zlib.output_compression', false);
-    ini_set('implicit_flush', true);
-
-    ob_implicit_flush(true);
-
-    // Clear, and turn off output buffering
-    while (ob_get_level() > 0) {
-        // Get the curent level
-        $level = ob_get_level();
-        // End the buffering
-        ob_end_clean();
-        // If the current level has not changed, abort
-        if (ob_get_level() == $level) {
-            break;
-        }
-    }
-
-    // Disable apache output buffering/compression
-    if (function_exists('apache_setenv')) {
-        apache_setenv('no-gzip', '1');
-        apache_setenv('dont-vary', '1');
-    }
 }
 
 /* ---------------------------------------------------------------------- [E] */
@@ -257,11 +149,9 @@ function getPortRandom($port_min = 50000, $port_max = 65535)
 
 /* ---------------------------------------------------------------------- [I] */
 
+/** * @SuppressWarnings(PHPMD.Superglobals) */
 function isCli()
 {
-    /**
-     * @SuppressWarnings(PHPMD)
-     */
     return PHP_SAPI === 'cli' || empty($_SERVER['REMOTE_ADDR']);
 }
 
@@ -272,10 +162,14 @@ function isOSmacOS()
 
 function isAppValidToCall($name_app)
 {
-    $path_dir_lsregister = '/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support';
+    $path_dir_lsregister  = '/System/Library/Frameworks/CoreServices.framework';
+    $path_dir_lsregister .= '/Versions/A/Frameworks/LaunchServices.framework';
+    $path_dir_lsregister .= '/Versions/A/Support';
+
     $path_file_lsregister = $path_dir_lsregister . DIR_SEP . 'lsregister';
 
-    $cmd = $path_file_lsregister . " -dump | grep -o \"/.*\\${name_app}.app/\" | head -1";
+    $args = " -dump | grep -o \"/.*\\{$name_app}.app/\" | head -1";
+    $cmd  = $path_file_lsregister . $args;
 
     $output = [];
     $status = STATUS_OK;

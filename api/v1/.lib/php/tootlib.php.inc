@@ -1,6 +1,7 @@
 <?php
-// 汎用のため明示的にグローバル名前空間に設置
-namespace {
+
+namespace { // 汎用のため明示的にグローバル名前空間に設置
+
 
 /* [Constants] ============================================================== */
 
@@ -23,56 +24,11 @@ namespace {
     const IS_INTERNAL_CMD = true;
     const STATUS_OK       = 0; // 成功時のExit ステータス。失敗時は行番号のこと。
 
-/* [Settings] =============================================================== */
+/* [Classes] ================================================================ */
 
-
-/* [Trait] ================================================================== */
-
-    trait PropertyValuesAllowed
-    {
-        // 設定可能なプロパティ値
-        private $allow = [
-            'schema'     => ['http','https'],
-            'method'     => ['GET','POST','PATCH','PUT','DELETE'],
-            'host'       => ['qiitadon.com','qiita.com','github.com'],
-            'visibility' => ['public', 'unlisted', 'private'],
-            'endpoint'   => [
-                '/api/v1/statuses',
-            ],
-        ];
-    }
-
-    trait PropertyKeysForApi
-    {
-        // デフォルトのプロパティ値
-        private $access_token = '';
-        private $endpoint     = '';
-        private $host         = '';
-        private $method       = '';
-        private $name_service = '';
-        private $name_token   = '';
-        private $schema       = DEFAULT_SCHEMA;
-        private $spoiler_text = ''; // CW の警告文
-        private $status       = ''; // トゥート本体
-        private $visibility   = DEFAULT_VISIBILITY;
-
-        // プロパティ値の汎用ゲッター
-        public function __get($name_property)
-        {
-            return $this->$name_property;
-        }
-    }
-
-    if (!isset($settings)) {
-        // Default settings
-        $settings = [
-            'schema'     => 'https',
-            'host'       => 'qiitadon.com',
-            'method'     => 'POST',
-            'endpoint'   => '/api/v1/statuses',
-            'visibility' => 'public',  // タイプ: public, unlisted, private
-        ];
-    }
+    include_once(dirname(__FILE__) . DIR_SEP . 'traitPropertyValuesAllowed.php.inc');
+    include_once(dirname(__FILE__) . DIR_SEP . 'traitPropertyKeysForApi.php.inc');
+    include_once(dirname(__FILE__) . DIR_SEP . 'classProperties.php.inc');
 
 /* [Functions] ============================================================== */
 
@@ -113,6 +69,7 @@ namespace {
 
 /* ---------------------------------------------------------------------- [D] */
 
+    /** * @SuppressWarnings(PHPMD.ExitExpression) */
     function dieMsg($msg, $status = STATUS_OK)
     {
         if (! is_string($msg)) {
@@ -127,9 +84,7 @@ namespace {
 
         echo trim($msg), " (status:{$status_to_display})", PHP_EOL;
 
-        /**
-         * @SuppressWarnings(PHPMD)
-         */
+        /** * @SuppressWarnings("PHPMD.ExitExpression") */
         exit($status);
     }
 
@@ -207,7 +162,7 @@ namespace {
 
         // サーバーの `gettoken` シェルコマンドから現在の AccessToken 取得
         // 参照: https://github.com/Qithub-BOT/Qithub-ORG/issues/128
-        $result = execCmd('gettoken', "${name_service} ${name_token}");
+        $result = execCmd('gettoken', "{$name_service} {$name_token}");
 
         if (getValue('is_error', $result, IS_ERROR)) {
             $msg  = 'Error while requesting access token.' . PHP_EOL . PHP_EOL;
@@ -296,9 +251,7 @@ namespace {
 
     function isCli()
     {
-        /**
-         * @SuppressWarnings(PHPMD)
-         */
+        /** * @SuppressWarnings("PHPMD.SuperGlobals") */
         return PHP_SAPI === 'cli' || empty($_SERVER['REMOTE_ADDR']);
     }
 
@@ -394,110 +347,6 @@ namespace {
 
 /* [Class] ================================================================== */
 
-    class Properties
-    {
-        use PropertyValuesAllowed;
-        use PropertyKeysForApi;
 
-        /* ------------------------------------------------------ [Construct] */
-
-        public function __construct(array $settings)
-        {
-            $this->setProperties($settings);
-        }
-
-        /* -------------------------------------------------------------- [S] */
-
-        private function setProperties(array $settings)
-        {
-            $this->access_token = $this->fetchAccessToken($settings);
-            $this->endpoint     = $this->fetchEndpoint($settings);
-            $this->host         = $this->fetchHost($settings);
-            $this->method       = $this->fetchMethod($settings);
-            $this->schema       = $this->fetchSchema($settings);
-            $this->spoiler_text = $this->fetchSpoilerText($settings);
-            $this->status       = $this->fetchStatus($settings);
-            $this->visibility   = $this->fetchVisibility($settings);
-        }
-
-        /* -------------------------------------------------------------- [F] */
-
-        private function fetchAccessToken(array $settings)
-        {
-            $string = getValue('access_token', $settings, '');
-
-            $this->name_service = getValue('name_service', $settings, '');
-            $this->name_token   = getValue('name_token', $settings, '');
-
-            if (! empty($string)) {
-                if (! isValidFormatToken($string)) {
-                    dieMsg('Invalid access token format.', __LINE__);
-                }
-
-                return $string;
-            }
-
-            if (empty($this->name_service) || empty($this->name_token)) {
-                $msg = 'No access token specified or bad `gettoken` request.';
-                dieMsg($msg, __LINE__);
-            }
-
-            return getAccessToken($this->name_service, $this->name_token);
-        }
-
-        private function fetchEndpoint(array $settings)
-        {
-            $string    = getValue('endpoint', $settings);
-            $endpoints = $this->allow['endpoint'];
-
-            return in_array($string, $endpoints) ? $string : '';
-        }
-
-        private function fetchHost(array $settings)
-        {
-            $string = getValue('host', $settings);
-            $hosts  = $this->allow['host'];
-
-            return in_array($string, $hosts) ? $string : $this->host;
-        }
-
-        private function fetchMethod(array $settings)
-        {
-            $string  = strtoupper(getValue('method', $settings));
-            $methods = $this->allow['method'];
-
-            return in_array($string, $methods) ? $string : $this->method;
-        }
-
-        private function fetchSchema(array $settings)
-        {
-            $string  = strtolower(getValue('schema', $settings));
-            $schemas = $this->allow['schema'];
-
-            return in_array($string, $schemas) ? $string : $this->schema;
-        }
-
-        private function fetchSpoilerText(array $settings)
-        {
-            $string = getValue('spoiler_text', $settings, '');
-
-            return trim($string);
-        }
-
-        private function fetchStatus(array $settings)
-        {
-            $string = getValue('status', $settings, '');
-
-            return trim($string);
-        }
-
-        private function fetchVisibility(array $settings)
-        {
-            $string       = strtolower(getValue('visibility', $settings));
-            $visibilities = $this->allow['visibility'];
-
-            return in_array($string, $visibilities) ? $string : $this->visibility;
-        }
-    }
-
-} //End Of Namespace
+//End Of Namespace
+}
