@@ -1,0 +1,5 @@
+#!/usr/bin/env php
+<?php
+namespace Qithub\dev;
+
+include_once('../.lib/php/dev_local_mac.php.inc');
