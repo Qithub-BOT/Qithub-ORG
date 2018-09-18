@@ -1,0 +1,5 @@
+#!/usr/bin/env php
+<?php
+namespace Qithub\dev;
+
+include_once('../.lib/php/developServer.php.inc');

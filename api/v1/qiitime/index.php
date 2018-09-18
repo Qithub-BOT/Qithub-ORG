@@ -1,31 +1,34 @@
 <?php
-namespace Qithub\QiiTime;
-
 /**
- * This script toots one time signal toot per hour on request.
- * And/or returns the last tooted info. Such as the Toot ID (Status ID) and time.
+ * このスクリプトは時報トゥートの実行と最終時報トゥートの情報を JSON で返します.
+ *
+ * 基本動作仕様:
+ *
+ * - トゥート済みの時間と同じ時間内の呼び出しの場合は最終トゥート情報を返します。
+ * - 未トゥートの場合は、時報をトゥートし最終時報トゥートの情報を更新します。
+ *
+ * その他の仕様:
+ *
+ * - 最終トゥート情報は同階層の `.data/.tooted` に保存されます。
+ * - `.tooted` は Include 可能な PHP ファイルです。
+ * - `.tooted` には $settings の配列データが記載されています。（自動生成）
  *
  * Notes:
- * - You need to set access token before use as below:
- *   https://qithub.tk/api/v1/qiitime/?token=<accesstoken>
- *   Only once required.
- * - This scripts works stand-alone. To use it on your instance, copy this script
- *   and change default settings on "Settings" section.
+ * - 初期化： `.data/` ディレクトリを削除します。
  */
+
+namespace Qithub\QiiTime;
+
+include_once('../.lib/php/tootlib.php.inc');
 
 /* [Constants] ============================================================== */
 
-const FORMAT_TIMESTAMP   = 'YmdH';  // 2018083020 format
-const JSON_NO_OPTION     = 0;       // To reset JSON_ENCODE option
-const LEN_ACCESS_TOKEN   = 64;      // String length of access token
-const NAME_USER_AGENT    = 'QiiTime(HourlyTootBot)';
-const QUERY_TOKEN        = 'token'; // Query key name for access token
-const SLEEPTIME_ON_TOOT  = 1;       // 1 sec pause after toot
-const STATUS_OK          = 0;       // Exit status on success. Line num on fail.
-const TIMEZONE           = 'Asia/Tokyo'; // Our time. Japan.
+// 内部環境定数
+const FORMAT_TIMESTAMP   = 'YmdH';  // 2018083020 フォーマット
+const JSON_NO_OPTION     = 0;       // json_encode() のオプション初期化用
+const KEY_TOKEN          = 'token'; //
 
-//Aliases and flags
-const DIR_SEP           = DIRECTORY_SEPARATOR;
+// フラグ
 const TOOT_IS_NEW       = false;
 const TOOT_IS_CACHE     = true;
 
@@ -36,13 +39,8 @@ define('TIME_NOW', time());
 // Set time zone
 date_default_timezone_set(TIMEZONE);
 
-// Default settings
+// トゥート済み情報のデフォルト（初回のみ適用）
 $settings = [
-    'schema'         => 'https',
-    'host'           => 'qiitadon.com',
-    'method'         => 'POST',
-    'endpoint'       => '/api/v1/statuses',
-    'visibility'     => 'public', //public, unlisted, private
     'name_file_data' => '.tooted',
     'name_dir_data'  => '.data',
     'path_dir_curr'  => dirname(__FILE__),
@@ -50,59 +48,60 @@ $settings = [
 
 /* [Main] =================================================================== */
 
-// Prepare data directory and file
-if (! hasSavedData()) {
-    if (! is_dir(getPathDirData()) && ! mkdir(getPathDirData(), 0700)) {
+// トゥート済み情報の保存先を同階層に作成
+if (! hasSavedData($settings)) {
+    $path_dir_data = getPathDirData($settings);
+
+    // ディレクトリ作成
+    if (! is_dir($path_dir_data) && ! mkdir($path_dir_data, 0700)) {
         dieMsg('Error: Can not create data directory.', __LINE__);
     }
-
-    if (! saveData()) {
+    // トゥート済み情報の初回保存（デフォルト値）
+    if (! saveData($settings)) {
         dieMsg('Error: Can not save data.', __LINE__);
     }
 }
 
-// Include last tooted info（load variable $settings）
-include(getPathFileData());
+// トゥート済み情報（$settings）の読み込み
+include(getPathFileData($settings));
 
-// Check if access token is in $settings
-if (! isSetAccessToken()) {
-    // Update $settings, if access token is in request query.
-    if (! setAccessTokenFromQuery()) {
-        exitNoAccessTokenSet(__LINE__);
-    }
-    // Exit if success saving access token.
-    $msg = 'Success: Access Token set. Re-access the URL with no query.';
-    dieMsg($msg, STATUS_OK);
-}
-
-// Return cache. If in-time request then return last tooted info and exit.
-if (isRequestInTime()) {
-    returnLatestTootInfo();
+// 同時間内のアクセスの場合は何もせずキャッシュを返して終了
+if (isRequestInTime($settings)) {
+    echoLatestTootInfo($settings);
     exit(STATUS_OK);
 }
 
-// Create message to toot.
-$msg = createTootMsg();
+/* トゥートの実行とキャッシュ作成 */
 
-// Toot the message and exit on fail.
-$settings['result'] = toot($msg);
+$msg = createTootMsg(); // トゥート内容の作成
 
-// Update time tooted
+// トゥートの実行（失敗時は Exit）
+// アクセストークン取得許可済み（Issue #141 にて）
+$settings['result'] = toot([
+    'schema'       => 'https',
+    'host'         => 'qiitadon.com',
+    'visibility'   => 'unlisted',           // タイプ: public, unlisted, private
+    'name_service' => 'qiitadon',           // `gettoken` 第１引数
+    'name_token'   => 'qithub-dev',         // `gettoken` 第２引数
+    'spoiler_text' => $msg['spoiler_text'], // CW 警告文
+    'status'       => $msg['status'],       // トゥート本体
+]);
+
+// トゥート時間の更新
 $settings['time']      = getTimeStampHourlyNow();
 $settings['threshold'] = getTimeStampHourlyNow();
 
-// Save variable $settings
-if (! saveData()) {
+// トゥート済み情報の保存（キャッシュの更新）
+if (! saveData($settings)) {
     dieMsg('Error: Failed saving data.', __LINE__);
 } else {
-    // Reload and return latest tooted info and exit
-    include(getPathFileData());
-    returnLatestTootInfo(TOOT_IS_NEW);
+    // 保存データを再読み込みして表示
+    include(getPathFileData($settings));
+    echoLatestTootInfo($settings, TOOT_IS_NEW);
     exit(STATUS_OK);
 }
 
-// Exit on unknown error
-exit(__LINE__);
+exit(__LINE__);// End of Main
 
 /* [Functions] ============================================================== */
 
@@ -149,92 +148,28 @@ function convertArrayIncludable(array $array)
     return   $string . PHP_EOL;
 }
 
-/* ---------------------------------------------------------------------- [D] */
-
-function dieMsg($msg, $status = STATUS_OK)
-{
-    if (! is_string($msg)) {
-        $msg = print_r($msg, true);
-    }
-
-    if (! isCli()) {
-        $etag = getEtag();
-        header("Content-Type: text/plain");
-        header("ETag: \"${etag}\"");
-    }
-
-    echo $msg, PHP_EOL;
-
-    exit($status);
-}
-
 /* ---------------------------------------------------------------------- [E] */
 
-function exitNoAccessTokenSet($status)
+function echoLatestTootInfo(array $settings, $status_cache = TOOT_IS_CACHE)
 {
-    $key = QUERY_TOKEN;
-    $msg = <<<EOL
-No access token set.
+    if (! isCli()) {
+        $etag = getEtag($settings);
+        header('content-type: application/json; charset=utf-8');
+        header("ETag: \"{$etag}\"");
+    }
 
-Access with "?{$key}=<YOUR ACCESS TOKEN>" query to this URL again.
-
-* This action is required only once.
-EOL;
-
-    dieMsg($msg, $status);
+    echo getJsonToReturn($settings, $status_cache, JSON_PRETTY_PRINT), PHP_EOL;
 }
 
 /* ---------------------------------------------------------------------- [G] */
 
-function getAccessToken()
+function getEtag(array $settings)
 {
-    static $result;
-
-    if (isset($result)) {
-        return $result;
-    }
-
-    global $settings;
-
-    if (! isSetAccessToken()) {
-        return false;
-    }
-
-    $result = $settings[QUERY_TOKEN];
-
-    return $result;
+    return hash('md5', getThreshold($settings));
 }
 
-function getAccessTokenFromQuery()
+function getJsonToReturn(array $settings, $status_cache = TOOT_IS_CACHE, $json_option = JSON_NO_OPTION)
 {
-    $access_token = getValue(QUERY_TOKEN, $_GET);
-
-    if (empty($access_token)) {
-        return false;
-    }
-
-    if (! isTokenFormatValid($access_token)) {
-        dieMsg('Error: Invalid access token format.', __LINE__);
-    }
-
-    return $access_token;
-}
-
-function getDefaultVisibility()
-{
-    global $settings;
-
-    return getValue('visibility', $settings);
-}
-
-function getEtag()
-{
-    return hash('md5', getThreshold());
-}
-
-function getJsonToReturn($status_cache = TOOT_IS_CACHE, $json_option = JSON_NO_OPTION)
-{
-    global $settings;
 
     if (isCli()) {
         $json_option = $json_option | JSON_PRETTY_PRINT;
@@ -244,47 +179,39 @@ function getJsonToReturn($status_cache = TOOT_IS_CACHE, $json_option = JSON_NO_O
     $result['is_cache']   = $status_cache;
 
     $result_toot = getValue('result', $settings);
-    $result['id']         = getValue('id', $result_toot, 'unset');
-    $result['uri']        = getValue('uri', $result_toot, 'unset');
-    $result['url']        = getValue('url', $result_toot, 'unset');
-    $result['created_at'] = getValue('created_at', $result_toot, 'unset');
+
+    $result['id']           = getValue('id', $result_toot, 'unset');
+    $result['uri']          = getValue('uri', $result_toot, 'unset');
+    $result['url']          = getValue('url', $result_toot, 'unset');
+    $result['created_at']   = getValue('created_at', $result_toot, 'unset');
     $result['requested_at'] = date('Y-m-d\TH:i:s.Z\Z', TIME_NOW); //Without TimeZone
 
     return json_encode($result, $json_option);
 }
 
-function getPathDirData()
+function getPathDirData(array $settings)
 {
-    global $settings;
-
     $path_dir_curr  = getValue('path_dir_curr', $settings);
     $name_dir_data  = getValue('name_dir_data', $settings);
 
     return $path_dir_curr . DIR_SEP . $name_dir_data;
 }
 
-function getPathFileData()
+function getPathFileData(array $settings)
 {
-    static $result;
-
-    if (isset($result)) {
-        return $result;
-    }
-
-    global $settings;
-
     $name_file_data = getValue('name_file_data', $settings);
-    $path_dir_data  = getPathDirData();
+    $path_dir_data  = getPathDirData($settings);
 
-    $result = $path_dir_data . DIR_SEP . $name_file_data;
-
-    return $result;
+    return $path_dir_data . DIR_SEP . $name_file_data;
 }
 
-function getTimeStampHourlyLast()
+function getThreshold(array $settings)
 {
-    global $settings;
+    return getValue('threshold', $settings, getTimeStampHourlyNow());
+}
 
+function getTimeStampHourlyLast(array $settings)
+{
     return getValue('time', $settings);
 }
 
@@ -293,100 +220,31 @@ function getTimeStampHourlyNow()
     return date(FORMAT_TIMESTAMP, TIME_NOW);
 }
 
-function getThreshold()
-{
-    global $settings;
-
-    return getValue('threshold', $settings, getTimeStampHourlyNow());
-}
-
-function getUrlApiToot()
-{
-    global $settings;
-
-    $schema   = getValue('schema', $settings);
-    $host     = getValue('host', $settings);
-    $endpoint = getValue('endpoint', $settings);
-    $url      = "${schema}://${host}${endpoint}";
-
-    return $url;
-}
-
-function getValue($key, array $array, $default = '')
-{
-    if (empty($default)) {
-        $default = false;
-    }
-
-    return (isset($array[$key])) ? $array[$key] : $default;
-}
-
 /* ---------------------------------------------------------------------- [H] */
 
-function hasSavedData()
+function hasSavedData(array $settings)
 {
-    return file_exists(getPathFileData());
+    return file_exists(getPathFileData($settings));
 }
 
 /* ---------------------------------------------------------------------- [I] */
 
-function isCli()
+function isRequestInTime(array $settings)
 {
-    return PHP_SAPI === 'cli' || empty($_SERVER['REMOTE_ADDR']);
+    return (getTimeStampHourlyLast($settings) === getTimeStampHourlyNow());
 }
 
-function isHeaderResponseOK($response_header)
-{
-    foreach ($response_header as $line) {
-        if (false !== strpos(strtoupper($line), '200 OK')){
-            return true;
-        }
-    }
-
-    return false;
-}
-
-function isRequestInTime()
-{
-    return (getTimeStampHourlyLast() === getTimeStampHourlyNow());
-}
-
-function isSetAccessToken()
-{
-    global $settings;
-
-    return isset($settings[QUERY_TOKEN]);
-}
-
-function isTokenFormatValid($string)
-{
-    return ctype_alnum($string) && (LEN_ACCESS_TOKEN === strlen($string));
-}
-
-/* ---------------------------------------------------------------------- [R] */
-
-function returnLatestTootInfo($status_cache = TOOT_IS_CACHE)
-{
-    if (! isCli()) {
-        $etag = getEtag();
-        header('content-type: application/json; charset=utf-8');
-        header("ETag: \"${etag}\"");
-    }
-
-    echo getJsonToReturn($status_cache, JSON_PRETTY_PRINT), PHP_EOL;
-}
 
 /* ---------------------------------------------------------------------- [S] */
 
-function saveData()
+function saveData(array $settings)
 {
-    global $settings;
-
-    $path_file_data = getPathFileData();
+    $path_file_data = getPathFileData($settings);
     $data_to_save   = convertArrayIncludable($settings);
 
     if (file_put_contents($path_file_data, $data_to_save, LOCK_EX)) {
         $result = file_get_contents($path_file_data);
+
         return ($result === $data_to_save);
     };
 
@@ -403,67 +261,7 @@ function setAccessTokenFromQuery()
 
     global $settings;
 
-    $settings[QUERY_TOKEN] = $access_token;
+    $settings[KEY_TOKEN] = $access_token;
 
     return saveData();
-}
-
-/* ---------------------------------------------------------------------- [T] */
-
-function toot(array $toot_msg, $visibility = null)
-{
-    sleep(1); // Avoid too many toots limitation (1toot/sec max)
-
-    if (null === $visibility) {
-        $visibility = getDefaultVisibility();
-    }
-
-    $status       = getValue('status', $toot_msg);
-    $spoiler_text = getValue('spoiler_text', $toot_msg);
-
-    if (empty(trim($status) . trim($spoiler_text))) {
-        dieMsg('Error: No toot message specified.', __LINE__);
-    }
-
-    global $settings;
-
-    $method       = getValue('method', $settings);
-    $access_token = getAccessToken();
-    $data_post    = [
-            'status'     => $status,
-            'visibility' => $visibility,
-    ];
-
-    if (! empty($spoiler_text)) {
-        $data_post['spoiler_text'] = $spoiler_text;
-    }
-
-    $data_post      = http_build_query($data_post, "", "&");
-    $name_useragent = NAME_USER_AGENT;
-
-    $header    = implode("\r\n", [
-        'Content-Type: application/x-www-form-urlencoded',
-        "Authorization: Bearer ${access_token}",
-        "User-Agent: ${name_useragent}",
-    ]);
-
-    $context = [
-        'http' => [
-            'method'  => $method,
-            'header'  => $header,
-            'content' => $data_post,
-        ],
-    ];
-
-    $url    = getUrlApiToot();
-    $result = @file_get_contents($url, false, stream_context_create($context));
-
-    if (! isHeaderResponseOK($http_response_header)) {
-        $msg  = 'Error: Bad response from Mastodon server.' . PHP_EOL;
-        $msg .= 'Response header:' . PHP_EOL;
-        $msg .= print_r($http_response_header, true);
-        dieMsg($msg, __LINE__); // Should we log here?
-    }
-
-    return json_decode($result, JSON_OBJECT_AS_ARRAY);
 }
