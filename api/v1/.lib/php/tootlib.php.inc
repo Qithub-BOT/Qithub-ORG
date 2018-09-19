@@ -69,7 +69,6 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
 
 /* ---------------------------------------------------------------------- [D] */
 
-    /** * @SuppressWarnings(PHPMD.ExitExpression) */
     function dieMsg($msg, $status = STATUS_OK)
     {
         if (! is_string($msg)) {
@@ -332,7 +331,7 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
      */
     function toot(array $settings)
     {
-        $settings['schama']   = 'https';
+        $settings['schema']   = 'https';
         $settings['endpoint'] = '/api/v1/statuses';
         $settings['method']   = 'POST';
 
