@@ -82,7 +82,7 @@ $settings['result'] = toot([
     'host'         => 'qiitadon.com',
     'visibility'   => 'unlisted',           // タイプ: public, unlisted, private
     'name_service' => 'qiitadon',           // `gettoken` 第１引数
-    'name_token'   => 'qithub',             // `gettoken` 第２引数
+    'name_token'   => 'qiitime',            // `gettoken` 第２引数
     'spoiler_text' => $msg['spoiler_text'], // CW 警告文
     'status'       => $msg['status'],       // トゥート本体
 ]);
