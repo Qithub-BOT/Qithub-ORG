@@ -28,6 +28,7 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
 
 /* ---------------------------------------------------------------- [Classes] */
 
+    include_once($path_dir_self . 'traitPropertyValuesAllowed.php.inc');
     include_once($path_dir_self . 'traitPropertyKeysForApi.php.inc');
     include_once($path_dir_self . 'classProperties.php.inc');
 
