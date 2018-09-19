@@ -8,15 +8,9 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
 // 内部環境定数
     const LEN_ACCESS_TOKEN   = 64; // Mastodn アクセストークン長
     const NAME_USER_AGENT    = 'Qithub(bot) by Qithub ORG'; //これにAPP名を加えること
-    const VER_PHP_REQUIRED   = '7.1.0'; // PHP v5.6 でも動くが v7.1の方が速いため
-    const VER_HHVM_REQUIRED  = '5.6.0'; // Qithub.tk の PHP は HHVM なため
     const SLEEPTIME_ON_TOOT  = 1;      // API利用時の連投防止の待ち時間（秒）
-    const TIMEZONE           = 'Asia/Tokyo'; // Our time. Japan.
     const DEFAULT_SCHEMA     = 'https';
     const DEFAULT_VISIBILITY = 'private';
-
-// 既存定数のエイリアス
-    const DIR_SEP = DIRECTORY_SEPARATOR;
 
 // フラグ
     const IS_ERROR        = true;
@@ -24,11 +18,19 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
     const IS_INTERNAL_CMD = true;
     const STATUS_OK       = 0; // 成功時のExit ステータス。失敗時は行番号のこと。
 
-/* [Classes] ================================================================ */
+/* [Includes] =============================================================== */
 
-    include_once(dirname(__FILE__) . DIR_SEP . 'traitPropertyValuesAllowed.php.inc');
-    include_once(dirname(__FILE__) . DIR_SEP . 'traitPropertyKeysForApi.php.inc');
-    include_once(dirname(__FILE__) . DIR_SEP . 'classProperties.php.inc');
+    $path_dir_self = dirname(__FILE__) . DIRECTORY_SEPARATOR;
+
+/* ------------------------------------------------------- [Common functions] */
+
+    include_once($path_dir_self . 'functionsCommon.php.inc');
+
+/* ---------------------------------------------------------------- [Classes] */
+
+    include_once($path_dir_self . 'traitPropertyValuesAllowed.php.inc');
+    include_once($path_dir_self . 'traitPropertyKeysForApi.php.inc');
+    include_once($path_dir_self . 'classProperties.php.inc');
 
 /* [Functions] ============================================================== */
 
@@ -65,26 +67,6 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
         ];
 
         return stream_context_create($context);
-    }
-
-/* ---------------------------------------------------------------------- [D] */
-
-    function dieMsg($msg, $status = STATUS_OK)
-    {
-        if (! is_string($msg)) {
-            $msg = print_r($msg, true);
-        }
-
-        if (! isCli()) {
-            header("Content-Type: text/plain");
-        }
-
-        $status_to_display = ($status === STATUS_OK) ? 'OK' : $status;
-
-        echo trim($msg), " (status:{$status_to_display})", PHP_EOL;
-
-        /** * @SuppressWarnings("PHPMD.ExitExpression") */
-        exit($status);
     }
 
 /* ---------------------------------------------------------------------- [E] */
@@ -190,15 +172,6 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
         return "{$schema}://{$host}{$endpoint}";
     }
 
-    function getValue($key, array $array, $default = '')
-    {
-        if (empty($default)) {
-            $default = false;
-        }
-
-        return (isset($array[$key])) ? $array[$key] : $default;
-    }
-
     function getVisibilityDefault()
     {
         return DEFAULT_VISIBILITY;
@@ -246,21 +219,6 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
             default:
                 return false;
         }
-    }
-
-    function isCli()
-    {
-        /** * @SuppressWarnings("PHPMD.SuperGlobals") */
-        return PHP_SAPI === 'cli' || empty($_SERVER['REMOTE_ADDR']);
-    }
-
-    function isCoveredVersionPHP()
-    {
-        $ver_current  = phpversion();
-        $is_hhvm      = (false !== strpos(strtolower($ver_current), 'hhvm'));
-        $ver_required = ($is_hhvm) ? VER_HHVM_REQUIRED : VER_PHP_REQUIRED;
-
-        return version_compare($ver_current, $ver_required, '>');
     }
 
     function isHeaderResponseOK($response_header)
