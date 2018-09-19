@@ -7,7 +7,7 @@
 
 namespace Qithub\NameOfYourApp;
 
-include_once('../lib/php/tootlib.php.inc');
+include_once('../.lib/php/tootlib.php.inc');
 
 $result = toot([
     'schema'       => 'https',        //
