@@ -63,14 +63,16 @@ if (isRequestInTime($settings)) {
 }
 
 // ロック解除が終わるまで待機
-while (isLocked()) {
+while (true) {
+    if (! isLocked()) {
+        break;
+    }
+
     // 待機しすぎたら強制解除＆キャッシュを返して終了
     if (time() > TIME_NOW + TIME_WAIT_TO_UNLOCK) {
-        if (unlockFile()) {
-            echoLatestTootInfo($settings);
-            exit(STATUS_OK);
-        }
-        dieMsg('Error: Can not unlock file.', __LINE__);
+        unlockFile();
+        echoLatestTootInfo($settings);
+        exit(STATUS_OK);
     }
 }
 
