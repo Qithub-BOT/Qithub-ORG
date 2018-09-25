@@ -4,7 +4,7 @@ namespace Qithub\QiitaItems;
 /* [Constants] ============================================================== */
 
 // 本番・開発切り替えフラグ
-const IS_MODE_DEV = true; // false の場合は本番アクセストークンを利用
+const IS_MODE_DEV = false; // false の場合は本番アクセストークンを利用
 
 // IS_MODE_DEV = true 時の返信先トゥートID
 const ID_TOOT_INREPLY_WHEN_DEV = '100778081113682805';
