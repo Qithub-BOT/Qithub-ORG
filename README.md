@@ -5,23 +5,15 @@
 <a id="toc"></a>
 # 目次
 
-<ul>
-    <li><a href="#index1">1. Qithubについて</a></li>
-    <ul>
-        <li><a href="#index1-1">1-1. Qithubサークルとは</a></li>
-        <li><a href="#index1-2">1-2. 参加条件</a></li>
-        <li><a href="#index1-3">1-3. 入部方法</a></li>
-        <li><a href="#index1-4">1-4. メンテナ</a></li>
-        <li><a href="#index1-5">1-5. 部室・溜まり場・遊び場</a></li>
-    </ul>
-</ul>
-<ul>
-    <li><a href="#index2">2. Qithub-ORGリポジトリについて</a></li>
-    <ul>
-        <li><a href="#index2-1">2-1. リポジトリのWiki</a></li>
-        <li><a href="#index2-2">2-2. 新規リポジトリを作りたい</a></li>
-    </ul>
-</ul>
+1. [Qithubについて](#index1)
+    - 1-1. [Qithubサークルとは](#index1-1)
+    - 1-2. [参加条件](#index1-2)
+    - 1-3. [入部方法](#index1-3)
+    - 1-4. [メンテナ](#index1-4)
+    - 1-5. [部室・溜まり場・遊び場](#index1-5)
+1. [Qithub-ORGリポジトリについて](#index2)
+    - 2-1. [リポジトリのWiki](#index2-1)
+    - 2-2. [新規リポジトリを作りたい](#index2-2)
 
 
 <a id="index1"></a>
@@ -72,13 +64,13 @@ Qithub サークルでは GitHub の Organization メンバーをメンテナと
 
 ### 部室
 
-<img src="https://github.com/Qithub-BOT/Qithub-ORG/blob/master/images/Icon_Qithub/Qithub_500x500.png" width=80 align=left>  [部室_qithub @ Qiitadon酒場hidao店](https://discordapp.com/invite/kRVsy4A) @ Discrod ※
+<img src="https://github.com/Qithub-BOT/Qithub-ORG/blob/master/images/Icon_Qithub/Qithub_500x500.png" width=80 align=left>  [部室_qithub @ Qiitadon酒場hidao店](https://discordapp.com/invite/kRVsy4A) @ Discrod [^注釈]
 
 下記 Qiitadon酒場hidao店の１室（チャンネル）を借りて部室にしています。
 
 ### 溜まり場
 
-<img src="https://raw.githubusercontent.com/Qithub-BOT/Qithub-ORG/master/images/Icon_QiitadonBar/QiitadonBar-v2_512x512.png" width=80 align=left> [溜まり場 @ Qiitadon酒場hidao店](https://discord.gg/JevmsM7) @ Discord ※
+<img src="https://raw.githubusercontent.com/Qithub-BOT/Qithub-ORG/master/images/Icon_QiitadonBar/QiitadonBar-v2_512x512.png" width=80 align=left> [溜まり場 @ Qiitadon酒場hidao店](https://discord.gg/JevmsM7) @ Discord [^注釈]
 
 Qiitadon酒場は 24h/7d オープンのオンライン酒場です。Qiitadon とは違った雰囲気でドリンク・食べ物持参で、まったりとチャットしています。たまにライブ配信もしています。
 
@@ -88,7 +80,7 @@ Qiitadon酒場は 24h/7d オープンのオンライン酒場です。Qiitadon �
 
 上記 URL のサーバが Qithub サークルの遊び場です。[このリポジトリ](https://github.com/Qithub-BOT/Qithub-ORG)の内容が https://qithub.tk/ に反映されるようになっています。そのため PR をあげてマージされると Web サーバに反映されます。<br>また、**このサーバは Qiita/Qiitadon ユーザが使うことを目的としています**ので一般ユーザ向けのサーバではないことにご留意ください。（一般向けにスピンオフする可能性はあります）
 
-※ **`Discord` はチャット・ルームです。ゲスト・アカウント（ユーザ登録不要）で入場できます**。入場の際、ニックネームは Qiitadon と同じアカウント名にしてもらうとわかりやすくて助かります。ブラウザを閉じると別のゲスト・ユーザとなるので、それが面倒な方はアカウントを作成をおすすめします。
+[^注釈]:Discord はチャット・ルームです。ゲスト・アカウント（ユーザ登録不要）で入場できます。入場の際、ニックネームは Qiitadon と同じアカウント名にしてもらうとわかりやすくて助かります。ブラウザを閉じると別のゲスト・ユーザとなるので、それが面倒な方はアカウントを作成をおすすめします。
 
 ---
 <a href="#toc">目次へ戻る</a>
