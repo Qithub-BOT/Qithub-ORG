@@ -62,6 +62,12 @@ if (isRequestInTime($settings)) {
     exit(STATUS_OK);
 }
 
+// `?update=` を持たない場合はキャッシュを返して終了
+if(! isset($_GET['update'])){
+    echoLatestTootInfo($settings);
+    exit(STATUS_OK);    
+}
+
 // ロック解除が終わるまで待機
 while (true) {
     if (! isLocked()) {
