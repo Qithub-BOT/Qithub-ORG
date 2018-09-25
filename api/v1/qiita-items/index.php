@@ -126,4 +126,3 @@ if (saveSettings($settings)) {
 }
 
 dieMsg('Unknown Error.', __LINE__);
-
