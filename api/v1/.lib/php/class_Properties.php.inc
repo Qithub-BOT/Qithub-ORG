@@ -1,9 +1,8 @@
 <?php
-
 // 汎用のため明示的にグローバル名前空間（namespaceなし）に設置
-namespace
+namespace {
 
-{
+
     class Properties
     {
         use PropertyValuesAllowed;
@@ -20,14 +19,15 @@ namespace
 
         private function setProperties(array $settings)
         {
-            $this->access_token = $this->fetchAccessToken($settings);
-            $this->endpoint     = $this->fetchEndpoint($settings);
-            $this->host         = $this->fetchHost($settings);
-            $this->method       = $this->fetchMethod($settings);
-            $this->schema       = $this->fetchSchema($settings);
-            $this->spoiler_text = $this->fetchSpoilerText($settings);
-            $this->status       = $this->fetchStatus($settings);
-            $this->visibility   = $this->fetchVisibility($settings);
+            $this->access_token   = $this->fetchAccessToken($settings);
+            $this->endpoint       = $this->fetchEndpoint($settings);
+            $this->host           = $this->fetchHost($settings);
+            $this->method         = $this->fetchMethod($settings);
+            $this->schema         = $this->fetchSchema($settings);
+            $this->spoiler_text   = $this->fetchSpoilerText($settings);
+            $this->status         = $this->fetchStatus($settings);
+            $this->visibility     = $this->fetchVisibility($settings);
+            $this->in_reply_to_id = $this->fetchInReplyToId($settings);
         }
 
         /* -------------------------------------------------------------- [F] */
@@ -69,6 +69,17 @@ namespace
             $hosts  = $this->allow['host'];
 
             return in_array($string, $hosts) ? $string : $this->host;
+        }
+
+        private function fetchInReplyToId(array $settings)
+        {
+            $string = getValue('in_reply_to_id', $settings, '');
+
+            if (! empty($string) && ! isValidFormatIdToot($string)) {
+                dieMsg('Invalid access token format.', __LINE__);
+            }
+
+            return $string;
         }
 
         private function fetchMethod(array $settings)

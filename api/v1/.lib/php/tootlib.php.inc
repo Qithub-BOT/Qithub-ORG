@@ -1,5 +1,4 @@
 <?php
-
 namespace { // 汎用のため明示的にグローバル名前空間に設置
 
 
@@ -16,7 +15,6 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
     const IS_ERROR        = true;
     const IS_EXTERNAL_CMD = false;
     const IS_INTERNAL_CMD = true;
-    const STATUS_OK       = 0; // 成功時のExit ステータス。失敗時は行番号のこと。
 
 /* [Includes] =============================================================== */
 
@@ -24,13 +22,13 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
 
 /* ------------------------------------------------------- [Common functions] */
 
-    include_once($path_dir_self . 'functionsCommon.php.inc');
+    include_once($path_dir_self . 'function_Common.php.inc');
 
 /* ---------------------------------------------------------------- [Classes] */
 
-    include_once($path_dir_self . 'traitPropertyValuesAllowed.php.inc');
-    include_once($path_dir_self . 'traitPropertyKeysForApi.php.inc');
-    include_once($path_dir_self . 'classProperties.php.inc');
+    include_once($path_dir_self . 'trait_PropertyValuesAllowed.php.inc');
+    include_once($path_dir_self . 'trait_PropertyKeysForApi.php.inc');
+    include_once($path_dir_self . 'class_Properties.php.inc');
 
 /* [Functions] ============================================================== */
 
@@ -43,7 +41,12 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
             'visibility' => $properties->visibility,
         ];
 
-        $spoiler_text = $properties->spoiler_text;
+        $in_reply_to_id = $properties->in_reply_to_id;
+        $spoiler_text   = $properties->spoiler_text;
+
+        if (! empty($in_reply_to_id)) {
+            $data_post['in_reply_to_id'] = $in_reply_to_id;
+        }
 
         if (! empty($spoiler_text)) {
             $data_post['spoiler_text'] = $spoiler_text;
@@ -155,14 +158,6 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
         return trim(getValue('last_line', $result, 'blank'));
     }
 
-    function getPathDirParent()
-    {
-        // 呼び出し元のディレクトリ・パスを取得
-        $result = getValue(0, debug_backtrace());
-
-        return dirname(getValue('file', $result, __FILE__));
-    }
-
     function getUrlApiToot(Properties $properties)
     {
         $schema   = $properties->schema;
@@ -248,6 +243,11 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
         return ctype_alnum($string) && (LEN_ACCESS_TOKEN === strlen($string));
     }
 
+    function isValidFormatIdToot($string)
+    {
+        return is_numeric($string);
+    }
+
 /* ---------------------------------------------------------------------- [R] */
 
     function requestApi(Properties $properties)
@@ -282,7 +282,7 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
 /* ---------------------------------------------------------------------- [T] */
 
     /**
-     * Qiitadon にトゥートする.
+     * Qiitadon にトゥートもしくは返信トゥートする.
      *
      * @param  array  $toot_info  トゥートに関する情報（要素の詳細は以下参照）
      * @return string             トゥート結果の JSON レスポンス

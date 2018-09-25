@@ -12,7 +12,7 @@ const STATUS_OK     = 0;
 
 /* [Functions] ============================================================== */
 
-include_once(dirname(__FILE__) . DIR_SEP . 'functions_dev.php.inc');
+include_once(dirname(__FILE__) . DIR_SEP . 'function_Dev.php.inc');
 
 /* [Settings] =============================================================== */
 

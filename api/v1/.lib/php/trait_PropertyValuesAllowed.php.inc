@@ -11,7 +11,7 @@ namespace
             'schema'     => ['http','https'],
             'method'     => ['GET','POST','PATCH','PUT','DELETE'],
             'host'       => ['qiitadon.com','qiita.com','github.com'],
-            'visibility' => ['public', 'unlisted', 'private'],
+            'visibility' => ['public', 'unlisted', 'private', 'direct'],
             'endpoint'   => [
                 '/api/v1/statuses',
             ],
