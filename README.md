@@ -2,9 +2,38 @@
 
 <img title="Qithub LOGO" alt="Qithub Logo" src="https://github.com/Qithub-BOT/Qithub-ORG/raw/master/images/Banner_Qithub/Qithub-BOT-900x300.jpg" width="900">
 
-## Qithub とは
+<a id="toc"></a>
+# 目次
+
+<ul>
+    <li><a href="#index1">1. Qithubについて</a></li>
+    <ul>
+        <li><a href="#index1-1">1-1. Qithubサークルとは</a></li>
+        <li><a href="#index1-2">1-2. 参加条件</a></li>
+        <li><a href="#index1-3">1-3. 入部方法</a></li>
+        <li><a href="#index1-4">1-4. メンテナ</a></li>
+        <li><a href="#index1-5">1-5. 部室・溜まり場・遊び場</a></li>
+    </ul>
+</ul>
+<ul>
+    <li><a href="#index2">2. Qithub-ORGリポジトリについて</a></li>
+    <ul>
+        <li><a href="#index2-1">2-1. リポジトリのWiki</a></li>
+        <li><a href="#index2-2">2-2. 新規リポジトリを作りたい</a></li>
+    </ul>
+</ul>
+
+
+<a id="index1"></a>
+# 1. Qithubについて
+
+<a id="index1-1"></a>
+## 1-1. Qithubサークルとは
 
 「Qithub」は [Qiita](https://qiita.com/) と [Qiitadon](https://qiitadon.com/) をこよなく愛する同人サークルです。以下の条件に合えば誰でも参加できます。
+
+<a id="index1-2"></a>
+## 1-2. 参加条件
 
 - Qiita もしくは Qiitadon ユーザである。
 - Qiita もしくは Qiitadon がもっと楽しくなることがしたい。
@@ -12,15 +41,8 @@
 - GitHub でコラボしたいが、怖くてできない。
 - 仕事とは関係なく**趣味**でプログラミングしたいし、写経／乱取りなんだから小ウルサイことを言われたくない。でも誰かに気楽にチェックして欲しい。😳
 
-## このリポジトリについて
-
-このリポジトリは **Qithub サークルの「遊び場」および「とりまとめ」用のリポジトリ**です。[他のリポジトリ](https://github.com/Qithub-BOT)の issue などもここで一括管理しています。
-
-## 部員はどこにいるの？
-
-実際にどこに居るかはわかりませんが、 Qiitadon や Qiitadon酒場 でたむろっています。
-
-## 入部方法
+<a id="index1-3"></a>
+## 1-3. 入部方法
 
 このリポジトリの [`MEMBERS.md`](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/MEMBERS.md) に、あなたのアカウント名とプロフィールを記入し PR（プルリク、Pull Request）してマージされたら**晴れてあなたは Qithub サークルのメンバーです**。（退部手続きも同じです）
 
@@ -30,14 +52,23 @@
 
 このサークルはそもそも GitHub/Git や OSS コラボの初心者の練習の場として始まったので、失敗したら[ケセラセラ](https://ja.wiktionary.org/wiki/qu%C3%A9_ser%C3%A1,_ser%C3%A1)です。
 
-[PR の仕方](https://github.com/Qithub-BOT/Qithub-ORG/wiki/%E3%83%96%E3%83%A9%E3%83%B3%E3%83%81%E3%80%81PR%E3%80%81%E3%83%9E%E3%83%BC%E3%82%B8%E3%81%AE%E3%83%AB%E3%83%BC%E3%83%AB)や[ルール](https://github.com/Qithub-BOT/Qithub-ORG/wiki/Qithub-ORG-%E3%81%AE%E3%83%AB%E3%83%BC%E3%83%AB)など、**何か不安がある場合は遠慮なく下記の部室や溜まり場で聞いて**ください。Qiitadon でサークル・メンバーやメンテナにメンション or DM していただいても OK です。
+[PR の仕方](https://github.com/Qithub-BOT/Qithub-ORG/wiki/%E3%83%96%E3%83%A9%E3%83%B3%E3%83%81%E3%80%81PR%E3%80%81%E3%83%9E%E3%83%BC%E3%82%B8%E3%81%AE%E3%83%AB%E3%83%BC%E3%83%AB)や[ルール](https://github.com/Qithub-BOT/Qithub-ORG/wiki/Qithub-ORG-%E3%81%AE%E3%83%AB%E3%83%BC%E3%83%AB)など、**何か不安がある場合は遠慮なく下記の部室や溜まり場で聞いて**ください。Qiitadon でサークル・メンバーや[メンテナ](https://github.com/orgs/Qithub-BOT/people)にメンション or DM していただいても OK です。
 
 なお、メンテナも随時募集中！下記「メンテナについて」をご覧ください。
 
+<a id="index1-4"></a>
+## 1-4. メンテナ
 
-**Qiitadon で[メンテナ](https://github.com/orgs/Qithub-BOT/people)にメンション or DM していただいても OK** です。
+Qithub サークルでは GitHub の Organization メンバーをメンテナと呼んでいます。
 
-- メンテナも随時募集中！下記「メンテナについて」をご覧ください。
+基本的に PR のチェック（コードレビュー）などはサークルのメンバー全員で**まったり**と行なっていますが、サークルのメンバー対応、リポジトリの管理やサーバのメンテナンスはメンテナが行なっています。
+
+「なんか手伝ってもいいよー」という方は、Qiitadon や Qiitadon酒場でお声がけくださーい。
+
+- [メンテナ一覧](https://github.com/orgs/Qithub-BOT/people)
+
+<a id="index1-5"></a>
+## 1-5. 部室・溜まり場・遊び場
 
 ### 部室
 
@@ -59,7 +90,25 @@ Qiitadon酒場は 24h/7d オープンのオンライン酒場です。Qiitadon �
 
 ※ **`Discord` はチャット・ルームです。ゲスト・アカウント（ユーザ登録不要）で入場できます**。入場の際、ニックネームは Qiitadon と同じアカウント名にしてもらうとわかりやすくて助かります。ブラウザを閉じると別のゲスト・ユーザとなるので、それが面倒な方はアカウントを作成をおすすめします。
 
-## 新規リポジトリを作りたい
+---
+<a href="#toc">目次へ戻る</a>
+
+
+<a id="index2"></a>
+# 2. Qithub-ORGリポジトリについて
+
+このリポジトリは **Qithub サークルの「遊び場」および「とりまとめ」用のリポジトリ**です。[他のリポジトリ](https://github.com/Qithub-BOT)の issue などもここで一括管理しています。
+
+<a id="index2-1"></a>
+## 2-1. リポジトリのWiki
+
+このQithub-ORGリポジトリには[wiki](https://github.com/Qithub-BOT/Qithub-ORG/wiki)があります。
+
+[Qithubサークルのルール](https://github.com/Qithub-BOT/Qithub-ORG/wiki/Qithub-ORG-%E3%81%AE%E3%83%AB%E3%83%BC%E3%83%AB)やポリシー、使われる用語やサーバーの仕様など様々な内容が詳細に書かれています。
+Githubのwikiは[検索](https://github.com/Qithub-BOT/Qithub-ORG/search?q=%E3%83%AB%E3%83%BC%E3%83%AB&type=Wikis)もできますので、Qithubサークルで困ったことや質問したいことについては、一度wikiをご確認してみてください。
+
+<a id="index2-2"></a>
+## 2-2. 新規リポジトリを作りたい
 
 [Qithub の既存のリポジトリ](https://github.com/Qithub-BOT)とは趣旨が異なるリポジトリを新たに設置したい場合、リポジトリの管理者としてメンテナの一員になっていただく必要があります。
 
@@ -67,13 +116,7 @@ Qiitadon酒場は 24h/7d オープンのオンライン酒場です。Qiitadon �
 
 なお、そのリポジトリは Qithub Organization の[運用ルール](https://github.com/Qithub-BOT/Qithub-ORG/wiki/Qithub-ORG-%E3%83%AB%E3%83%BC%E3%83%AB)や [Qithub のポリシー](https://github.com/Qithub-BOT/Qithub-ORG/wiki/%E3%83%9D%E3%83%AA%E3%82%B7%E3%83%BC%E3%80%81%E3%82%B3%E3%83%B3%E3%82%BB%E3%83%97%E3%83%88)に準拠していただく必要があります。
 
-## メンテナについて
+---
+<a href="#toc">目次へ戻る</a>
 
-Qithub サークルでは GitHub の Organization メンバーをメンテナと呼んでいます。
-
-基本的に PR のチェック（コードレビュー）などはサークルのメンバー全員で**まったり**と行なっていますが、サークルのメンバー対応、リポジトリの管理やサーバのメンテナンスはメンテナが行なっています。
-
-「なんか手伝ってもいいよー」という方は、Qiitadon や Qiitadon酒場でお声がけくださーい。
-
-- [メンテナ一覧](https://github.com/orgs/Qithub-BOT/people)
 
