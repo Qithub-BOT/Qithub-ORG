@@ -216,15 +216,6 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
         }
     }
 
-    function isCoveredVersionPHP()
-    {
-        $ver_current  = phpversion();
-        $is_hhvm      = (false !== strpos(strtolower($ver_current), 'hhvm'));
-        $ver_required = ($is_hhvm) ? VER_HHVM_REQUIRED : VER_PHP_REQUIRED;
-
-        return version_compare($ver_current, $ver_required, '>');
-    }
-
     function isHeaderResponseOK($response_header)
     {
         foreach ($response_header as $line) {

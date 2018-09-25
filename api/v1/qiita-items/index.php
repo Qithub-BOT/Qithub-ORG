@@ -9,6 +9,8 @@
 namespace Qithub\QiitaItems;
 
 require_once('../.lib/php/tootlib.php.inc');
+require_once('constants.php.inc');
+require_once('functions.php.inc');
 
 /* [Settings] =============================================================== */
 
