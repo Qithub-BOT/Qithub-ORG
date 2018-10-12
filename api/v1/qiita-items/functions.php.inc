@@ -79,18 +79,24 @@ function echoJson($string_json, $options = \NO_OPTIONS)
 
 function escapeTagForMastodon($string)
 {
-    if ('node.js' === strtolower($string)) {
-        $string = 'NodeJs';
-    }
+    $string = (string) $string;
+    $string = mb_convert_kana($string, 'aKV');
+
+    $string_lower = strtolower($string);
+
+    $string = str_replace('node.js', 'NodeJs', $string_lower);
+    $string = str_replace('c++', 'CPlusPlus', $string_lower);
+    $string = str_replace('c+', 'CPlus', $string_lower);
+    $string = str_replace('c#', 'CSharp', $string_lower);
 
     $string = str_replace(
-        ['.', '-', ' ','/'],
+        ['.', '-', ' ', '/'],
         '_',
         $string
     );
     $string = str_replace(
-        ['@', '#'],
-        ['at', ''],
+        ['@',    '#', '+'],
+        ['_at_', '',  '_plus_'],
         $string
     );
 
