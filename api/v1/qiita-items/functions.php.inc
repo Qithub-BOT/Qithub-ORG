@@ -90,7 +90,7 @@ function escapeTagForMastodon($string)
     $string = str_replace('c#', 'CSharp', $string_lower);
 
     $string = str_replace(
-        ['.', '-', ' ', '/'],
+        ['.', '-', ' ', '/', ','],
         '_',
         $string
     );
