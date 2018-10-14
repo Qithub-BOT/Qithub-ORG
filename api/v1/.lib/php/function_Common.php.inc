@@ -207,11 +207,6 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
 
     function isValidJson($json_string)
     {
-        $json_string = trim($json_string);
-        if ('{' !== $json_string[0]) {
-            return false;
-        }
-
         return JSON_DECODE_FAIL !== json_decode($json_string);
     }
 
@@ -224,7 +219,7 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
      */
     function putContentsToFile($path_file, $data, $flags = LOCK_EX, $resource = NO_CONTEXT)
     {
-        return file_put_contents($path_file, $data, $flags, $resource);
+        return (false !== file_put_contents($path_file, $data, $flags, $resource));
     }
 
 
