@@ -89,15 +89,15 @@ function getItemIdGiven()
         return $result;
     }
 
-    $id = hasItemIdInArgs(RETURN_AS_ID);
-    if (! empty($id)) {
-        $result = $id;
+    $id_item = hasItemIdInArgs(RETURN_AS_ID);
+    if (! empty($id_item)) {
+        $result = $id_item;
         return $result;
     }
 
-    $id = hasItemIdInGet(RETURN_AS_ID);
-    if (! empty($id)) {
-        $result = $id;
+    $id_item = hasItemIdInGet(RETURN_AS_ID);
+    if (! empty($id_item)) {
+        $result = $id_item;
         return $result;
     }
 
