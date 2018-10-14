@@ -63,7 +63,7 @@ if (! isValidFormatId('item_qiita', $id_item)) {
 $do_update_cache = \getValue('update', $_GET) ? true : false;
 
 // キャッシュの表示
-$path_file_cache = getPathFileCache($id_item, $settings);
+$path_file_cache = getPathFileCache($id_item);
 if (file_exists($path_file_cache)) {
     $json = file_get_contents($path_file_cache);
 

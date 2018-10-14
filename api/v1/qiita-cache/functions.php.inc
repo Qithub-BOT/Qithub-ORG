@@ -17,8 +17,8 @@ function copyCacheToSpams($json)
     if (file_exists($path_file_spam)) {
         return true;
     }
-    
-    $array = json_decode($json, JSON_OBJECT_AS_ARRAY);    
+
+    $array = json_decode($json, JSON_OBJECT_AS_ARRAY);
     $user  = \getValue('user', $array, []);
 
     $result['id_item']   = \getValue('id', $array);
@@ -26,7 +26,7 @@ function copyCacheToSpams($json)
     $result['url_cache'] = URL_ENDPOINT_BASE  . '?id=' . $id_item;
     $result['url_raw']   = URL_ENDPOINT_QIITA . $id_item;
     $result['date_post'] = \getValue('created_at', $array);
-    
+
     $json = json_encode($result, \JSON_COMMON_OPTION);
 
     return \putContentsToFile($path_file_spam, $json);
@@ -149,20 +149,35 @@ function getPathDirSpam(array $settings)
     return \getValue('path_dir_spams', $settings, false);
 }
 
-function getPathFileCache($id_item, array $settings)
+function getPathFileCache($id_item)
 {
-    $path_dir_cache  = getPathDirCache($settings);
-    $name_file_cache = $id_item . EXT_FILE_CACHE;
-    $path_file_cache = $path_dir_cache . \DIR_SEP . $name_file_cache;
+    global $settings;
 
-    return $path_file_cache;
+    $path_dir_cache = getPathDirCache($settings);
+
+    if (! is_dir($path_dir_cache)) {
+        return false;
+    }
+
+    // Qiita記事IDの最初の１文字をカテゴリ名としてディレクトリにする
+    // https://github.com/Qithub-BOT/Qithub-ORG/issues/152
+    $name_dir_group = $id_item[0];
+    $path_dir_cache = $path_dir_cache . \DIR_SEP . $name_dir_group;
+
+    if (! is_dir($path_dir_cache) && ! mkdir($path_dir_cache, 0700)) {
+        \dieMsg('Error: Can not create spam cache directory.', __LINE__);
+    }
+
+    $name_file_cache = $id_item . EXT_FILE_CACHE;
+
+    return $path_dir_cache . \DIR_SEP . $name_file_cache;
 }
 
 function getPathFileSpam($id_item)
 {
     global $settings;
 
-    if (! \isValidFormatId('item_qiita', $id_item)){
+    if (! \isValidFormatId('item_qiita', $id_item)) {
         return false;
     }
 
@@ -173,8 +188,7 @@ function getPathFileSpam($id_item)
     }
 
     // Qiita記事IDの最初の１文字をカテゴリ名としてディレクトリにする
-    // 理由：ファイル数が多すぎると GitHub 上の Qiita-SPAMS リポジトリの表示や
-    //       エディタで表示されなくなるため。（１階層内のファイル分散のため）
+    // https://github.com/Qithub-BOT/Qithub-ORG/issues/152
     $name_dir_group = $id_item[0];
     $path_dir_spams = $path_dir_spams . \DIR_SEP . $name_dir_group;
 
