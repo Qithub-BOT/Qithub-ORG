@@ -1,10 +1,10 @@
 <?php
 namespace { // 汎用のため明示的にグローバル名前空間に設置
 
-
 /* [Constants] ============================================================== */
 
 // 内部環境定数
+    const REQUEST_LIMIT_PER_SEC = 1; // API リクエスト時の sleep 時間（秒）
     const TIMEZONE          = 'Asia/Tokyo';
     const VER_PHP_REQUIRED  = '7.1.0'; // PHP v5.6 でも動くが v7.1の方が速いため
     const VER_HHVM_REQUIRED = '5.6.0'; // Qithub.tk の PHP は HHVM なため
@@ -14,7 +14,15 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
     const NO_CONTEXT        = null;
     const LEN_ID_TOOT       = 18; // Qiitadon のトゥートIDの長さ
     const LEN_ID_ITEM_QIITA = 20; // Qiita記事IDの長さ
-    const REQUEST_LIMIT_PER_SEC = 1; // API リクエスト時の sleep 時間（秒）
+    const JSON_DECODE_FAIL  = null;  // json_decode 失敗時は null
+    const JSON_ENCODE_FAIL  = false; // json_encode 失敗時は false
+    const RETURN_AS_BOOL    = 0b00000000;
+    const RETURN_AS_STRING  = 0b00000001;
+    const RETURN_AS_ARRAY   = 0b00000010;
+    const RETURN_AS_JSON    = 0b00000100;
+    const RETURN_AS_ID      = 0b00001000;
+
+    define('JSON_COMMON_OPTION', JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
 // 既存定数のエイリアス
     const DIR_SEP = DIRECTORY_SEPARATOR;
@@ -64,14 +72,16 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
     }
 
 /* ---------------------------------------------------------------------- [G] */
-
+    /**
+     * file_get_contents 関数のラッパー.
+     *
+     * ファイル保存と読み込みのバッティングが起きた場合はここで回避予定。
+     */
     function getContentsFromFile($path_file)
     {
         if (! file_exists($path_file)) {
             return null;
         }
-
-        // 今後、排他ロックで読み込む必要がある場合のラッパー
 
         return file_get_contents($path_file);
     }
@@ -94,8 +104,9 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
 
         if (false === $result) {
             $error  = "Error occurred while fetching url: {$url}" . PHP_EOL;
+            $error .= "Response headers are: " . PHP_EOL;
             $error .= print_r($http_response_header, true) . PHP_EOL;
-            dieMsg($error);
+            dieMsg($error, __LINE__);
         }
 
         $results[$crc] = $result;
@@ -154,6 +165,9 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
         return PHP_SAPI === 'cli' || empty($_SERVER['REMOTE_ADDR']);
     }
 
+    /**
+     * @todo この関数名は isVersionPHPCovered() が妥当と思われる.
+     */
     function isCoveredVersionPHP()
     {
         $ver_current  = phpversion();
@@ -192,6 +206,11 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
         return false;
     }
 
+    function isValidJson($json_string)
+    {
+        return JSON_DECODE_FAIL !== json_decode($json_string);
+    }
+
 /* ---------------------------------------------------------------------- [P] */
 
     /**
@@ -201,7 +220,7 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
      */
     function putContentsToFile($path_file, $data, $flags = LOCK_EX, $resource = NO_CONTEXT)
     {
-        return file_put_contents($path_file, $data, $flags, $resource);
+        return (false !== file_put_contents($path_file, $data, $flags, $resource));
     }
 
 
