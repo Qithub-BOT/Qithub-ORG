@@ -17,6 +17,7 @@ $settings = [
     'name_dir_cache' => '.cache', // キャッシュの保存先
     'name_file_tags' => '.tags',  // タグ一覧のファイル名
     'path_dir_curr'  => PATH_DIR_CURR,
+    'path_dir_spam'  => PATH_DIR_CURR . \DIR_SEP . '.spams',
     'url_redirect'   => 'https://github.com/Qithub-BOT/Qithub-ORG/tree/master/api/v1/qiita-cache/',
 ];
 
@@ -66,16 +67,54 @@ if (file_exists($path_file_cache)) {
 
     // アップデート指示がない場合はキャッシュを表示
     if (! $do_update_cache) {
-        echoJson($json);
+        $is_spam = isInSpam($id_item) ? IS_SPAM : NOT_SPAM;
+        echoJson($json, $is_spam);
         exit(STATUS_OK);
     }
 
     // アップデート指示があっても記事が削除済みの場合はキャッシュを表示
     if (isItem404($id_item)) {
         /* スパムのキャッシュ登録処理 */
-        echoJson($json);
-        exit(STATUS_OK);
+        if (copyCacheToSpams($json)) {
+            echoJson($json, IS_SPAM);
+            exit(STATUS_OK);
+        }
     }
+}
+
+function isInSpam($id_item)
+{
+    global $settings;
+
+    $path_dir_spams = getPathDirSpam($settings);
+    $name_file_spam = $id_item . '.json';
+    $path_file_spam = $path_dir_spams . \DIR_SEP . $name_file_spam;
+
+    return file_exists($path_file_spam);
+}
+
+function copyCacheToSpams($json)
+{
+    global $settings;
+
+    if (empty($json)) {
+        return false;
+    }
+
+    $id_item        = getItemIdGiven();
+    $path_dir_spams = getPathDirSpam($settings);
+    $name_file_spam = $id_item . '.json';
+    $path_file_spam = $path_dir_spams . \DIR_SEP . $name_file_spam;
+
+    if (file_exists($path_file_spam)) {
+        return true;
+    }
+
+    if (! is_dir($path_dir_spams)) {
+        return false;
+    }
+
+    return \putContentsToFile($path_file_spam, $json);
 }
 
 /**
@@ -89,13 +128,23 @@ if (! isValidJson($json)) {
 }
 
 // キャッシュの保存（全体）
-if (! putContentsToFile($path_file_cache, $json)) {
+if (! \putContentsToFile($path_file_cache, $json)) {
     dieMsg('Fail to save cache file.', __LINE__);
 }
 
 // キャッシュの保存（タグ）
 if (! putTagsToFile(getPathFileTags(), $json)) {
     dieMsg('Fail to save tags to file.', __LINE__);
+}
+
+// スパムの場合の保存
+if (isItem404($id_item)) {
+    /* スパムのキャッシュ登録処理 */
+    if (copyCacheToSpams($json)) {
+        // キャッシュを表示して終了
+        echoJson($json, IS_SPAM);
+        exit(STATUS_OK);
+    }
 }
 
 // キャッシュを表示して終了

@@ -5,13 +5,17 @@ namespace Qithub\QiitaCache;
 
 /* ---------------------------------------------------------------------- [E] */
 
-function echoJson($json_string, $options = \JSON_COMMON_OPTION)
+function echoJson($json_string, $is_spam = NOT_SPAM, $options = \JSON_COMMON_OPTION)
 {
     if (! \isValidJson($json_string)) {
         \dieMsg('Invalid JSON given.(JSON empty)', __LINE__);
     }
 
-    $json_string = json_encode(json_decode($json_string), $options);
+    $array = json_decode($json_string, JSON_OBJECT_AS_ARRAY);
+
+    $array['is_spam'] = (IS_SPAM === $is_spam);
+
+    $json_string = json_encode($array, $options);
     $etag        = hash('md5', $json_string);
 
     if (! \isCli() && ! headers_sent()) {
@@ -22,8 +26,6 @@ function echoJson($json_string, $options = \JSON_COMMON_OPTION)
 
     echo $json_string;
 }
-
-
 
 function echoTagsAsCommonFormat($tags_search, $return = RETURN_AS_ARRAY)
 {
@@ -109,6 +111,13 @@ function getPathDirCache(array $settings)
     $path_dir_curr  = \getValue('path_dir_curr', $settings);
     $name_dir_cache = \getValue('name_dir_cache', $settings);
     $path_dir_cache = $path_dir_curr . \DIR_SEP . $name_dir_cache;
+
+    return $path_dir_cache;
+}
+
+function getPathDirSpam(array $settings)
+{
+    $path_dir_cache = \getValue('path_dir_spam', $settings);
 
     return $path_dir_cache;
 }
@@ -306,6 +315,12 @@ function initializeDirectories($settings)
     if (! is_dir($path_dir_cache) && ! mkdir($path_dir_cache, 0700)) {
         \dieMsg('Error: Can not create cache directory.', __LINE__);
     }
+
+    // スパム・ディレクトリ確認/作成
+    $path_dir_spam = getPathDirSpam($settings);
+    if (! is_dir($path_dir_spam) && ! mkdir($path_dir_spam, 0700)) {
+        \dieMsg('Error: Can not create spam cache directory.', __LINE__);
+    }
 }
 
 function isItem404($id_item)
@@ -390,5 +405,5 @@ function stripItemTagMinimum($name_tag)
     $name_tag = str_replace(' ', '_', $name_tag);
     $name_tag = str_replace('#', '', $name_tag);
 
-    return $name_tag;
+    return htmlspecialchars($name_tag);
 }

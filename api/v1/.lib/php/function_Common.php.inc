@@ -104,8 +104,9 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
 
         if (false === $result) {
             $error  = "Error occurred while fetching url: {$url}" . PHP_EOL;
+            $error .= "Response headers are: " . PHP_EOL;
             $error .= print_r($http_response_header, true) . PHP_EOL;
-            dieMsg($error);
+            dieMsg($error, __LINE__);
         }
 
         $results[$crc] = $result;
