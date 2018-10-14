@@ -214,7 +214,7 @@ function getPathFileTags(array $settings = [])
     return $path_file_tags;
 }
 
-function getTagAsCommonFormat(string $name_tag)
+function getTagAsCommonFormat($name_tag)
 {
     static $list_tags;
 
