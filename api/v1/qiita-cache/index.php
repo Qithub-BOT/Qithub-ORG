@@ -27,6 +27,7 @@ initializeDirectories($settings);
 
 /**
  * タグ名の表記検索と表示.
+ *
  * 指定されたタグ名のキャッシュされた記事で最も使われている表記表記方を返す。
  */
 
@@ -41,6 +42,7 @@ if (! empty($name_tags)) {
 
 /**
  * Qiita 記事のキャッシュ表示.
+ *
  * キャッシュがない場合やアップデート指示があった場合は Qiita API から取得・更新
  */
 
@@ -70,12 +72,15 @@ if (file_exists($path_file_cache)) {
 
     // アップデート指示があっても記事が削除済みの場合はキャッシュを表示
     if (isItem404($id_item)) {
+        /* スパムのキャッシュ登録処理 */
         echoJson($json);
         exit(STATUS_OK);
     }
 }
 
-/* アップデート処理 */
+/**
+ * キャッシュ処理.
+ */
 
 // Qiita API からデータを取得
 $json = getJsonItemFromApi($id_item);

@@ -50,21 +50,6 @@ function echoTagsAsCommonFormat($tags_search, $return = RETURN_AS_ARRAY)
 
 /* ---------------------------------------------------------------------- [G] */
 
-function getNameTagGiven($return = RETURN_AS_ARRAY)
-{
-    $name_tag = hasTagsInArgs($return);
-    if (! empty($name_tag)) {
-        return $name_tag;
-    }
-
-    $name_tag = hasTagsInGet($return);
-    if (! empty($name_tag)) {
-        return $name_tag;
-    }
-
-    return false;
-}
-
 function getItemIdGiven()
 {
     static $result;
@@ -104,13 +89,19 @@ function getJsonItemFromApi($id_item)
     return $json;
 }
 
-function getPathFileCache($id_item, array $settings)
+function getNameTagGiven($return = RETURN_AS_ARRAY)
 {
-    $path_dir_cache  = getPathDirCache($settings);
-    $name_file_cache = $id_item . ".json";
-    $path_file_cache = $path_dir_cache . \DIR_SEP . $name_file_cache;
+    $name_tag = hasTagsInArgs($return);
+    if (! empty($name_tag)) {
+        return $name_tag;
+    }
 
-    return $path_file_cache;
+    $name_tag = hasTagsInGet($return);
+    if (! empty($name_tag)) {
+        return $name_tag;
+    }
+
+    return false;
 }
 
 function getPathDirCache(array $settings)
@@ -120,6 +111,15 @@ function getPathDirCache(array $settings)
     $path_dir_cache = $path_dir_curr . \DIR_SEP . $name_dir_cache;
 
     return $path_dir_cache;
+}
+
+function getPathFileCache($id_item, array $settings)
+{
+    $path_dir_cache  = getPathDirCache($settings);
+    $name_file_cache = $id_item . ".json";
+    $path_file_cache = $path_dir_cache . \DIR_SEP . $name_file_cache;
+
+    return $path_file_cache;
 }
 
 function getPathFileTags(array $settings = [])
@@ -165,6 +165,7 @@ function getTagsFromFileAsArray($path_file_tags)
 {
     $json   = \getContentsFromFile($path_file_tags);
     $result = json_decode($json, JSON_OBJECT_AS_ARRAY);
+
     if (NO_CONTEXT === $result) {
         $result = [];
     }
@@ -208,11 +209,11 @@ function hasItemIdInArgs($return = RETURN_AS_BOOL)
         return false;
     }
 
-    if (false === strpos(getValue(1, $argv), '-id')) {
+    if (false === strpos(\getValue(1, $argv), '-id')) {
         return false;
     }
 
-    $id_item = getValue(2, $argv);
+    $id_item = \getValue(2, $argv);
 
     if (! isValidFormatId('item_qiita', $id_item)) {
         return false;
@@ -225,7 +226,7 @@ function hasItemIdInGet($return = RETURN_AS_BOOL)
 {
     global $_GET;
 
-    $id_item = getValue('id', $_GET);
+    $id_item = \getValue('id', $_GET);
 
     if (! isValidFormatId('item_qiita', $id_item)) {
         return false;
@@ -242,11 +243,11 @@ function hasTagsInArgs($return = RETURN_AS_BOOL)
         return false;
     }
 
-    if (false === strpos(getValue(1, $argv), '-tag')) {
+    if (false === strpos(\getValue(1, $argv), '-tag')) {
         return false;
     }
 
-    $tags = getValue(2, $argv);
+    $tags = \getValue(2, $argv);
     $tags = str_replace(' ', ',', trim($tags));
 
     if (RETURN_AS_STRING === $return) {
@@ -273,7 +274,7 @@ function hasTagsInGet($return = RETURN_AS_BOOL)
 {
     global $_GET;
 
-    $tags = getValue('tag', $_GET);
+    $tags = \getValue('tag', $_GET);
     $tags = str_replace(' ', ',', trim($tags));
 
     if (RETURN_AS_STRING === $return) {
