@@ -3,6 +3,32 @@ namespace Qithub\QiitaCache;
 
 /* [Functions] ============================================================== */
 
+/* ---------------------------------------------------------------------- [C] */
+
+function copyCacheToSpams($json)
+{
+    global $settings;
+
+    if (empty($json)) {
+        return false;
+    }
+
+    $id_item        = getItemIdGiven();
+    $path_dir_spams = getPathDirSpam($settings);
+    $name_file_spam = $id_item . EXT_FILE_CACHE;
+    $path_file_spam = $path_dir_spams . \DIR_SEP . $name_file_spam;
+
+    if (file_exists($path_file_spam)) {
+        return true;
+    }
+
+    if (! is_dir($path_dir_spams)) {
+        return false;
+    }
+
+    return \putContentsToFile($path_file_spam, $json);
+}
+
 /* ---------------------------------------------------------------------- [E] */
 
 function echoJson($json_string, $is_spam = NOT_SPAM, $options = \JSON_COMMON_OPTION)
@@ -125,7 +151,7 @@ function getPathDirSpam(array $settings)
 function getPathFileCache($id_item, array $settings)
 {
     $path_dir_cache  = getPathDirCache($settings);
-    $name_file_cache = $id_item . ".json";
+    $name_file_cache = $id_item . EXT_FILE_CACHE;
     $path_file_cache = $path_dir_cache . \DIR_SEP . $name_file_cache;
 
     return $path_file_cache;
@@ -321,6 +347,17 @@ function initializeDirectories($settings)
     if (! is_dir($path_dir_spam) && ! mkdir($path_dir_spam, 0700)) {
         \dieMsg('Error: Can not create spam cache directory.', __LINE__);
     }
+}
+
+function isInSpams($id_item)
+{
+    global $settings;
+
+    $path_dir_spams = getPathDirSpam($settings);
+    $name_file_spam = $id_item . EXT_FILE_CACHE;
+    $path_file_spam = $path_dir_spams . \DIR_SEP . $name_file_spam;
+
+    return file_exists($path_file_spam);
 }
 
 function isItem404($id_item)

@@ -10,6 +10,7 @@ const REQUEST_LIMIT_PER_SEC  = 1;       // QiitaAPI は 1リクエスト/sec (60
 const NUM_PAGES_TO_FETCH     = 2;       // 1リクエストで取得する記事数
 const IS_SPAM                = true;
 const NOT_SPAM               = false;
+const EXT_FILE_CACHE         = '.json'; // キャッシュファイルの拡張子
 
 define('TIME_NOW', time());
 define('PATH_DIR_CURR', dirname(__FILE__));

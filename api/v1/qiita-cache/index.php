@@ -67,7 +67,7 @@ if (file_exists($path_file_cache)) {
 
     // アップデート指示がない場合はキャッシュを表示
     if (! $do_update_cache) {
-        $is_spam = isInSpam($id_item) ? IS_SPAM : NOT_SPAM;
+        $is_spam = isInSpams($id_item) ? IS_SPAM : NOT_SPAM;
         echoJson($json, $is_spam);
         exit(STATUS_OK);
     }
@@ -80,41 +80,6 @@ if (file_exists($path_file_cache)) {
             exit(STATUS_OK);
         }
     }
-}
-
-function isInSpam($id_item)
-{
-    global $settings;
-
-    $path_dir_spams = getPathDirSpam($settings);
-    $name_file_spam = $id_item . '.json';
-    $path_file_spam = $path_dir_spams . \DIR_SEP . $name_file_spam;
-
-    return file_exists($path_file_spam);
-}
-
-function copyCacheToSpams($json)
-{
-    global $settings;
-
-    if (empty($json)) {
-        return false;
-    }
-
-    $id_item        = getItemIdGiven();
-    $path_dir_spams = getPathDirSpam($settings);
-    $name_file_spam = $id_item . '.json';
-    $path_file_spam = $path_dir_spams . \DIR_SEP . $name_file_spam;
-
-    if (file_exists($path_file_spam)) {
-        return true;
-    }
-
-    if (! is_dir($path_dir_spams)) {
-        return false;
-    }
-
-    return \putContentsToFile($path_file_spam, $json);
 }
 
 /**
