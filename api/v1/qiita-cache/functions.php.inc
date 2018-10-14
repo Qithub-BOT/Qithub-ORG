@@ -23,19 +23,21 @@ function echoJson($json_string, $options = \JSON_COMMON_OPTION)
     echo $json_string;
 }
 
-function echoTagsAsCommonFormat($name_tags, $return = RETURN_AS_ARRAY)
+
+
+function echoTagsAsCommonFormat($tags_search, $return = RETURN_AS_ARRAY)
 {
-    if (is_string($name_tags)) {
-        $name_tags[] = $name_tags;
+    $result = [];
+
+    if (is_string($tags_search)) {
+        $tags_search[] = $tags_search;
     }
 
-    $tags_cache = getTagsFromFileAsArray(getPathFileTags());
-
-    foreach ($name_tags as $name_tag) {
-        $key      = strip_item_tag_minimum($name_tag);
-        $name_tag = strtolower($name_tag);
-        $name_tag = getTagAsCommonFormat($name_tag);
-        if ($tags_cache[$key][$name_tag]) {
+    foreach ($tags_search as $tag_search) {
+        $tag_search = stripTagAsKey($tag_search);
+        $tag_search = getTagAsCommonFormat($tag_search);
+        if (! empty($tag_search)) {
+            $result[] = $tag_search;
         }
     }
 
@@ -139,11 +141,11 @@ function getTagAsCommonFormat(string $name_tag)
 
     if (! isset($list_tags)) {
         // 出現タグ一覧の再利用に static 変数に代入
-        $list_tags = getContentsFromFile(getPathFileTags());
+        $list_tags = getTagsFromFileAsArray(getPathFileTags());
+        //$list_tags = getContentsFromFile(getPathFileTags());
     }
 
-    $name_tag = strip_item_tag_minimum($name_tag);
-    $key      = strtolower($name_tag);
+    $key = stripTagAsKey($name_tag);
 
     // 初出現の場合は同じタグを返す
     if (! isset($list_tags[$key])) {
@@ -152,11 +154,22 @@ function getTagAsCommonFormat(string $name_tag)
 
     // 該当タグの出現リストから最大出現数のタグを返す
     $array = $list_tags[$key];
-    $keys  = $array_keys($array, max($array));
+    $keys  = array_keys($array, max($array));
 
     ksort($keys, SORT_NATURAL);
 
     return $keys[0];
+}
+
+function getTagsFromFileAsArray($path_file_tags)
+{
+    $json   = \getContentsFromFile($path_file_tags);
+    $result = json_decode($json, JSON_OBJECT_AS_ARRAY);
+    if (NO_CONTEXT === $result) {
+        $result = [];
+    }
+
+    return $result;
 }
 
 function getUrlOfItem($id_item)
@@ -321,9 +334,56 @@ function isUserOfItem404($id_item)
     return isUser404($object->user->id);
 }
 
+/* ---------------------------------------------------------------------- [P] */
+
+function putTagsToFile($path_file_tags, $json)
+{
+    if (! is_string($json)) {
+        return false;
+    }
+
+    $array = json_decode($json, JSON_OBJECT_AS_ARRAY);
+    if (JSON_DECODE_FAIL === $array) {
+        return false;
+    }
+
+    $tags = \getValue('tags', $array, []);
+    if (empty($tags)) {
+        return false;
+    }
+
+    // 既存タグの読み込み
+    $result = getTagsFromFileAsArray($path_file_tags);
+
+    // タグの更新
+    foreach ($tags as $tag) {
+        $name_tag = $tag['name'];
+        $key      = stripTagAsKey($name_tag);
+        $name_tag = getTagAsCommonFormat($name_tag);
+        $count    = 1;
+        if (isset($result[$key][$name_tag])) {
+            $count = ++$result[$key][$name_tag];
+        }
+        $result[$key][$name_tag] = $count;
+    }
+
+    // タグの保存
+    $result_json = json_encode($result);
+
+    return \putContentsToFile($path_file_tags, $result_json);
+}
+
 /* ---------------------------------------------------------------------- [S] */
 
-function strip_item_tag_minimum($name_tag)
+function stripTagAsKey($name_tag)
+{
+    $name_tag = (string) $name_tag;
+    $name_tag = stripItemTagMinimum($name_tag);
+    return strtolower($name_tag);
+}
+
+
+function stripItemTagMinimum($name_tag)
 {
     $name_tag = trim($name_tag);
     $name_tag = str_replace(' ', '_', $name_tag);

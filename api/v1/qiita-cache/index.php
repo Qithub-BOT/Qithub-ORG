@@ -64,8 +64,8 @@ if (file_exists($path_file_cache)) {
 
     // アップデート指示がない場合はキャッシュを表示
     if (! $do_update_cache) {
-        //echoJson($json);
-        //exit(STATUS_OK);
+        echoJson($json);
+        exit(STATUS_OK);
     }
 
     // アップデート指示があっても記事が削除済みの場合はキャッシュを表示
@@ -83,58 +83,14 @@ if (! isValidJson($json)) {
     dieMsg('Invalid JSON returned from Qiita API.', __LINE__);
 }
 
-// キャッシュの保存
+// キャッシュの保存（全体）
 if (! putContentsToFile($path_file_cache, $json)) {
     dieMsg('Fail to save cache file.', __LINE__);
 }
 
-$path_file_tags = getPathFileTags();
-echo putTagsToFile($path_file_tags, $json);
-dieMsg('');
-
-
-function getTagsFromFileAsArray($path_file_tags)
-{
-    $json   = \getContentsFromFile($path_file_tags);
-    $result = json_decode($json, JSON_OBJECT_AS_ARRAY);
-    if( NO_CONTEXT === $result){
-        $result = [];
-    }
-    
-    return $result;
-}
-
-function putTagsToFile($path_file_tags, $json)
-{
-    // get tags
-    $array = json_decode($json, JSON_OBJECT_AS_ARRAY);
-    if (JSON_DECODE_FAIL === $array) {
-        return false;
-    }
-    $tags = \getValue('tags', $array, []);
-    if (empty($tags)) {
-        return false;
-    }
-    // load tags
-    $result = getTagsFromFileAsArray($path_file_tags);
-    // loop
-    foreach ($tags as $tag) {
-        $name_tag = $tag['name'];
-        $name_tag = strip_item_tag_minimum($name_tag);
-        $key      = strtolower($name_tag);
-        $name_tag = getTagAsCommonFormat($name_tag);
-        $count    = 1;
-        if (isset($result[$key][$name_tag])) {
-            $count = ++$result[$key][$name_tag];
-        }
-        $result[$key][$name_tag] = $count;
-    }
-
-    $result_json = json_encode($result);
-    
-    print_r($result_json);
-
-    return \putContentsToFile($path_file_tags,$result_json);
+// キャッシュの保存（タグ）
+if (! putTagsToFile(getPathFileTags(), $json)) {
+    dieMsg('Fail to save tags to file.', __LINE__);
 }
 
 // キャッシュを表示して終了
