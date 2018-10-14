@@ -7,24 +7,27 @@ namespace Qithub\QiitaCache;
 
 function copyCacheToSpams($json)
 {
-    global $settings;
-
     if (empty($json)) {
         return false;
     }
 
     $id_item        = getItemIdGiven();
-    $path_dir_spams = getPathDirSpam($settings);
-    $name_file_spam = $id_item . EXT_FILE_CACHE;
-    $path_file_spam = $path_dir_spams . \DIR_SEP . $name_file_spam;
+    $path_file_spam = getPathFileSpam($id_item);
 
     if (file_exists($path_file_spam)) {
         return true;
     }
+    
+    $array = json_decode($json, JSON_OBJECT_AS_ARRAY);    
+    $user  = \getValue('user', $array, []);
 
-    if (! is_dir($path_dir_spams)) {
-        return false;
-    }
+    $result['id_item']   = \getValue('id', $array);
+    $result['id_user']   = \getValue('id', $user);
+    $result['url_cache'] = URL_ENDPOINT_BASE  . '?id=' . $id_item;
+    $result['url_raw']   = URL_ENDPOINT_QIITA . $id_item;
+    $result['date_post'] = \getValue('created_at', $array);
+    
+    $json = json_encode($result, \JSON_COMMON_OPTION);
 
     return \putContentsToFile($path_file_spam, $json);
 }
@@ -107,7 +110,7 @@ function getJsonItemFromApi($id_item)
         return false;
     }
 
-    $url  = "https://qiita.com/api/v2/items/{$id_item}";
+    $url  = URL_ENDPOINT_QIITA . $id_item;
     $json = \getContentsFromUrl($url);
 
     if (null === json_decode($json)) {
@@ -143,9 +146,7 @@ function getPathDirCache(array $settings)
 
 function getPathDirSpam(array $settings)
 {
-    $path_dir_cache = \getValue('path_dir_spam', $settings);
-
-    return $path_dir_cache;
+    return \getValue('path_dir_spams', $settings, false);
 }
 
 function getPathFileCache($id_item, array $settings)
@@ -155,6 +156,35 @@ function getPathFileCache($id_item, array $settings)
     $path_file_cache = $path_dir_cache . \DIR_SEP . $name_file_cache;
 
     return $path_file_cache;
+}
+
+function getPathFileSpam($id_item)
+{
+    global $settings;
+
+    if (! \isValidFormatId('item_qiita', $id_item)){
+        return false;
+    }
+
+    $path_dir_spams = getPathDirSpam($settings);
+
+    if (! is_dir($path_dir_spams)) {
+        return false;
+    }
+
+    // Qiita記事IDの最初の１文字をカテゴリ名としてディレクトリにする
+    // 理由：ファイル数が多すぎると GitHub 上の Qiita-SPAMS リポジトリの表示や
+    //       エディタで表示されなくなるため。（１階層内のファイル分散のため）
+    $name_dir_group = $id_item[0];
+    $path_dir_spams = $path_dir_spams . \DIR_SEP . $name_dir_group;
+
+    if (! is_dir($path_dir_spams) && ! mkdir($path_dir_spams, 0700)) {
+        \dieMsg('Error: Can not create spam cache directory.', __LINE__);
+    }
+
+    $name_file_spam = $id_item . EXT_FILE_CACHE;
+
+    return $path_dir_spams . \DIR_SEP . $name_file_spam;
 }
 
 function getPathFileTags(array $settings = [])
@@ -343,21 +373,15 @@ function initializeDirectories($settings)
     }
 
     // スパム・ディレクトリ確認/作成
-    $path_dir_spam = getPathDirSpam($settings);
-    if (! is_dir($path_dir_spam) && ! mkdir($path_dir_spam, 0700)) {
+    $path_dir_spams = getPathDirSpam($settings);
+    if (! is_dir($path_dir_spams) && ! mkdir($path_dir_spams, 0700)) {
         \dieMsg('Error: Can not create spam cache directory.', __LINE__);
     }
 }
 
 function isInSpams($id_item)
 {
-    global $settings;
-
-    $path_dir_spams = getPathDirSpam($settings);
-    $name_file_spam = $id_item . EXT_FILE_CACHE;
-    $path_file_spam = $path_dir_spams . \DIR_SEP . $name_file_spam;
-
-    return file_exists($path_file_spam);
+    return file_exists(getPathFileSpam($id_item));
 }
 
 function isItem404($id_item)

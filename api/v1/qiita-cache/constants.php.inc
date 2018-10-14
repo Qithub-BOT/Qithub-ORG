@@ -11,6 +11,8 @@ const NUM_PAGES_TO_FETCH     = 2;       // 1リクエストで取得する記事
 const IS_SPAM                = true;
 const NOT_SPAM               = false;
 const EXT_FILE_CACHE         = '.json'; // キャッシュファイルの拡張子
+const URL_ENDPOINT_BASE      = 'https://qithub.tk/api/v1/qiita-cache/';
+const URL_ENDPOINT_QIITA     = 'https://qiita.com/api/v2/items/';
 
 define('TIME_NOW', time());
 define('PATH_DIR_CURR', dirname(__FILE__));
