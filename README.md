@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/Qithub-BOT/Qithub-ORG.svg?branch=master)](https://travis-ci.org/Qithub-BOT/Qithub-ORG)
-
 <img title="Qithub LOGO" alt="Qithub Logo" src="https://github.com/Qithub-BOT/Qithub-ORG/raw/master/images/Banner_Qithub/Qithub-BOT-900x300.jpg" width="900">
+
+[![Build Status](https://travis-ci.org/Qithub-BOT/Qithub-ORG.svg?branch=master)](https://travis-ci.org/Qithub-BOT/Qithub-ORG) [![参加ポリシー](http://img.shields.io/badge/policy-Qithub%203原則-blue.svg)](https://github.com/Qithub-BOT/Qithub-ORG/wiki/%E3%83%9D%E3%83%AA%E3%82%B7%E3%83%BC%E3%80%81%E3%82%B3%E3%83%B3%E3%82%BB%E3%83%97%E3%83%88) [![License](https://img.shields.io/badge/license-CC%20BY--SA%204.0-brightgreen.svg)](https://github.com/Qithub-BOT/Qithub-ORG/blob/master/Outline_Of_License.md) ![日本語ドキュメント](https://img.shields.io/badge/document-ja__JP-brightgreen.svg) ![日本語コミットメッセージ](https://img.shields.io/badge/Commit%20message-ja__JP-brightgreen.svg) ![日本語ソース内コメント](https://img.shields.io/badge/code%20comment-ja__JP-brightgreen.svg)
 
 <a id="toc"></a>
 # 目次
