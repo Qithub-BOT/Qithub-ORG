@@ -22,6 +22,8 @@ Qiita のスパム記事のスパム検知エンジン開発などにご利用�
 https://qithub.tk/api/v1/qiita-cache/?id=<Qiita記事ID>
 ```
 
+オプションで `&update=true` をリクエスト・クエリに加えるとキャッシュの内容を更新します。（削除済みを除く）
+
 ### GET `/api/v1/qiita-cache/?tag=`
 
 - tag
