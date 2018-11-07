@@ -108,7 +108,7 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
         //アクセス過多による BAN 防止
         //   Qiita は制限が厳しいので注意
         //     未認証    1 request / min
-        //     認証済み 16 request / min (3/sec)
+        //     認証済み 16 request / min (1req/3sec)
         sleep(REQUEST_LIMIT_PER_SEC);
 
         if (! empty($access_token)) {
