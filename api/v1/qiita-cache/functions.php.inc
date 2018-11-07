@@ -88,12 +88,12 @@ function getAccessToken($name_service, $name_token)
     // 2018/11/08 現在の取得可能なアクセストークン一覧
     // name_service = [qiitadon, qiita]
     // name_token = [qithub, qithub-dev, qiitime, test] （サービスのアカウント）
-    // 
+    //
     // ※ サーバーの gettoken コマンドを利用するには事前に申請許可と、リクエスト
     //    元のディレクトリをアクセス・リストに追加してもらう必要があります。
     //    詳しくは Qithub-ORG リポジトリ Wiki の「アクセストークンについて」参照
 
-    $command    = "gettoken ${name_service} ${name_token}";
+    $command    = "gettoken {$name_service} {$name_token}";
     $output     = [];
     $return_var = 1;
     $lastline   = exec($command, $output, $return_var);
@@ -139,7 +139,7 @@ function getJsonItemFromApi($id_item)
     if (empty($id_item)) {
         return false;
     }
-    
+
     $access_token_qiita = getAccessTokenQiita();
 
     $url  = URL_ENDPOINT_QIITA . $id_item;
@@ -148,7 +148,7 @@ function getJsonItemFromApi($id_item)
     if (null === json_decode($json)) {
         return false;
     }
-    
+
     sleep(3); // Qiita API のアクセス制限が 16 request/min
 
     return $json;
