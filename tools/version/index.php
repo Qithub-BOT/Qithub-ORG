@@ -75,7 +75,7 @@ echo_eol('<h2>Env</h2>');
 $os     = runCmd('cat /etc/redhat-release');
 $path   = runCmd('echo $PATH');
 $whoami = runCmd('whoami');
-$df     = runCmd('df -h');
+$df     = runCmd('df -h | sed  -e \'s/haru.*\/webdav/xxxxxx.softether.net:xxxx             /\'');
 $env    = runCmd('printenv');
 
 echo_eol('<ul>');
