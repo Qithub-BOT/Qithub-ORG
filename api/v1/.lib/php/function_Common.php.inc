@@ -116,7 +116,7 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
             $context['http']['header'] = $header;
         }
 
-        $result = @file_get_contents($url, false, stream_context_create($context));
+        $result = @file_get_contents($url, null, stream_context_create($context));
 
         if (false === $result) {
             $error  = "Error occurred while fetching url: {$url}" . PHP_EOL;
