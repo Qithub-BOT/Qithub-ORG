@@ -67,7 +67,7 @@ $lists['program'] = [
         'List of MeCab dictionaries list' => 'mecab-config --dicdir && ls -la $(echo `mecab-config --dicdir`)',
     ],
     'MeCab-ipadic-NEologd' => [
-        'Path of mecab-ipadic-NEologd' => 'echo `mecab-config --dicdir`"/mecab-ipadic-neologd"',
+        'Path of mecab-ipadic-NEologd' => 'echo `mecab-config --dicdir`'/mecab-ipadic-neologd'',
     ],
     'Composer' => [
         'version' => 'composer --version',
@@ -79,7 +79,7 @@ $lists['program'] = [
         'version' => 'npm ls -g',
     ],
     'Perl module' => [
-        'Perl module list' => 'find `perl -e \'print "@INC"\'` -name \'*.pm\' -print',
+        'Perl module list' => 'find `perl -e \'print '@INC'\'` -name \'*.pm\' -print',
     ],
     'pip' => [
         'version' => 'pip --version',
@@ -109,9 +109,12 @@ $lists['program'] = [
         'version' => 'rg --version',
     ],
     'yum' => [
-        "version" => 'yum --version',
+        'version' => 'yum --version',
     ],
     'yum package installed' => [
-        "List of yum packages installed" => 'yum list installed',
+        'List of yum packages installed' => 'yum list installed',
+    ],
+    'jq' => [
+        'version' => 'jq --version',
     ],
 ];
