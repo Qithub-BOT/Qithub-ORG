@@ -137,6 +137,7 @@ function getItemIdGiven()
 function getJsonItemFromApi($id_item)
 {
     if (empty($id_item)) {
+        echo 'Empty $id_item given at: ' . __LINE__ . PHP_EOL;
         return false;
     }
 
@@ -146,6 +147,7 @@ function getJsonItemFromApi($id_item)
     $json = \getContentsFromUrl($url, $access_token_qiita);
 
     if (null === json_decode($json)) {
+        echo 'Can not get contents from API at: ' . __LINE__ . PHP_EOL;
         return false;
     }
 
