@@ -91,7 +91,9 @@ if (file_exists($path_file_cache)) {
 // Qiita API からデータを取得
 $json = getJsonItemFromApi($id_item);
 if (! isValidJson($json)) {
-    dieMsg('Invalid JSON returned from Qiita API.', __LINE__);
+    $msg  = 'Invalid JSON returned from Qiita API.', PHP_EOL;
+    $msg .= $json;
+    dieMsg($msg, __LINE__);
 }
 
 // キャッシュの保存（全体）
