@@ -86,7 +86,7 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
         return file_get_contents($path_file);
     }
 
-    function getContentsFromUrl($url)
+    function getContentsFromUrl($url, $access_token = '')
     {
         static $results;
 
@@ -96,11 +96,27 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
             return $results[$crc];
         }
 
-        sleep(REQUEST_LIMIT_PER_SEC); //アクセス過多による BAN 防止
-
         // コンテンツの取得
         $http_response_header = null;
-        $result = @file_get_contents($url);
+        $context = [
+            'http' => [
+                'method' => 'GET',
+                'ignore_errors' => true,
+            ],
+        ];
+
+        //アクセス過多による BAN 防止
+        //   Qiita は制限が厳しいので注意
+        //     未認証    1 request / min
+        //     認証済み 16 request / min (1req/3sec)
+        sleep(REQUEST_LIMIT_PER_SEC);
+
+        if (! empty($access_token)) {
+            $header = "Authorization: Bearer ${access_token}\r\n";
+            $context['http']['header'] = $header;
+        }
+
+        $result = @file_get_contents($url, false, stream_context_create($context));
 
         if (false === $result) {
             $error  = "Error occurred while fetching url: {$url}" . PHP_EOL;
