@@ -128,6 +128,7 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
         echo 'TEST', PHP_EOL;
         print_r($result);
         print_r($context);
+        print_r($url);
 
         $results[$crc] = $result;
 
