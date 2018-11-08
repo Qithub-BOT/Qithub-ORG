@@ -124,6 +124,9 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
             $error .= print_r($http_response_header, true) . PHP_EOL;
             dieMsg($error, __LINE__);
         }
+        
+        echo 'TEST', PHP_EOL;
+        print_r($result);
 
         $results[$crc] = $result;
 
