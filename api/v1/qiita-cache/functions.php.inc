@@ -11,16 +11,18 @@ function copyCacheToSpams($json)
         return false;
     }
 
-    $id_item        = getItemIdGiven();
+    $id_item        = getItemIdGiven(); // リクエスト記事ID
     $path_file_spam = getPathFileSpam($id_item);
 
     if (file_exists($path_file_spam)) {
-        return true;
+        return true; // すでに墓場行きなら処理済み
     }
 
     $array = json_decode($json, JSON_OBJECT_AS_ARRAY);
     $user  = \getValue('user', $array, []);
 
+    // 下記 JSON に含めるスパム info のコンテンツ仕様は Issue #152 より
+    // https://github.com/Qithub-BOT/Qithub-ORG/issues/152
     $result['id_item']   = \getValue('id', $array);
     $result['id_user']   = \getValue('id', $user);
     $result['url_cache'] = URL_ENDPOINT_BASE  . '?id=' . $id_item;
@@ -81,6 +83,34 @@ function echoTagsAsCommonFormat($tags_search, $return = RETURN_AS_ARRAY)
 
 /* ---------------------------------------------------------------------- [G] */
 
+function getAccessToken($name_service, $name_token)
+{
+    // 2018/11/08 現在の取得可能なアクセストークン一覧
+    // name_service = [qiitadon, qiita]
+    // name_token = [qithub, qithub-dev, qiitime, test] （サービスのアカウント）
+    //
+    // ※ サーバーの gettoken コマンドを利用するには事前に申請許可と、リクエスト
+    //    元のディレクトリをアクセス・リストに追加してもらう必要があります。
+    //    詳しくは Qithub-ORG リポジトリ Wiki の「アクセストークンについて」参照
+
+    $command    = "gettoken {$name_service} {$name_token}";
+    $output     = [];
+    $return_var = 1;
+    $lastline   = exec($command, $output, $return_var);
+
+    return (0 === $return_var) ? $lastline : false;
+}
+
+function getAccessTokenQiita()
+{
+    // アクセストークンの取得許可済み
+    // https://github.com/Qithub-BOT/Qithub-ORG/issues/168
+    $name_service = 'qiita';
+    $name_token   = 'qithub';
+
+    return getAccessToken($name_service, $name_token);
+}
+
 function getItemIdGiven()
 {
     static $result;
@@ -110,12 +140,16 @@ function getJsonItemFromApi($id_item)
         return false;
     }
 
+    $access_token_qiita = getAccessTokenQiita();
+
     $url  = URL_ENDPOINT_QIITA . $id_item;
-    $json = \getContentsFromUrl($url);
+    $json = \getContentsFromUrl($url, $access_token_qiita);
 
     if (null === json_decode($json)) {
         return false;
     }
+
+    sleep(3); // Qiita API のアクセス制限が 16 request/min
 
     return $json;
 }
