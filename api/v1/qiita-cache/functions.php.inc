@@ -145,6 +145,7 @@ function getJsonItemFromApi($id_item)
 
     $url  = URL_ENDPOINT_QIITA . $id_item;
     $json = \getContentsFromUrl($url, $access_token_qiita);
+    print_r($json), PHP_EOL;
 
     if (null === json_decode($json)) {
         echo 'Can not get contents from API at: ' . __LINE__ . PHP_EOL;

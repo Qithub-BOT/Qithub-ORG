@@ -101,7 +101,6 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
         $context = [
             'http' => [
                 'method' => 'GET',
-                'ignore_errors' => true,
             ],
         ];
 
