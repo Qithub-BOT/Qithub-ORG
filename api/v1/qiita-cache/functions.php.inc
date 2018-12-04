@@ -43,8 +43,10 @@ function echoJson($json_string, $is_spam = NOT_SPAM, $options = \JSON_COMMON_OPT
     }
 
     $array = json_decode($json_string, JSON_OBJECT_AS_ARRAY);
-
-    $array['is_spam'] = (IS_SPAM === $is_spam);
+    
+    if(IS_SPAM === $is_spam){
+        $array['is_spam'] = (IS_SPAM === $is_spam);    
+    }
 
     $json_string = json_encode($array, $options);
     $etag        = hash('md5', $json_string);
@@ -145,7 +147,6 @@ function getJsonItemFromApi($id_item)
 
     $url  = URL_ENDPOINT_QIITA . $id_item;
     $json = \getContentsFromUrl($url, $access_token_qiita);
-    echo print_r($json, true) . PHP_EOL;
 
     if (null === json_decode($json)) {
         echo 'Can not get contents from API at: ' . __LINE__ . PHP_EOL;

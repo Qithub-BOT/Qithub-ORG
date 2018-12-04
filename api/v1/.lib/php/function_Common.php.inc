@@ -90,19 +90,32 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
     {
         static $results;
 
+        if (empty($url)) {
+            throw new InvalidArgumentException('Empty URL given.');
+        }
+
         $crc = hash('crc32', $url);
 
         if (isset($results[$crc])) {
             return $results[$crc];
         }
 
-        // コンテンツの取得
-        $http_response_header = null;
-        $context = [
-            'http' => [
-                'method' => 'GET',
-            ],
-        ];
+        $curl = curl_init();
+
+        if (! empty($access_token)) {
+            $header = [
+                'Authorization: Bearer '.$access_token,
+            ];
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
+        }
+
+        // CURL セットアップ
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
+        curl_setopt($curl, CURLOPT_HEADER, true);
+
 
         //アクセス過多による BAN 防止
         //   Qiita は制限が厳しいので注意
@@ -110,23 +123,32 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
         //     認証済み 16 request / min (1req/3sec)
         sleep(REQUEST_LIMIT_PER_SEC);
 
-        if (! empty($access_token)) {
-            $header = "Authorization: Bearer ${access_token}\r\n";
-            $context['http']['header'] = $header;
+        $response = curl_exec($curl);
+
+        // データ取得
+        $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+        if( 200 !== $code){
+            $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+            $header      = substr($response, 0, $header_size);
+            $body        = substr($response, $header_size);
+
+            $msg  = 'Error while fetching URL. Status: ' . $code . PHP_EOL;
+            $msg .= 'Header: ' . $header . PHP_EOL;
+            $msg .= 'Body: ' . $body . PHP_EOL;
+            
+            dieMsg($msg, __LINE__);
         }
 
-        $result = @file_get_contents($url, null, stream_context_create($context));
+        $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+        $header      = substr($response, 0, $header_size);
+        $body        = substr($response, $header_size);
 
-        if (false === $result) {
-            $error  = "Error occurred while fetching url: {$url}" . PHP_EOL;
-            $error .= "Response headers are: " . PHP_EOL;
-            $error .= print_r($http_response_header, true) . PHP_EOL;
-            dieMsg($error, __LINE__);
-        }
+        $results[$crc] = $body;
         
-        $results[$crc] = $result;
+        curl_close($curl);
 
-        return $result;
+        return $body;
     }
 
     function getPathDirParent()
