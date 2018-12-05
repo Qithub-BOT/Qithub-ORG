@@ -36,7 +36,7 @@ function copyCacheToSpams($json)
 
 /* ---------------------------------------------------------------------- [E] */
 
-function echoJson($json_string, $is_spam = NOT_SPAM, $options = \JSON_COMMON_OPTION)
+function echoJson($json_string, $is_spam = null, $options = \JSON_COMMON_OPTION)
 {
     if (! \isValidJson($json_string)) {
         \dieMsg('Invalid JSON given.(JSON empty)', __LINE__);
@@ -44,7 +44,7 @@ function echoJson($json_string, $is_spam = NOT_SPAM, $options = \JSON_COMMON_OPT
 
     $array = json_decode($json_string, JSON_OBJECT_AS_ARRAY);
     
-    if(IS_SPAM === $is_spam){
+    if(null !== $is_spam){
         $array['is_spam'] = (IS_SPAM === $is_spam);    
     }
 
