@@ -1,6 +1,6 @@
-# Qiita 魚拓 API（`Qiita-spams API`）
+# Qiita 魚拓 API（`Qiita-cache API`）
 
-Qiita 記事のキャッシュサーバー（魚拓） API です。
+**Qiita 記事のキャッシュサーバー（魚拓） API** です。
 
 この API にリクエストがあると、指定された Qiita 記事 ID のキャッシュが JSON 形式で取得できます。
 
