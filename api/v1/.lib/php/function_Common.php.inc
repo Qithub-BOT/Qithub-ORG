@@ -111,6 +111,7 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
 
         // CURL セットアップ
         curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
@@ -139,7 +140,7 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
             
             dieMsg($msg, __LINE__);
         }
-
+        
         $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
         $header      = substr($response, 0, $header_size);
         $body        = substr($response, $header_size);
