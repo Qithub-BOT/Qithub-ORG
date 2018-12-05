@@ -10,6 +10,14 @@ Qiita のスパム記事のスパム検知エンジン開発などにご利用�
 
 この API は Qiita をより良くしたいユーザーのためのサービスです。心無い利用が多いと判断した場合は、Qiita の OAuth を必須とするなど検討いたします。
 
+## スパム・フラグ
+
+出力される JSON データの "is_spam" 要素（値：true/false）はキャッシュ・サーバーが付加したものです。
+
+**これは簡易的なスパム検知**で、キャッシュ時に、ユーザーおよび該当記事が削除されていた場合、スパム記事と見なされフラグが立てられます。
+
+そのため、ユーザー本人が退会および記事の削除を行った可能性もあるためスパムでない可能性もあります。
+
 ## エンドポイントとメソッド
 
 ### GET `/api/v1/qiita-cache/?id=`
@@ -18,9 +26,9 @@ Qiita のスパム記事のスパム検知エンジン開発などにご利用�
     - 取得したい Qiita 記事の ID です。20 桁の16 進数で表現されています。
     - Example: `"599c4f3b5a25370f8505"`
 
-```
-https://qithub.tk/api/v1/qiita-cache/?id=<Qiita記事ID>
-```
+    ```
+    https://qithub.tk/api/v1/qiita-cache/?id=<Qiita記事ID>
+    ```
 
 オプションで `&update=true` をリクエスト・クエリに加えるとキャッシュの内容を更新します。（削除済みを除く）
 
@@ -30,9 +38,9 @@ https://qithub.tk/api/v1/qiita-cache/?id=<Qiita記事ID>
     - URL エンコードされたタグ名です。キャッシュされた情報から最も出現率の多いタグの表記で返されます。スペース（`%20`）区切りで複数タグも指定できます。
     - Example: `"javascript%20TomCAT"`
 
-```
-https://qithub.tk/api/v1/qiita-cache/?tag=<URLエンコードのタグ>
-```
+    ```
+    https://qithub.tk/api/v1/qiita-cache/?tag=<URLエンコードのタグ>
+    ```
 
 ## 禁止事項／禁止事項
 
