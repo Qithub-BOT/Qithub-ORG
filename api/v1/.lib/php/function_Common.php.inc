@@ -117,7 +117,6 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
         curl_setopt($curl, CURLOPT_HEADER, true);
 
-
         //アクセス過多による BAN 防止
         //   Qiita は制限が厳しいので注意
         //     未認証    1 request / min
@@ -129,24 +128,28 @@ namespace { // 汎用のため明示的にグローバル名前空間に設置
         // データ取得
         $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-        if( 200 !== $code){
+        if (200 !== $code) {
             $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
             $header      = substr($response, 0, $header_size);
             $body        = substr($response, $header_size);
 
-            $msg  = 'Error while fetching URL. Status: ' . $code . PHP_EOL;
-            $msg .= 'Header: ' . $header . PHP_EOL;
-            $msg .= 'Body: ' . $body . PHP_EOL;
-            
+            $msg  = 'Error while fetching URL.' . PHP_EOL;
+            $msg .= '* URL: ' . $url . PHP_EOL;
+            $msg .= '* Status: ' . $code . PHP_EOL;
+            $msg .= '* Header: ' . $header . PHP_EOL;
+            $msg .= '* Body: ' . $body . PHP_EOL;
+
+            curl_close($curl);
+
             dieMsg($msg, __LINE__);
         }
-        
+
         $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
         $header      = substr($response, 0, $header_size);
         $body        = substr($response, $header_size);
 
         $results[$crc] = $body;
-        
+
         curl_close($curl);
 
         return $body;
