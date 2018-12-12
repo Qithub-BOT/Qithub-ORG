@@ -2,6 +2,10 @@
 
 **Qiita 記事のキャッシュサーバー（魚拓） API** です。
 
+```
+https://qithub.tk/api/v1/qiita-cache/
+```
+
 この API にリクエストがあると、指定された Qiita 記事 ID のキャッシュが JSON 形式で取得できます。
 
 ## 用途＆利用対象者
