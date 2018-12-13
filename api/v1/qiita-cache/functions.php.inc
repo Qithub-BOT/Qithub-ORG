@@ -26,7 +26,7 @@ function copyCacheToSpams($json)
     $result['id_item']   = \getValue('id', $array);
     $result['id_user']   = \getValue('id', $user);
     $result['url_cache'] = URL_ENDPOINT_BASE  . '?id=' . $id_item;
-    $result['url_raw']   = URL_ENDPOINT_QIITA . $id_item;
+    $result['url_raw']   = URL_ENDPOINT_QIITA_ITEM . $id_item;
     $result['date_post'] = \getValue('created_at', $array);
 
     $json = json_encode($result, \JSON_COMMON_OPTION);
@@ -42,38 +42,56 @@ function echoJson($json_string, $is_spam = null, $options = \JSON_COMMON_OPTION)
         \dieMsg('Invalid JSON given.(JSON empty)', __LINE__);
     }
 
+    // is_spam 要素の追加
     $array = json_decode($json_string, JSON_OBJECT_AS_ARRAY);
-    
-    if(null !== $is_spam){
-        $array['is_spam'] = (IS_SPAM === $is_spam);    
+    if (null !== $is_spam) {
+        $array['is_spam'] = (IS_SPAM === $is_spam);
     }
 
+    // JSON ヘッダの出力
     $json_string = json_encode($array, $options);
     $etag        = hash('md5', $json_string);
-
     if (! \isCli() && ! headers_sent()) {
         header('Content-type: application/json; charset=utf-8');
         header('Content-Length: '.strlen($json_string));
         header('Etag: ' . $etag);
     }
 
+    // JSON の出力
     echo $json_string;
 }
 
 function echoTagsAsCommonFormat($tags_search, $return = RETURN_AS_ARRAY)
 {
+    global $tag_only_used;
+
     $result = [];
 
     if (is_string($tags_search)) {
         $tags_search[] = $tags_search;
     }
 
-    foreach ($tags_search as $tag_search) {
-        $tag_search = stripTagAsKey($tag_search);
+    foreach ($tags_search as $tag_search_raw) {
+        $tag_search = stripTagAsKey($tag_search_raw);
         $tag_search = getTagAsCommonFormat($tag_search);
+
+        // キャッシュに存在する場合
         if (! empty($tag_search)) {
-            $result[] = $tag_search;
+            $result[$tag_search_raw] = $tag_search;
+            continue;
         }
+        
+        // Qiita API に存在する場合
+        $tag_search = getJsonTagFromApi($tag_search_raw);
+
+        if (! empty($tag_search)) {
+            $result[$tag_search_raw] = $tag_search;
+            continue;
+        }
+
+        // タグが存在しない場合
+        // $tag_only_used != true 同じタグ名を返す(仕様 Issue173）
+        $result[$tag_search_raw] = ($tag_only_used) ? '' : $tag_search_raw;
     }
 
     if (RETURN_AS_JSON === $return) {
@@ -145,7 +163,7 @@ function getJsonItemFromApi($id_item)
 
     $access_token_qiita = getAccessTokenQiita();
 
-    $url  = URL_ENDPOINT_QIITA . $id_item;
+    $url  = URL_ENDPOINT_QIITA_ITEM . $id_item;
     $json = \getContentsFromUrl($url, $access_token_qiita);
 
     if (null === json_decode($json)) {
@@ -156,6 +174,28 @@ function getJsonItemFromApi($id_item)
     sleep(3); // Qiita API のアクセス制限が 16 request/min
 
     return $json;
+}
+
+function getJsonTagFromApi($tag_search)
+{
+    if (empty($tag_search)) {
+        return '';
+    }
+
+    $url  = URL_ENDPOINT_QIITA_TAG . urldecode($tag_search);
+
+    if(\isUrl404($url)){
+        return '';
+    }
+
+    $access_token_qiita = getAccessTokenQiita();
+    $json  = \getContentsFromUrl($url, $access_token_qiita);
+    $array = json_decode($json, JSON_OBJECT_AS_ARRAY);
+    if (null === $array) {
+        return '';
+    }
+
+    return \getValue('id', $array, '');
 }
 
 function getNameTagGiven($return = RETURN_AS_ARRAY)
@@ -259,14 +299,13 @@ function getTagAsCommonFormat($name_tag)
     if (! isset($list_tags)) {
         // 出現タグ一覧の再利用に static 変数に代入
         $list_tags = getTagsFromFileAsArray(getPathFileTags());
-        //$list_tags = getContentsFromFile(getPathFileTags());
     }
 
     $key = stripTagAsKey($name_tag);
 
-    // 初出現の場合は同じタグを返す
+    // キャッシュにタグがない場合
     if (! isset($list_tags[$key])) {
-        return $name_tag;
+        return '';
     }
 
     // 該当タグの出現リストから最大出現数のタグを返す
@@ -488,7 +527,9 @@ function putTagsToFile($path_file_tags, $json)
     foreach ($tags as $tag) {
         $name_tag = $tag['name'];
         $key      = stripTagAsKey($name_tag);
-        $name_tag = getTagAsCommonFormat($name_tag);
+        $name_tag = getTagAsCommonFormat($name_tag) ?: $name_tag;
+
+        // タグの出現回数カウントアップ
         $count    = 1;
         if (isset($result[$key][$name_tag])) {
             $count = ++$result[$key][$name_tag];

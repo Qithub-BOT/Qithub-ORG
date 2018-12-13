@@ -38,7 +38,7 @@ Qiita のスパム記事のスパム検知エンジン開発などにご利用�
 
     - Example:
         ```
-        https://qithub.tk/api/v1/qiita-cache/?id=599c4f3b5a25370f8505&update=hoge
+        https://qithub.tk/api/v1/qiita-cache/?id=599c4f3b5a25370f8505&update=foo
         ```
 
 #### JSON のフォーマット
@@ -68,9 +68,9 @@ Qiita のスパム記事のスパム検知エンジン開発などにご利用�
         ```
         ```json
         [
-            "JavaScript",
-            "Tomcat",
-            "JerryMOUSE"
+            "javascript": "JavaScript",
+            "TomCAT": "Tomcat",
+            "JerryMOUSE": "JerryMOUSE"
         ]
         ```
 
@@ -80,13 +80,13 @@ Qiita のスパム記事のスパム検知エンジン開発などにご利用�
 
     - Example:
         ```
-        https://qithub.tk/api/v1/qiita-cache/?tag=javascript%20TomCAT%20JerryMOUSE&only_used=fuga
+        https://qithub.tk/api/v1/qiita-cache/?tag=javascript%20TomCAT%20JerryMOUSE&only_used=bar
         ```
         ```json
         [
-            "JavaScript",
-            "Tomcat",
-            ""
+            "javascript": "JavaScript",
+            "TomCAT": "",
+            "JerryMOUSE": ""
         ]
         ```
 
