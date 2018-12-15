@@ -63,7 +63,11 @@ function echoJson($json_string, $is_spam = null, $options = \JSON_COMMON_OPTION)
 
 function echoTagsAsCommonFormat($tags_search, $return = RETURN_AS_ARRAY)
 {
-    global $tag_only_used;
+    global $_GET;
+
+    // 未使用タグの場合の戻り値を空にするフラグを取得
+    $tag_only_used   = \getValue(QUERY_KEY_ONLY_USED, $_GET, RETURN_SELF);
+    $return_as_empty = (RETURN_EMPTY === strtolower($tag_only_used));
 
     $result = [];
 
@@ -80,7 +84,7 @@ function echoTagsAsCommonFormat($tags_search, $return = RETURN_AS_ARRAY)
             $result[$tag_search_raw] = $tag_search;
             continue;
         }
-        
+
         // Qiita API に存在する場合
         $tag_search = getJsonTagFromApi($tag_search_raw);
 
@@ -90,8 +94,8 @@ function echoTagsAsCommonFormat($tags_search, $return = RETURN_AS_ARRAY)
         }
 
         // タグが存在しない場合
-        // $tag_only_used != true 同じタグ名を返す(仕様 Issue173）
-        $result[$tag_search_raw] = ($tag_only_used) ? '' : $tag_search_raw;
+        // $return_as_empty != true 同じタグ名を返す(仕様 Issue173）
+        $result[$tag_search_raw] = ($return_as_empty) ? '' : $tag_search_raw;
     }
 
     if (RETURN_AS_JSON === $return) {
@@ -184,7 +188,7 @@ function getJsonTagFromApi($tag_search)
 
     $url  = URL_ENDPOINT_QIITA_TAG . urldecode($tag_search);
 
-    if(\isUrl404($url)){
+    if (\isUrl404($url)) {
         return '';
     }
 

@@ -22,7 +22,7 @@ Qiita のスパム記事のスパム検知エンジン開発などにご利用�
 
 キャッシュされた Qiita 記事の情報が取得できます。
 
-- クエリ引数：`id`
+- クエリ引数： `id` （必須）
     - 取得したい Qiita 記事の ID を指定します。20 桁の16 進数で表現されています。
         ```
         https://qithub.tk/api/v1/qiita-cache/?id=<Qiita記事ID>
@@ -32,7 +32,7 @@ Qiita のスパム記事のスパム検知エンジン開発などにご利用�
         ```
         https://qithub.tk/api/v1/qiita-cache/?id=599c4f3b5a25370f8505
         ```
- - クエリ引数： `update`（オプション）
+ - クエリ引数： `update` （オプション）
     - 値が指定されていると最新の記事情報が取得できます。（キャッシュの内容も更新されます）
     - 値が空白、もしくは記事がすでに削除されている場合は更新しません。
 
@@ -54,15 +54,20 @@ Qiita のスパム記事のスパム検知エンジン開発などにご利用�
 
 #### GET `/api/v1/qiita-cache/?tag=`
 
-キャッシュされた Qiita 記事で最も使われているタグの表記方法を取得できます。タグが存在しない（使われたことがない）場合は、デフォルトで同じタグが返されます。
+キャッシュされた Qiita 記事で**最も使われているタグの表記方法を取得**できます。
 
-- クエリ引数：`tag`
-    - URL エンコードされたタグ名です。スペース（`%20`）区切りで複数タグも指定できます。
+キャッシュ記事や Qiita API にも検索タグが存在しない／使われたことがない場合は、デフォルトで検索タグが返されます。
+
+- クエリ引数： `tag` （必須）
+    - 値
+        - URL エンコードされたタグ名です。スペース（`%20`）区切りで複数タグも指定できます。
+
         ```
         https://qithub.tk/api/v1/qiita-cache/?tag=<URLエンコードのタグ>
         ```
 
     - Example: `"javascript%20TomCAT"`
+
         ```
         https://qithub.tk/api/v1/qiita-cache/?tag=javascript%20TomCAT%20JerryMOUSE
         ```
@@ -74,13 +79,16 @@ Qiita のスパム記事のスパム検知エンジン開発などにご利用�
         ]
         ```
 
-- クエリ引数：`only_used`（オプション）
-    - 値が指定されていると、タグがキャッシュや本家の API にも存在しない場合は空白を返します。
-    - 値が空白、もしくはクエリの指定がない場合は、検索タグを返します。
-
+- クエリ引数： `return_value` （オプション）
+    - 値
+        - `self_if_not_used` （デフォルト）
+            - タグが存在しない場合、検索タグ自身を返します。
+        - `only_used`
+            - タグが存在しない場合、空の値を返します。
+        - 値が指定されていない場合は、デフォルト値が使われます。
     - Example:
         ```
-        https://qithub.tk/api/v1/qiita-cache/?tag=javascript%20TomCAT%20JerryMOUSE&only_used=bar
+        https://qithub.tk/api/v1/qiita-cache/?tag=javascript%20TomCAT%20JerryMOUSE&return_value=only_used
         ```
         ```json
         [

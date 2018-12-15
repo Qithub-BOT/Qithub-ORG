@@ -39,10 +39,6 @@ $name_tags = getNameTagGiven(\RETURN_AS_ARRAY);
 
 // 指定されたタグの最も使われている表記方法（キャッシュ内に限る）を返して終了
 if (! empty($name_tags)) {
-
-    // 未使用タグの場合の戻り値を空にするフラグを取得
-    $tag_only_used = \getValue('only_used', $_GET) ? true : false;
-
     echoTagsAsCommonFormat($name_tags, \RETURN_AS_JSON);
     exit(\STATUS_OK);
 }

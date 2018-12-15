@@ -14,6 +14,9 @@ const EXT_FILE_CACHE          = '.json'; // キャッシュファイルの拡張
 const URL_ENDPOINT_BASE       = 'https://qithub.tk/api/v1/qiita-cache/';
 const URL_ENDPOINT_QIITA_ITEM = 'https://qiita.com/api/v2/items/';
 const URL_ENDPOINT_QIITA_TAG  = 'https://qiita.com/api/v2/tags/';
+const QUERY_KEY_ONLY_USED     = 'return_value';
+const RETURN_SELF             = 'self_if_not_used';
+const RETURN_EMPTY            = 'only_used';
 
 define('TIME_NOW', time());
 define('PATH_DIR_CURR', dirname(__FILE__));
