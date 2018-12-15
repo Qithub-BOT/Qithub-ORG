@@ -6,7 +6,7 @@
 https://qithub.tk/api/v1/qiita-cache/
 ```
 
-この API にリクエストがあると、指定された Qiita 記事 ID のキャッシュが JSON 形式で取得できます。
+この API にリクエストがあると、指定された Qiita 記事 ID のキャッシュ情報が JSON 形式で取得できます。
 
 ## 用途＆利用対象者
 
@@ -14,20 +14,16 @@ Qiita のスパム記事のスパム検知エンジン開発などにご利用�
 
 この API は Qiita をより良くしたいユーザーのためのサービスです。心無い利用が多いと判断した場合は、Qiita の OAuth を必須とするなど検討いたします。
 
-## スパム・フラグ
-
-出力される JSON データの "is_spam" 要素（値：true/false）はキャッシュ・サーバーが付加したものです。
-
-**これは簡易的なスパム検知**で、キャッシュ時に、ユーザーおよび該当記事が削除されていた場合、スパム記事と見なされフラグが立てられます。
-
-そのため、ユーザー本人が退会および記事の削除を行った可能性もあるためスパムでない可能性もあります。
-
 ## エンドポイントとメソッド
 
-### GET `/api/v1/qiita-cache/?id=`
+### 記事取得
 
-- id
-    - 取得したい Qiita 記事の ID です。20 桁の16 進数で表現されています。
+#### GET `/api/v1/qiita-cache/?id=`
+
+キャッシュされた Qiita 記事の情報が取得できます。
+
+- クエリ引数： `id` （必須）
+    - 取得したい Qiita 記事の ID を指定します。20 桁の16 進数で表現されています。
         ```
         https://qithub.tk/api/v1/qiita-cache/?id=<Qiita記事ID>
         ```
@@ -36,20 +32,70 @@ Qiita のスパム記事のスパム検知エンジン開発などにご利用�
         ```
         https://qithub.tk/api/v1/qiita-cache/?id=599c4f3b5a25370f8505
         ```
+ - クエリ引数： `update` （オプション）
+    - 値が指定されていると最新の記事情報が取得できます。（キャッシュの内容も更新されます）
+    - 値が空白、もしくは記事がすでに削除されている場合は更新しません。
 
-オプションで `&update=true` をリクエスト・クエリに加えるとキャッシュの内容を更新します。（削除済みを除く）
+    - Example:
+        ```
+        https://qithub.tk/api/v1/qiita-cache/?id=599c4f3b5a25370f8505&update=foo
+        ```
 
-### GET `/api/v1/qiita-cache/?tag=`
+#### JSON のフォーマット
 
-- tag
-    - URL エンコードされたタグ名です。キャッシュされた情報から最も出現率の多いタグの表記で返されます。スペース（`%20`）区切りで複数タグも指定できます。
+返される JSON は、本家 Qiita の API の JSON 仕様に、スパム・フラグの要素を加えたものです。
+
+- [Qiita API v2 投稿](https://qiita.com/api/v2/docs#%E6%8A%95%E7%A8%BF) @ Qiita
+- スパム・フラグ
+    - 要素名："`is_spam`"、型：`string`、値：`true`/`false`
+    - **これは簡易的なスパム検知**です。キャッシュ時に、ユーザーおよび該当記事が削除されていた場合、スパム記事と見なされフラグが立てられます。そのため、ユーザー本人が退会および記事の削除を行った可能性もあるためスパムでない可能性もあります。
+
+### タグ取得
+
+#### GET `/api/v1/qiita-cache/?tag=`
+
+キャッシュされた Qiita 記事で**最も使われているタグの表記方法を取得**できます。
+
+キャッシュ記事や Qiita API にも検索タグが存在しない／使われたことがない場合は、デフォルトで検索タグが返されます。
+
+- クエリ引数： `tag` （必須）
+    - 値
+        - URL エンコードされたタグ名です。スペース（`%20`）区切りで複数タグも指定できます。
+
         ```
         https://qithub.tk/api/v1/qiita-cache/?tag=<URLエンコードのタグ>
         ```
 
     - Example: `"javascript%20TomCAT"`
+
         ```
-        https://qithub.tk/api/v1/qiita-cache/?tag=javascript%20TomCAT
+        https://qithub.tk/api/v1/qiita-cache/?tag=javascript%20TomCAT%20JerryMOUSE
+        ```
+        ```json
+        [
+            "javascript": "JavaScript",
+            "TomCAT": "Tomcat",
+            "JerryMOUSE": "JerryMOUSE"
+        ]
+        ```
+
+- クエリ引数： `return_value` （オプション）
+    - 値
+        - `self_if_not_used` （デフォルト）
+            - タグが存在しない場合、検索タグ自身を返します。
+        - `only_used`
+            - タグが存在しない場合、空の値を返します。
+        - 値が指定されていない場合は、デフォルト値が使われます。
+    - Example:
+        ```
+        https://qithub.tk/api/v1/qiita-cache/?tag=javascript%20TomCAT%20JerryMOUSE&return_value=only_used
+        ```
+        ```json
+        [
+            "javascript": "JavaScript",
+            "TomCAT": "",
+            "JerryMOUSE": ""
+        ]
         ```
 
 
