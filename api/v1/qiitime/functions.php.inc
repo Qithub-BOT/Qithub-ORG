@@ -32,7 +32,7 @@ EOD;
     // Status message
     // -------------------------------------------------------------------------
     $status =<<<EOD
-QiiTime は Qiita/Qiitadon の同人サークル Qithub のコラボ作品です。詳細は https://qiitadon.com/@QiiTime/100691414720855633 へ。コラボ・メンバー募集中！ :qiitan: #${date_tag_Ym} #${date_tag_Ymd} #${date_tag_YmdH}
+QiiTime は Qiita/Qiitadon の同人サークル Qithub のコラボ作品です。詳細は https://qiitadon.com/@QiiTime/101306011841057999 へ。コラボ・メンバー募集中！ :qiitan: #${date_tag_Ym} #${date_tag_Ymd} #${date_tag_YmdH}
 EOD;
 
     return ['spoiler_text' => $spoiler_text, 'status' => $status];
