@@ -1,4 +1,4 @@
 <?php
 
 // 301 Moved Permanently
-header("Location: https://qithub.gq/tools/update/",TRUE,301);
+header("Location: https://qithub.gq/tools/update/", true, 301);
