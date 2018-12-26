@@ -25,7 +25,7 @@ $settings = [
     ],
     'qiitime' => [
         'schema'   => 'https',
-        'host'     => 'qithub.tk',
+        'host'     => 'qithub.gq',
         'endpoint' => '/api/v1/qiitime',
     ],
     'items_per_page' => NUM_PAGES_TO_FETCH, // 取得する記事数
