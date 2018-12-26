@@ -9,7 +9,7 @@
 `GET` リクエストで下記 URL を叩くと JSON 配列で返されます。
 
 ```
-https://qithub.tk/api/v1/qiita-items/
+https://qithub.gq/api/v1/qiita-items/
 ```
 
 ## API の基本動作

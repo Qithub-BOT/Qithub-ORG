@@ -3,7 +3,7 @@
 **Qiita 記事のキャッシュサーバー（魚拓） API** です。
 
 ```
-https://qithub.tk/api/v1/qiita-cache/
+https://qithub.gq/api/v1/qiita-cache/
 ```
 
 この API にリクエストがあると、指定された Qiita 記事 ID のキャッシュ情報が JSON 形式で取得できます。
@@ -25,12 +25,12 @@ Qiita のスパム記事のスパム検知エンジン開発などにご利用�
 - クエリ引数： `id` （必須）
     - 取得したい Qiita 記事の ID を指定します。20 桁の16 進数で表現されています。
         ```
-        https://qithub.tk/api/v1/qiita-cache/?id=<Qiita記事ID>
+        https://qithub.gq/api/v1/qiita-cache/?id=<Qiita記事ID>
         ```
 
     - Example: `"599c4f3b5a25370f8505"`
         ```
-        https://qithub.tk/api/v1/qiita-cache/?id=599c4f3b5a25370f8505
+        https://qithub.gq/api/v1/qiita-cache/?id=599c4f3b5a25370f8505
         ```
  - クエリ引数： `update` （オプション）
     - 値が指定されていると最新の記事情報が取得できます。（キャッシュの内容も更新されます）
@@ -38,7 +38,7 @@ Qiita のスパム記事のスパム検知エンジン開発などにご利用�
 
     - Example:
         ```
-        https://qithub.tk/api/v1/qiita-cache/?id=599c4f3b5a25370f8505&update=foo
+        https://qithub.gq/api/v1/qiita-cache/?id=599c4f3b5a25370f8505&update=foo
         ```
 
 #### JSON のフォーマット
@@ -63,13 +63,13 @@ Qiita のスパム記事のスパム検知エンジン開発などにご利用�
         - URL エンコードされたタグ名です。スペース（`%20`）区切りで複数タグも指定できます。
 
         ```
-        https://qithub.tk/api/v1/qiita-cache/?tag=<URLエンコードのタグ>
+        https://qithub.gq/api/v1/qiita-cache/?tag=<URLエンコードのタグ>
         ```
 
     - Example: `"javascript%20TomCAT"`
 
         ```
-        https://qithub.tk/api/v1/qiita-cache/?tag=javascript%20TomCAT%20JerryMOUSE
+        https://qithub.gq/api/v1/qiita-cache/?tag=javascript%20TomCAT%20JerryMOUSE
         ```
         ```json
         [
@@ -88,7 +88,7 @@ Qiita のスパム記事のスパム検知エンジン開発などにご利用�
         - 値が指定されていない場合は、デフォルト値が使われます。
     - Example:
         ```
-        https://qithub.tk/api/v1/qiita-cache/?tag=javascript%20TomCAT%20JerryMOUSE&return_value=only_used
+        https://qithub.gq/api/v1/qiita-cache/?tag=javascript%20TomCAT%20JerryMOUSE&return_value=only_used
         ```
         ```json
         [

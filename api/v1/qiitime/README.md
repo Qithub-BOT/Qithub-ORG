@@ -12,7 +12,7 @@
 以下が QiiTime API へのリクエスト用エンドポイント URL です。
 
 ```
-https://qithub.tk/api/v1/qiitime/
+https://qithub.gq/api/v1/qiitime/
 ```
 
 ### リクエスト例
@@ -21,7 +21,7 @@ https://qithub.tk/api/v1/qiitime/
 $ curl --version
 curl 7.54.0 (x86_64-apple-darwin17.0) libcurl/7.54.0 LibreSSL/2.0.20 zlib/1.2.11 nghttp2/1.24.0
 $ 
-$ curl https://qithub.tk/api/v1/qiitime/
+$ curl https://qithub.gq/api/v1/qiitime/
 {
     "threshold": "2018090511",
     "is_cache": true,
@@ -37,7 +37,7 @@ $ curl https://qithub.tk/api/v1/qiitime/
 $ php --version
 PHP 7.2.6 (cli) (built: May 25 2018 06:18:43) ( NTS )
 $ 
-$ php -r "print_r(file_get_contents('https://qithub.tk/api/v1/qiitime/'));"
+$ php -r "print_r(file_get_contents('https://qithub.gq/api/v1/qiitime/'));"
 {
     "threshold": "2018090511",
     "is_cache": true,

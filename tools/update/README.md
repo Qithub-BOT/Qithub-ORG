@@ -4,7 +4,7 @@
 
 ### 呼び出し URL 
 
-- `https://qithub.tk/tools/update/`
+- `https://qithub.gq/tools/update/`
 
 ### 注意
 
