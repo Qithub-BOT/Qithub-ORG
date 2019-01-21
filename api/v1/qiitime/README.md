@@ -55,7 +55,7 @@ $ php -r "print_r(file_get_contents('https://qithub.gq/api/v1/qiitime/'));"
 
 ローカルや連合などの**タイムラインには流したくないがタグ検索にヒットさせたいトゥートがある**場合にご利用ください。
 
-なお、[Qithub サークル](https://github.com/Qithub-BOT/Qithub-ORG/)では、「[@​Qithub​(bot)​](https://qiitadon.com/@qithub)」による [Qiita](https://qiita.com/) の新着記事のお知らせなどに利用しています。
+なお、[Qithub サークル](https://github.com/Qithub-BOT/Qithub-ORG/)では、「[@​Qithub​(bot)​](https://qiitadon.com/@qithub/with_replies)」による [Qiita](https://qiita.com/) の新着記事のお知らせなどに利用しています。
 
 ### TS;DR
 
