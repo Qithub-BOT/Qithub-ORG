@@ -101,7 +101,7 @@ echo "OK"
 #       4096 =  502
 #       8192 = 1018
 echo -n "公開鍵でファイルを暗号化中 ... "
-openssl rsautl -encrypt -pubin -inkey $PATHPUBKEY.pkcs8 -ssl -in $INPUTFILE -out $OUTPUTFILE
+openssl rsautl -encrypt -pubin -inkey $PATHPUBKEY.pkcs8 -in $INPUTFILE -out $OUTPUTFILE
 
 if [[ $? != 0 ]]; then
   echo "NG：暗号化に失敗しました。ファイルのサイズなど、エラー内容を確認ください。"
