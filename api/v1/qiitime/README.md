@@ -12,7 +12,7 @@
 以下が QiiTime API へのリクエスト用エンドポイント URL です。
 
 ```
-https://qithub.gq/api/v1/qiitime/
+GET https://qithub.gq/api/v1/qiitime/
 ```
 
 ### リクエスト例
@@ -67,15 +67,23 @@ $ php -r "print_r(file_get_contents('https://qithub.gq/api/v1/qiitime/'));"
 
 ## 仕様
 
+### リクエスト URL（エンドポイント）
+
+```text
+GET https://qithub.gq/api/v1/qiitime/
+```
+
 ### 基本動作
 
 - API にアクセスがあると、最後にトゥートした情報を JSON 形式で返します。
 - API へのアクセス時、その時間内にトゥートされてない場合は、時報を Qiitadon でトゥートします。
 - 同一 IP からの大量アクセスや異常を [`DenyHosts`](https://www.google.co.jp/search?q=site:qiita.com+DenyHosts%E3%81%A8%E3%81%AF&oq=DenyHosts%E3%81%A8%E3%81%AF) が検知した場合、一定時間ブロックされる可能性があります。
 
+
 ### `threshold` 値について
 
-- 最後にトゥートした日時を「`YmdH`」フォーマットにした整数を `threshold` と呼んでいます。（例：`2018/09/04 14時`のトゥートの場合、`threshold` は`2018090414`）
+- 最後にトゥートした日時を「`YmdH`」フォーマットにした整数を `threshold` と呼んでいます。
+  - 例：`2018/09/04 14時`のトゥートの場合、`threshold` は`2018090414`
 
 
 ### トゥート
@@ -96,15 +104,15 @@ $ php -r "print_r(file_get_contents('https://qithub.gq/api/v1/qiitime/'));"
 
 下記 JSON の１次元データが返されます。
 
-|Attribute    |Description                               |Type     |
+|Attribute      |Description                             |Type     |
 |:------------- |:-------------------------------------- |:-------:|
-| `threshold`   | 'YmdH'形式のタイムスタンプ             | integer |
-| `is_cache`    | 時報済みか否か                         | boolean |
-| `id`          | 時報トゥート（`status`）の ID          | integer |
-| `uri`         | 連合内のユニークなリソース ID          | string  |
-| `url`         | 時報トゥートのインスタンス上の URL     | string  |
-| `created_at`  | 時報トゥートが作成された時刻           | string  |
-| `requested_at`| 時報トゥートが作成された時刻           | string  |
+| `threshold`   | 'YmdH'形式のタイムスタンプ                | integer |
+| `is_cache`    | 時報済みか否か                           | boolean |
+| `id`          | 時報トゥート（`status`）の ID             | integer |
+| `uri`         | 連合内のユニークなリソース ID              | string  |
+| `url`         | 時報トゥートのインスタンス上の URL          | string  |
+| `created_at`  | 時報トゥートが作成された時刻               | string  |
+| `requested_at`| 時報トゥートが作成された時刻               | string  |
 
 
 #### レスポンスのサンプル
@@ -114,7 +122,7 @@ $ php -r "print_r(file_get_contents('https://qithub.gq/api/v1/qiitime/'));"
 ```json
 {
     "threshold": "2018090414",
-    "is_cache": false,
+    "is_cache": true,
     "id": "100665815858109827",
     "uri": "https:\/\/qiitadon.com\/users\/QiiTime\/statuses\/100665815858109827",
     "url": "https:\/\/qiitadon.com\/@QiiTime\/100665815858109827",
