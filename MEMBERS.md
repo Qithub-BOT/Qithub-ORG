@@ -14,6 +14,7 @@
 - [@alice1017](https://github.com/alice1017)
 - [@hidao80](https://github.com/hidao80)
 - [@KEINOS](https://github.com/KEINOS)
+- [@matyapiro31](//github.com/matyapiro31)
 
 ---
 
@@ -53,3 +54,11 @@ Qiitadon 國チョコミン党ハイボール部パクチー局ハラペーニ�
 - Qiitadon: https://qiitadon.com/@KEINOS/
 - GitHub: https://github.com/KEINOS/
 - Blog: https://blog.keinos.com/
+
+### @matyapiro31
+
+暇で暇で仕方ないのでゲームを作ったりしてる。
+
+- Qiita: https://qiita.com/matyapiro31
+- Qiitadon: https://qiitadon.com/@matyapiro31/
+- GitHub: https://github.com/matyapiro31/
